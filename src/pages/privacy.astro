@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import siteData from '../../data/site.json';
+---
+
+<BaseLayout
+  title="Privacy Policy"
+  description={`${siteData.name} privacy policy. Learn how we handle your data and protect your privacy.`}
+>
+  <Section narrow>
+    <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">Privacy Policy</h1>
+
+    <div class="prose prose-lg prose-gray max-w-none">
+      <p class="text-sm text-gray-500 mb-8">Last updated: March 2026</p>
+
+      <p>
+        At {siteData.name}, we take your privacy seriously. This policy explains what information we collect, how we use it, and your rights regarding your data.
+      </p>
+
+      <h2>Information We Collect</h2>
+
+      <h3>Automatically Collected</h3>
+      <p>When you visit our website, we may automatically collect:</p>
+      <ul>
+        <li>Browser type and version</li>
+        <li>Pages visited and time spent</li>
+        <li>Referring website</li>
+        <li>General location (country/region level)</li>
+      </ul>
+
+      <h3>Voluntarily Provided</h3>
+      <p>If you contact us, we may collect:</p>
+      <ul>
+        <li>Name</li>
+        <li>Email address</li>
+        <li>Any information you include in your message</li>
+      </ul>
+
+      <h2>How We Use Your Information</h2>
+      <p>We use collected information to:</p>
+      <ul>
+        <li>Understand how visitors use our site so we can improve it</li>
+        <li>Respond to your enquiries</li>
+        <li>Ensure the site functions correctly</li>
+      </ul>
+
+      <h2>Cookies</h2>
+      <p>
+        Our site may use cookies for basic functionality and analytics. Affiliate links may also set cookies from third-party retailers (such as Amazon) to track referrals. These cookies are governed by those third parties' privacy policies.
+      </p>
+
+      <h2>Third-Party Services</h2>
+      <p>We may use third-party services that collect data independently:</p>
+      <ul>
+        <li><strong>Analytics:</strong> To understand site traffic and usage patterns</li>
+        <li><strong>Affiliate networks:</strong> To track referral commissions</li>
+      </ul>
+      <p>Each third-party service operates under its own privacy policy.</p>
+
+      <h2>Your Rights</h2>
+      <p>You have the right to:</p>
+      <ul>
+        <li>Request access to any personal data we hold about you</li>
+        <li>Request deletion of your personal data</li>
+        <li>Opt out of analytics tracking</li>
+      </ul>
+
+      <h2>Contact</h2>
+      <p>
+        For privacy-related enquiries, please <a href="/contact/">contact us</a>.
+      </p>
+    </div>
+  </Section>
+</BaseLayout>

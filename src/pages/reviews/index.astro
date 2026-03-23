@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import siteData from '../../../data/site.json';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: `Reviews - ${siteData.name}`,
+  description: 'In-depth, honest product reviews covering features, performance, and value.',
+};
+---
+
+<BaseLayout
+  title="Reviews"
+  description="In-depth, honest product reviews covering features, performance, and value."
+  schema={schema}
+>
+  <Section>
+    <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Product Reviews</h1>
+    <p class="text-lg text-gray-600 mb-10 max-w-2xl">
+      Detailed, honest reviews of individual products. We cover features, performance, value, and who each product is best for.
+    </p>
+
+    <!-- Placeholder: Review listings will go here -->
+    <div class="bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl p-12 text-center">
+      <p class="text-gray-500 text-lg mb-2">Content coming soon</p>
+      <p class="text-gray-400 text-sm">Our detailed product reviews will be published here as we build out the content library.</p>
+    </div>
+  </Section>
+</BaseLayout>

@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import siteData from '../../../data/site.json';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: `Best Picks - ${siteData.name}`,
+  description: 'Curated lists of the best products in each category, researched and compared.',
+};
+---
+
+<BaseLayout
+  title="Best Picks"
+  description="Curated lists of the best products in each category, researched and compared by our team."
+  schema={schema}
+>
+  <Section>
+    <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Best Picks</h1>
+    <p class="text-lg text-gray-600 mb-10 max-w-2xl">
+      Our curated lists of the best products in each category. Every pick is researched, compared, and chosen based on real performance and value.
+    </p>
+
+    <!-- Placeholder: Roundup listings will go here once niche is confirmed -->
+    <div class="bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl p-12 text-center">
+      <p class="text-gray-500 text-lg mb-2">Content coming soon</p>
+      <p class="text-gray-400 text-sm">Our expert roundups and "best of" lists will be published here once the product categories are finalised.</p>
+    </div>
+  </Section>
+</BaseLayout>

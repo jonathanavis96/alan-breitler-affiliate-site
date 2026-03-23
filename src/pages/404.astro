@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import siteData from '../../data/site.json';
+---
+
+<BaseLayout title="Page Not Found" noindex={true}>
+  <div class="container-narrow py-24 text-center">
+    <p class="text-6xl font-bold text-gray-300 mb-4">404</p>
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Page Not Found</h1>
+    <p class="text-gray-600 mb-8">
+      Sorry, the page you're looking for doesn't exist or has been moved.
+    </p>
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="/" class="btn-primary no-underline">Go Home</a>
+      <a href="/best/" class="btn-outline no-underline">Browse Best Picks</a>
+    </div>
+  </div>
+</BaseLayout>

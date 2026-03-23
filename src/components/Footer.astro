@@ -1,0 +1,58 @@
+---
+import siteData from '../../data/site.json';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-gray-900 text-gray-300 mt-auto">
+  <div class="container-wide py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Brand -->
+      <div>
+        <h3 class="text-white text-lg font-bold mb-3">{siteData.name}</h3>
+        <p class="text-sm text-gray-400 max-w-xs">
+          {siteData.description}
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h4 class="text-white text-sm font-semibold uppercase tracking-wider mb-3">Quick Links</h4>
+        <ul class="space-y-2" role="list">
+          {siteData.navigation.map((item) => (
+            <li>
+              <a href={item.href} class="text-sm text-gray-400 hover:text-white transition-colors no-underline">
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Legal -->
+      <div>
+        <h4 class="text-white text-sm font-semibold uppercase tracking-wider mb-3">Legal</h4>
+        <ul class="space-y-2" role="list">
+          {siteData.footer.links.map((link) => (
+            <li>
+              <a href={link.href} class="text-sm text-gray-400 hover:text-white transition-colors no-underline">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+      <p class="text-sm text-gray-500">
+        &copy; {currentYear} {siteData.name}. All rights reserved.
+      </p>
+      <p class="text-xs text-gray-600 mt-2">
+        As an affiliate, we may earn commissions from qualifying purchases. See our
+        <a href="/disclosure/" class="text-gray-500 hover:text-gray-300 underline">affiliate disclosure</a>
+        for details.
+      </p>
+    </div>
+  </div>
+</footer>

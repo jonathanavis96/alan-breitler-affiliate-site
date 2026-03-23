@@ -1,0 +1,52 @@
+{
+  "_comment": "Product database. Products are referenced by slug in content files. Affiliate link slugs should match entries in affiliates.json.",
+  "products": [
+    {
+      "slug": "example-product-1",
+      "name": "Example Product 1",
+      "brand": "Brand A",
+      "category": "category-placeholder",
+      "image": "/images/products/placeholder.jpg",
+      "rating": 4.5,
+      "affiliateSlug": "example-product-1",
+      "price": "$XX.XX",
+      "pros": [
+        "Pro point 1",
+        "Pro point 2",
+        "Pro point 3"
+      ],
+      "cons": [
+        "Con point 1",
+        "Con point 2"
+      ],
+      "verdict": "A solid choice for most users looking for [use case].",
+      "specs": {
+        "key1": "value1",
+        "key2": "value2"
+      }
+    },
+    {
+      "slug": "example-product-2",
+      "name": "Example Product 2",
+      "brand": "Brand B",
+      "category": "category-placeholder",
+      "image": "/images/products/placeholder.jpg",
+      "rating": 4.2,
+      "affiliateSlug": "example-product-2",
+      "price": "$XX.XX",
+      "pros": [
+        "Pro point 1",
+        "Pro point 2"
+      ],
+      "cons": [
+        "Con point 1",
+        "Con point 2"
+      ],
+      "verdict": "Best budget option for [use case].",
+      "specs": {
+        "key1": "value1",
+        "key2": "value2"
+      }
+    }
+  ]
+}

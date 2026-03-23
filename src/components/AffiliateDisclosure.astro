@@ -1,0 +1,24 @@
+---
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+---
+
+{compact ? (
+  <p class="affiliate-disclosure">
+    <strong>Disclosure:</strong> This page contains affiliate links. We may earn a commission at no extra cost to you.
+    <a href="/disclosure/" class="underline">Learn more</a>.
+  </p>
+) : (
+  <div class="affiliate-disclosure">
+    <p>
+      <strong>Affiliate Disclosure:</strong> Some of the links on this page are affiliate links, which means we may receive a small commission if you click through and make a purchase. This comes at no additional cost to you and helps support our work in providing free, useful content.
+    </p>
+    <p class="mt-2">
+      We only recommend products we genuinely believe in.
+      <a href="/disclosure/" class="underline">Read our full disclosure policy</a>.
+    </p>
+  </div>
+)}

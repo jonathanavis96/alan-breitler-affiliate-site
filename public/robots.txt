@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Disallow affiliate redirect URLs from indexing
+Disallow: /go/
+
+Sitemap: https://example.com/sitemap-index.xml

@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import siteData from '../../data/site.json';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: `About ${siteData.name}`,
+  url: `${siteData.url}/about/`,
+  description: `Learn about ${siteData.name} and our mission to provide honest, well-researched product recommendations.`,
+};
+---
+
+<BaseLayout
+  title="About Us"
+  description={`Learn about ${siteData.name} and our mission to provide honest, well-researched product recommendations.`}
+  schema={schema}
+>
+  <Section narrow>
+    <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">About {siteData.name}</h1>
+
+    <div class="prose prose-lg prose-gray max-w-none">
+      <p class="text-xl text-gray-600 leading-relaxed mb-8">
+        We started {siteData.name} with a simple goal: help people make better purchasing decisions without the noise, hype, or hidden agendas.
+      </p>
+
+      <h2>Our Mission</h2>
+      <p>
+        Every product recommendation on this site is the result of careful research and honest evaluation. We believe you deserve straightforward, trustworthy information — not marketing fluff designed to push you toward the highest commission.
+      </p>
+
+      <h2>How We Work</h2>
+      <p>Our review process follows a consistent methodology:</p>
+      <ol>
+        <li><strong>Research</strong> — We study specifications, manufacturer claims, and expert analysis.</li>
+        <li><strong>Compare</strong> — We evaluate products against their competitors on features, value, and reliability.</li>
+        <li><strong>Test</strong> — Where possible, we verify claims through hands-on use and real-world testing.</li>
+        <li><strong>Write</strong> — We share our honest findings, including both strengths and weaknesses.</li>
+      </ol>
+
+      <h2>Our Standards</h2>
+      <ul>
+        <li>We include both pros <strong>and</strong> cons for every product we review.</li>
+        <li>We clearly disclose all affiliate relationships.</li>
+        <li>We never let affiliate commissions influence our rankings or ratings.</li>
+        <li>We update our content regularly to keep recommendations current.</li>
+      </ul>
+
+      <h2>Affiliate Disclosure</h2>
+      <p>
+        {siteData.name} is supported through affiliate partnerships. When you click a link and make a purchase, we may earn a commission at no extra cost to you. This helps us keep the site running and continue producing free, helpful content.
+      </p>
+      <p>
+        For full details, see our <a href="/disclosure/">affiliate disclosure page</a>.
+      </p>
+
+      <h2>Get in Touch</h2>
+      <p>
+        Have a question, suggestion, or feedback? We'd love to hear from you.
+        <a href="/contact/">Contact us here</a>.
+      </p>
+    </div>
+  </Section>
+</BaseLayout>

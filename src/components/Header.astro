@@ -1,0 +1,77 @@
+---
+import siteData from '../../data/site.json';
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200">
+  <nav class="container-wide flex items-center justify-between h-16" aria-label="Main navigation">
+    <!-- Logo / Site Name -->
+    <a href="/" class="flex items-center gap-2 text-xl font-bold text-gray-900 hover:text-primary no-underline">
+      {siteData.name}
+    </a>
+
+    <!-- Desktop Navigation -->
+    <ul class="hidden md:flex items-center gap-8" role="list">
+      {siteData.navigation.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class:list={[
+              'text-sm font-medium transition-colors no-underline',
+              currentPath === item.href || currentPath.startsWith(item.href + '/')
+                ? 'text-primary'
+                : 'text-gray-600 hover:text-gray-900',
+            ]}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Mobile Menu Button -->
+    <button
+      type="button"
+      class="md:hidden p-2 text-gray-600 hover:text-gray-900"
+      aria-label="Toggle menu"
+      id="mobile-menu-button"
+    >
+      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Mobile Navigation -->
+  <div class="hidden md:hidden border-t border-gray-200 bg-white" id="mobile-menu">
+    <ul class="py-2 px-4 space-y-1" role="list">
+      {siteData.navigation.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class:list={[
+              'block py-2 px-3 rounded-lg text-sm font-medium no-underline',
+              currentPath === item.href || currentPath.startsWith(item.href + '/')
+                ? 'text-primary bg-blue-50'
+                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50',
+            ]}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</header>
+
+<script>
+  const button = document.getElementById('mobile-menu-button');
+  const menu = document.getElementById('mobile-menu');
+
+  button?.addEventListener('click', () => {
+    const isOpen = !menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden');
+    button?.setAttribute('aria-expanded', String(!isOpen));
+  });
+</script>

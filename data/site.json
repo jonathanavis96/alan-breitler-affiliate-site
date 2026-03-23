@@ -1,0 +1,48 @@
+{
+  "name": "Company Name",
+  "tagline": "Your Trusted Guide to Smart Choices",
+  "description": "Expert reviews, comparisons, and buying guides to help you find the best products for your needs.",
+  "url": "https://example.com",
+  "author": {
+    "name": "Company Name Team",
+    "bio": "We research, test, and review products to help you make informed purchasing decisions."
+  },
+  "social": {
+    "twitter": "",
+    "facebook": "",
+    "instagram": ""
+  },
+  "colors": {
+    "primary": "#2563EB",
+    "primaryDark": "#1D4ED8",
+    "secondary": "#059669",
+    "accent": "#F59E0B",
+    "neutral": {
+      "50": "#F9FAFB",
+      "100": "#F3F4F6",
+      "200": "#E5E7EB",
+      "300": "#D1D5DB",
+      "400": "#9CA3AF",
+      "500": "#6B7280",
+      "600": "#4B5563",
+      "700": "#374151",
+      "800": "#1F2937",
+      "900": "#111827"
+    }
+  },
+  "navigation": [
+    { "label": "Home", "href": "/" },
+    { "label": "Best Picks", "href": "/best/" },
+    { "label": "Reviews", "href": "/reviews/" },
+    { "label": "Guides", "href": "/guides/" },
+    { "label": "About", "href": "/about/" }
+  ],
+  "footer": {
+    "links": [
+      { "label": "About", "href": "/about/" },
+      { "label": "Affiliate Disclosure", "href": "/disclosure/" },
+      { "label": "Privacy Policy", "href": "/privacy/" },
+      { "label": "Contact", "href": "/contact/" }
+    ]
+  }
+}

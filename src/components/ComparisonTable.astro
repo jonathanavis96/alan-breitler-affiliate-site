@@ -1,0 +1,81 @@
+---
+interface Product {
+  name: string;
+  affiliateSlug: string;
+  specs: Record<string, string>;
+  rating: number;
+  price?: string;
+  badge?: string;
+}
+
+interface Props {
+  products: Product[];
+  specLabels: Record<string, string>;
+}
+
+const { products, specLabels } = Astro.props;
+---
+
+<div class="overflow-x-auto">
+  <table class="w-full border-collapse text-sm">
+    <thead>
+      <tr class="border-b-2 border-gray-200">
+        <th class="text-left py-3 px-4 font-semibold text-gray-600">Feature</th>
+        {products.map((product) => (
+          <th class="text-center py-3 px-4 font-bold text-gray-900 relative">
+            {product.badge && (
+              <span class="badge-primary text-xs mb-1 inline-block">{product.badge}</span>
+            )}
+            <div>{product.name}</div>
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Rating Row -->
+      <tr class="border-b border-gray-100 bg-gray-50">
+        <td class="py-3 px-4 font-medium text-gray-600">Rating</td>
+        {products.map((product) => (
+          <td class="py-3 px-4 text-center">
+            <span class="font-bold text-amber-600">{product.rating}/5</span>
+          </td>
+        ))}
+      </tr>
+
+      <!-- Price Row -->
+      <tr class="border-b border-gray-100">
+        <td class="py-3 px-4 font-medium text-gray-600">Price</td>
+        {products.map((product) => (
+          <td class="py-3 px-4 text-center font-semibold">{product.price || 'Check Price'}</td>
+        ))}
+      </tr>
+
+      <!-- Spec Rows -->
+      {Object.entries(specLabels).map(([key, label], index) => (
+        <tr class:list={['border-b border-gray-100', index % 2 === 0 ? 'bg-gray-50' : '']}>
+          <td class="py-3 px-4 font-medium text-gray-600">{label}</td>
+          {products.map((product) => (
+            <td class="py-3 px-4 text-center">{product.specs[key] || '—'}</td>
+          ))}
+        </tr>
+      ))}
+
+      <!-- CTA Row -->
+      <tr>
+        <td class="py-4 px-4"></td>
+        {products.map((product) => (
+          <td class="py-4 px-4 text-center">
+            <a
+              href={`/go/${product.affiliateSlug}/`}
+              class="btn-primary text-xs no-underline"
+              target="_blank"
+              rel="nofollow sponsored noopener"
+            >
+              Check Price
+            </a>
+          </td>
+        ))}
+      </tr>
+    </tbody>
+  </table>
+</div>
