@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [feature/editorial-redesign]
+    branches: [main, feature/editorial-redesign]
   workflow_dispatch:
 
 permissions:

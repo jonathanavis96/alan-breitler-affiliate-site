@@ -29,7 +29,7 @@ export default {
         'on-background': '#191c1e',
         'secondary-fixed-dim': '#c3c0ff',
         'surface-variant': '#e0e3e5',
-        tertiary: '#000000',
+        tertiary: '#E45405',
         'primary-container': '#131b2e',
         'on-primary-container': '#7c839b',
         'surface-bright': '#f7f9fb',

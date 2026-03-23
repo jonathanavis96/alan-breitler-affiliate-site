@@ -4,4 +4,4 @@ Allow: /
 # Disallow affiliate redirect URLs from indexing
 Disallow: /go/
 
-Sitemap: https://example.com/sitemap-index.xml
+Sitemap: https://jonathanavis96.github.io/alan-breitler-affiliate-site/sitemap-index.xml

@@ -46,7 +46,7 @@ const reviews = productData.products;
             <div class="flex items-center gap-3 mb-3">
               <span class="label-text text-secondary font-bold">{product.brand}</span>
               <span class="label-text text-on-surface-variant/40">·</span>
-              <span class="label-text text-on-surface-variant/60">{product.category.replace('-', ' ')}</span>
+              <span class="label-text text-on-surface-variant/60">{product.category.replaceAll('-', ' ')}</span>
             </div>
 
             <h3 class="font-headline italic text-xl mb-3">{product.name}</h3>

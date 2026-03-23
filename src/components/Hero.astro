@@ -48,7 +48,7 @@ const after = idx >= 0 ? title.slice(idx + firstWord.length) : '';
     )}
 
     <h1 class="font-headline italic font-extrabold text-5xl md:text-8xl leading-[0.9] tracking-tighter mb-8 animate-fade-in animation-delay-100">
-      The Search for <span class="text-secondary inline-block min-w-[7ch]" id="hero-rotating-wrapper"><span id="hero-rotating-word">{firstWord}</span><span id="hero-cursor" class="hidden"></span></span> Ends Here.
+      {before}<span class="text-secondary inline-block min-w-[7ch]" id="hero-rotating-wrapper"><span id="hero-rotating-word">{firstWord}</span><span id="hero-cursor" class="hidden"></span></span>{after}
     </h1>
 
     {subtitle && (

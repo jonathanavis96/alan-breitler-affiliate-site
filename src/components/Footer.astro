@@ -44,12 +44,18 @@ const currentYear = new Date().getFullYear();
     <span class="material-symbols-outlined">explore</span>
     <span class="font-label text-[10px] uppercase tracking-widest font-bold">Discover</span>
   </a>
-  <a href={url('/reviews/')} class="flex flex-col items-center justify-center text-on-surface-variant pt-2 active:scale-90 transition-transform hover:text-primary no-underline">
+  <button type="button" id="mobile-search-trigger" class="flex flex-col items-center justify-center text-on-surface-variant pt-2 active:scale-90 transition-transform hover:text-primary bg-transparent border-none cursor-pointer">
     <span class="material-symbols-outlined">search</span>
     <span class="font-label text-[10px] uppercase tracking-widest font-bold">Search</span>
-  </a>
+  </button>
   <a href={url('/guides/')} class="flex flex-col items-center justify-center text-on-surface-variant pt-2 active:scale-90 transition-transform hover:text-primary no-underline">
     <span class="material-symbols-outlined">bookmark</span>
     <span class="font-label text-[10px] uppercase tracking-widest font-bold">Saved</span>
   </a>
 </nav>
+
+<script>
+  document.getElementById('mobile-search-trigger')?.addEventListener('click', () => {
+    document.getElementById('search-open')?.click();
+  });
+</script>

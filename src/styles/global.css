@@ -236,3 +236,10 @@
 .scroll-delay-300 { transition-delay: 0.3s; }
 .scroll-delay-400 { transition-delay: 0.4s; }
 
+/* Mobile bottom nav safe-area padding */
+@media (max-width: 768px) {
+  main {
+    padding-bottom: 5rem;
+  }
+}
+

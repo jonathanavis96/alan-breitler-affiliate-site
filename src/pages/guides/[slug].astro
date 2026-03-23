@@ -61,7 +61,7 @@ const schema = {
   <section class="py-16 md:py-24">
     <div class="container-narrow space-y-20">
       {guide.sections.map((section: string, i: number) => (
-        <div id={`section-${i}`}>
+        <div id={`section-${i}`} class="scroll-mt-24">
           <span class="label-text text-secondary font-bold mb-4 block">
             {String(i + 1).padStart(2, '0')}
           </span>
