@@ -24,7 +24,7 @@ const { products, specLabels } = Astro.props;
         {products.map((product) => (
           <th class="text-center py-3 px-4 font-bold text-gray-900 relative">
             {product.badge && (
-              <span class="badge-primary text-xs mb-1 inline-block">{product.badge}</span>
+              <span class="badge-editorial text-xs mb-1 inline-block">{product.badge}</span>
             )}
             <div>{product.name}</div>
           </th>

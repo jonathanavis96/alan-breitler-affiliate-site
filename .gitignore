@@ -12,11 +12,16 @@ dist/
 .env.production
 *.local
 
-# Internal tooling
+# Test/automation logs
+.playwright-mcp/
+
+# Internal dev tooling
 brain/
 CLAUDE.md
 .claude/
 cortex-upwork.bash
+docs/DESIGN.md
+docs/stitch-*.html
 
 # OS files
 .DS_Store

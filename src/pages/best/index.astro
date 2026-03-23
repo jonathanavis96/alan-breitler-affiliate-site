@@ -1,7 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Section from '../../components/Section.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
 import siteData from '../../../data/site.json';
+import productData from '../../../data/products.json';
+import { url } from '../../lib/base';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -9,23 +12,58 @@ const schema = {
   name: `Best Picks - ${siteData.name}`,
   description: 'Curated lists of the best products in each category, researched and compared.',
 };
+
+const products = productData.products;
 ---
 
 <BaseLayout
   title="Best Picks"
-  description="Curated lists of the best products in each category, researched and compared by our team."
+  description="Curated lists of the best home office products in each category, researched and compared by our team."
   schema={schema}
 >
-  <Section>
-    <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Best Picks</h1>
-    <p class="text-lg text-gray-600 mb-10 max-w-2xl">
-      Our curated lists of the best products in each category. Every pick is researched, compared, and chosen based on real performance and value.
+  <!-- Header -->
+  <section class="container-wide py-20 md:py-32">
+    <span class="label-text text-secondary font-bold mb-6 block">Editor's Choice</span>
+    <h1 class="font-headline italic text-5xl md:text-6xl leading-[0.9] tracking-tighter max-w-3xl mb-8">
+      Best Home Office Picks <span class="text-secondary">2026</span>
+    </h1>
+    <p class="text-on-surface-variant text-lg max-w-xl leading-relaxed font-body mb-6">
+      We tested dozens of products across every major home office category. These are the ones that earned a spot on our list — the top performers that deliver on their promises.
     </p>
+    <p class="label-text text-on-surface-variant/60">Last updated: March 2026 · {products.length} products reviewed</p>
+  </section>
 
-    <!-- Placeholder: Roundup listings will go here once niche is confirmed -->
-    <div class="bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl p-12 text-center">
-      <p class="text-gray-500 text-lg mb-2">Content coming soon</p>
-      <p class="text-gray-400 text-sm">Our expert roundups and "best of" lists will be published here once the product categories are finalised.</p>
+  <!-- Disclosure + Products -->
+  <section class="bg-surface-container-low py-16 md:py-24">
+    <div class="container-wide">
+      <AffiliateDisclosure compact />
+
+      <div class="space-y-6">
+        {products.map((product, i) => (
+          <ProductCard
+            name={product.name}
+            slug={product.slug}
+            image={product.image}
+            rating={product.rating}
+            price={product.price}
+            pros={product.pros}
+            cons={product.cons}
+            verdict={product.verdict}
+            affiliateSlug={product.affiliateSlug}
+            badge={product.badge}
+          />
+        ))}
+      </div>
     </div>
-  </Section>
+  </section>
+
+  <!-- Methodology note -->
+  <section class="container-narrow py-16 md:py-24 text-center">
+    <span class="material-symbols-outlined text-4xl text-on-surface-variant/20 mb-6">science</span>
+    <h2 class="font-headline italic text-2xl mb-4">How We Choose</h2>
+    <p class="text-on-surface-variant font-body leading-relaxed max-w-lg mx-auto mb-6">
+      Every product on this list went through our multi-stage evaluation process. We research specifications, compare against competitors, and where possible verify claims through hands-on testing.
+    </p>
+    <a href={url('/about/')} class="btn-outline no-underline">Read Our Methodology</a>
+  </section>
 </BaseLayout>

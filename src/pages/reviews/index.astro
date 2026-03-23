@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Section from '../../components/Section.astro';
 import siteData from '../../../data/site.json';
+import productData from '../../../data/products.json';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -9,6 +9,9 @@ const schema = {
   name: `Reviews - ${siteData.name}`,
   description: 'In-depth, honest product reviews covering features, performance, and value.',
 };
+
+// Use products as review entries
+const reviews = productData.products;
 ---
 
 <BaseLayout
@@ -16,16 +19,57 @@ const schema = {
   description="In-depth, honest product reviews covering features, performance, and value."
   schema={schema}
 >
-  <Section>
-    <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Product Reviews</h1>
-    <p class="text-lg text-gray-600 mb-10 max-w-2xl">
+  <!-- Header -->
+  <section class="container-wide py-20 md:py-32">
+    <span class="label-text text-secondary font-bold mb-6 block">In-Depth Analysis</span>
+    <h1 class="font-headline italic text-5xl md:text-6xl leading-[0.9] tracking-tighter max-w-3xl mb-8">Product Reviews</h1>
+    <p class="text-on-surface-variant text-lg max-w-xl leading-relaxed font-body">
       Detailed, honest reviews of individual products. We cover features, performance, value, and who each product is best for.
     </p>
+  </section>
 
-    <!-- Placeholder: Review listings will go here -->
-    <div class="bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl p-12 text-center">
-      <p class="text-gray-500 text-lg mb-2">Content coming soon</p>
-      <p class="text-gray-400 text-sm">Our detailed product reviews will be published here as we build out the content library.</p>
+  <!-- Review listings -->
+  <section class="bg-surface-container-low py-16 md:py-24">
+    <div class="container-wide">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {reviews.map((product) => (
+          <a href={`/reviews/${product.slug}/`} class="bg-surface p-8 group no-underline text-on-surface hover:bg-surface-container-high transition-colors duration-300">
+            <div class="aspect-square bg-white mb-6 flex items-center justify-center p-4">
+              <img
+                src={product.image}
+                alt={product.name}
+                class="max-w-full max-h-full object-contain group-hover:scale-105 transition-all duration-500"
+                loading="lazy"
+              />
+            </div>
+
+            <div class="flex items-center gap-3 mb-3">
+              <span class="label-text text-secondary font-bold">{product.brand}</span>
+              <span class="label-text text-on-surface-variant/40">·</span>
+              <span class="label-text text-on-surface-variant/60">{product.category.replaceAll('-', ' ')}</span>
+            </div>
+
+            <h3 class="font-headline italic text-xl mb-3">{product.name}</h3>
+
+            <div class="flex items-center gap-2 mb-4">
+              <div class="flex gap-0.5">
+                {Array.from({ length: 5 }, (_, i) => (
+                  <span class={`text-xs ${i < Math.floor(product.rating) ? 'text-on-tertiary-container' : 'text-surface-container-highest'}`}>★</span>
+                ))}
+              </div>
+              <span class="label-text text-on-surface-variant">{product.rating}/5</span>
+              <span class="label-text text-on-surface-variant/40 ml-auto">{product.price}</span>
+            </div>
+
+            <p class="text-on-surface-variant text-sm font-body leading-relaxed line-clamp-2">{product.verdict}</p>
+
+            <span class="inline-flex items-center gap-2 mt-4 text-secondary label-text font-bold group-hover:gap-3 transition-all">
+              Read full review
+              <span class="material-symbols-outlined text-sm">arrow_forward</span>
+            </span>
+          </a>
+        ))}
+      </div>
     </div>
-  </Section>
+  </section>
 </BaseLayout>

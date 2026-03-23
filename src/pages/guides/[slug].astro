@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import guidesJson from '../../../data/guides.json';
+import type { GetStaticPaths } from 'astro';
+import { url } from '../../lib/base';
+
+export const getStaticPaths: GetStaticPaths = () => {
+  return guidesJson.guides.map((guide) => ({
+    params: { slug: guide.slug },
+    props: { guide },
+  }));
+};
+
+const { guide } = Astro.props;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  name: guide.title,
+  description: guide.description,
+};
+---
+
+<BaseLayout
+  title={guide.title}
+  description={guide.description}
+  schema={schema}
+>
+  <!-- Guide Header -->
+  <section class="container-wide py-20 md:py-32">
+    <div class="max-w-3xl">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="label-text text-secondary font-bold">{guide.category}</span>
+        <span class="label-text text-on-surface-variant/40">·</span>
+        <span class="label-text text-on-surface-variant/60">{guide.readTime}</span>
+      </div>
+
+      <h1 class="font-headline italic text-4xl md:text-5xl lg:text-6xl leading-[0.9] tracking-tighter mb-8">{guide.title}</h1>
+      <p class="text-on-surface-variant text-lg md:text-xl leading-relaxed font-body">{guide.description}</p>
+    </div>
+  </section>
+
+  <!-- Table of Contents -->
+  <section class="bg-surface-container-low py-12">
+    <div class="container-narrow">
+      <h2 class="font-label uppercase font-bold text-xs tracking-widest text-on-surface-variant mb-6 not-italic">In This Guide</h2>
+      <nav class="space-y-3">
+        {guide.sections.map((section: string, i: number) => (
+          <a href={`#section-${i}`} class="flex items-center gap-4 group no-underline text-on-surface hover:text-secondary transition-colors">
+            <span class="font-headline italic text-2xl text-surface-container-highest group-hover:text-secondary transition-colors">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <span class="font-body text-sm">{section}</span>
+          </a>
+        ))}
+      </nav>
+    </div>
+  </section>
+
+  <!-- Guide Body (template mockup) -->
+  <section class="py-16 md:py-24">
+    <div class="container-narrow space-y-20">
+      {guide.sections.map((section: string, i: number) => (
+        <div id={`section-${i}`} class="scroll-mt-24">
+          <span class="label-text text-secondary font-bold mb-4 block">
+            {String(i + 1).padStart(2, '0')}
+          </span>
+          <h2 class="font-headline italic text-3xl md:text-4xl mb-6">{section}</h2>
+
+          {/* Placeholder content blocks */}
+          <div class="space-y-4">
+            <div class="h-4 bg-surface-container-high w-full"></div>
+            <div class="h-4 bg-surface-container-high w-11/12"></div>
+            <div class="h-4 bg-surface-container-high w-10/12"></div>
+            <div class="h-4 bg-surface-container-high w-full"></div>
+            <div class="h-4 bg-surface-container-high w-9/12"></div>
+            <div class="h-4 bg-surface-container-high w-11/12"></div>
+          </div>
+
+          {/* Placeholder image every other section */}
+          {i % 2 === 0 && (
+            <div class="mt-8 aspect-video bg-surface-container-high flex items-center justify-center">
+              <span class="label-text text-on-surface-variant/30">Image placeholder</span>
+            </div>
+          )}
+        </div>
+      ))}
+
+      <!-- Final CTA -->
+      <div class="bg-primary text-on-primary p-10 text-center grain-overlay">
+        <h3 class="font-headline italic text-2xl mb-4 text-on-primary">Ready to Buy?</h3>
+        <p class="text-primary-fixed-dim font-body mb-6 max-w-lg mx-auto">See our curated picks based on the criteria covered in this guide.</p>
+        <a href={url('/best/')} class="inline-flex items-center gap-3 bg-secondary text-on-secondary px-10 py-5 font-label uppercase text-xs tracking-widest font-bold hover:bg-secondary-container transition-colors duration-300 no-underline">
+          View Our Best Picks
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

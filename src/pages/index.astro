@@ -1,9 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import Section from '../components/Section.astro';
-import CategoryCard from '../components/CategoryCard.astro';
 import siteData from '../../data/site.json';
+import { url } from '../lib/base';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -15,87 +14,160 @@ const schema = {
 ---
 
 <BaseLayout title="Home" schema={schema}>
-  <!-- Hero -->
+  <!-- Hero: Anti-Grid Layout -->
   <Hero
-    title="Find the Best Products for Your Needs"
-    subtitle="We research, compare, and review so you don't have to. Honest recommendations backed by real analysis."
-    ctaText="Browse Our Top Picks"
-    ctaHref="/best/"
-    trustLine="Trusted by readers who value honest, well-researched recommendations"
+    eyebrow="2026 Editorial Outlook"
+    title="The Search for the Best Ends Here."
+    highlightWords={["the Best", "Perfect", "Quality", "Greater"]}
+    subtitle="We dismantle market hype with rigorous testing and obsessive manual reviews. Discover the definitive list of products that deliver on their promises."
+    ctaText="Discover Our 2026 Best Picks"
+    ctaHref={url('/best/')}
+    secondaryCtaText="View Editorial Standards"
+    secondaryCtaHref={url('/about/')}
+    heroImage="https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=800&q=80&auto=format"
+    heroImageAlt="Overhead view of a curated home office desk setup with keyboard, monitor, and desk accessories"
+    overlayLabel="Currently Testing"
+    overlayTitle="2026 Standing Desk Showdown: 8 Models, 300 Hours"
   />
 
-  <!-- Categories / Content Pillars -->
-  <Section
-    title="What Are You Looking For?"
-    subtitle="Explore our categories to find expert reviews and buying guides."
-  >
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <CategoryCard
-        title="Best Picks"
-        description="Curated lists of the top products in each category, tested and compared."
-        href="/best/"
-        icon="🏆"
-      />
-      <CategoryCard
-        title="In-Depth Reviews"
-        description="Detailed, honest reviews covering features, performance, and value."
-        href="/reviews/"
-        icon="🔍"
-      />
-      <CategoryCard
-        title="Buying Guides"
-        description="Learn what to look for before you buy with our expert buying guides."
-        href="/guides/"
-        icon="📖"
-      />
+  <!-- Bento Box Grid: Content Discovery -->
+  <section class="container-wide mt-40">
+    <div class="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8">
+      <div class="max-w-xl">
+        <h2 class="font-headline italic text-4xl mb-4">Navigating the Noise</h2>
+        <p class="text-on-surface-variant font-body">Our hierarchy of insight, designed for the conscious consumer who values precision over volume.</p>
+      </div>
+      <div class="h-[1px] flex-grow bg-surface-container-highest mx-8 hidden md:block"></div>
+      <span class="label-text opacity-50">Exploration Core</span>
     </div>
-  </Section>
 
-  <!-- How We Work -->
-  <Section
-    title="Why Trust Our Recommendations?"
-    subtitle="We follow a rigorous process to ensure every recommendation earns its place."
-    class="bg-gray-50"
-  >
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="text-center">
-        <div class="w-12 h-12 bg-blue-100 text-primary rounded-xl flex items-center justify-center mx-auto mb-4">
-          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-          </svg>
+    <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-auto md:h-[600px]">
+      <!-- Big Feature: Best Picks -->
+      <a href={url('/best/')} class="md:col-span-2 md:row-span-2 bg-surface-container-low p-10 flex flex-col justify-between relative overflow-hidden group no-underline text-on-surface scroll-reveal">
+        <div class="z-20">
+          <span class="badge-editorial mb-6">Editor's Choice</span>
+          <h3 class="font-headline italic text-4xl leading-tight">Best Picks 2026</h3>
+          <p class="mt-4 text-on-surface-variant max-w-xs font-body">The top 1% of products that survived our stress tests this year.</p>
         </div>
-        <h3 class="font-bold text-gray-900 mb-2">We Research</h3>
-        <p class="text-sm text-gray-600">We dig into specifications, user feedback, and expert opinions for every product we cover.</p>
-      </div>
-      <div class="text-center">
-        <div class="w-12 h-12 bg-green-100 text-secondary rounded-xl flex items-center justify-center mx-auto mb-4">
-          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
-          </svg>
+        <div class="flex justify-between items-end z-20">
+          <span class="text-secondary font-label uppercase text-xs tracking-widest font-bold border-b-2 border-secondary pb-1 group-hover:pr-4 transition-all">Explore the list</span>
         </div>
-        <h3 class="font-bold text-gray-900 mb-2">We Compare</h3>
-        <p class="text-sm text-gray-600">We put products side by side, evaluating performance, value, and real-world usability.</p>
-      </div>
-      <div class="text-center">
-        <div class="w-12 h-12 bg-amber-100 text-accent rounded-xl flex items-center justify-center mx-auto mb-4">
-          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.745 3.745 0 011.043 3.296A3.745 3.745 0 0121 12z" />
-          </svg>
+        <!-- Background image -->
+        <div class="absolute right-[-5%] bottom-[-5%] w-2/3 h-2/3 opacity-20 group-hover:opacity-30 group-hover:scale-105 transition-all duration-700">
+          <img
+            class="w-full h-full object-cover"
+            src="https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=600&q=80&auto=format"
+            alt=""
+            loading="lazy"
+          />
         </div>
-        <h3 class="font-bold text-gray-900 mb-2">We Recommend</h3>
-        <p class="text-sm text-gray-600">We only recommend products we genuinely believe in, with honest pros and cons.</p>
-      </div>
-    </div>
-  </Section>
+      </a>
 
-  <!-- CTA -->
-  <Section class="text-center">
-    <div class="max-w-2xl mx-auto">
-      <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Ready to Find Your Perfect Match?</h2>
-      <p class="text-gray-600 mb-6">Browse our latest reviews and buying guides to make confident purchasing decisions.</p>
-      <a href="/best/" class="btn-primary no-underline">
-        See Our Top Picks
+      <!-- Medium Feature: In-Depth Reviews -->
+      <a href={url('/reviews/')} class="md:col-span-2 bg-primary text-on-primary p-8 flex flex-col justify-between grain-overlay no-underline scroll-reveal scroll-delay-100">
+        <div>
+          <h3 class="font-headline italic text-3xl text-on-primary">In-Depth Reviews</h3>
+          <p class="text-primary-fixed-dim text-sm mt-2 font-body">Comprehensive technical analysis for every product we cover.</p>
+        </div>
+        <div class="flex justify-between items-center z-20">
+          <span class="label-text text-primary-fixed-dim">Read our latest</span>
+          <span class="material-symbols-outlined text-on-primary">menu_book</span>
+        </div>
+      </a>
+
+      <!-- Small Feature: Buying Guides -->
+      <a href={url('/guides/')} class="md:col-span-1 bg-secondary text-on-secondary p-8 flex flex-col justify-between no-underline scroll-reveal scroll-delay-200">
+        <span class="material-symbols-outlined text-3xl text-on-secondary">auto_stories</span>
+        <div>
+          <h3 class="font-label uppercase font-bold text-xs tracking-widest text-on-secondary not-italic">Buying Guides</h3>
+          <p class="text-xs opacity-80 mt-1 font-body">Smart checklists for the final decision.</p>
+        </div>
+      </a>
+
+      <!-- Small Feature: How We Test -->
+      <a href={url('/about/')} class="md:col-span-1 bg-surface-container-highest p-8 flex flex-col justify-between border-l-4 border-on-tertiary-container no-underline text-on-surface scroll-reveal scroll-delay-300">
+        <span class="material-symbols-outlined text-3xl text-on-tertiary-container">biotech</span>
+        <div>
+          <h3 class="font-label uppercase font-bold text-xs tracking-widest text-on-surface not-italic">How We Test</h3>
+          <p class="text-xs text-on-surface-variant mt-1 font-body">The science of objectivity.</p>
+        </div>
       </a>
     </div>
-  </Section>
+  </section>
+
+  <!-- Trust Section: How We Test -->
+  <section class="mt-40 bg-surface-container-low grain-overlay relative">
+    <div class="container-wide py-12 md:py-24">
+      <div class="max-w-4xl mx-auto text-center mb-20 scroll-reveal">
+        <span class="label-text text-secondary font-bold mb-4 block">Our Methodology</span>
+        <h2 class="font-headline italic text-5xl md:text-6xl mb-6">Built on Radical Transparency.</h2>
+        <p class="text-on-surface-variant text-lg leading-relaxed font-body">Most sites read the box. We break the product. Every recommendation is backed by practical stress-testing and empirical measurement.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-16 relative z-10">
+        <div class="flex flex-col items-center text-center">
+          <div class="w-16 h-16 bg-surface flex items-center justify-center mb-6 shadow-sm">
+            <i data-lucide="flask-conical" class="w-7 h-7 text-secondary"></i>
+          </div>
+          <h4 class="font-headline italic text-2xl mb-3">Rigorous Benchmarking</h4>
+          <p class="text-sm text-on-surface-variant leading-relaxed font-body">We use precision instruments and standardized tests to measure real performance, not marketing claims.</p>
+        </div>
+        <div class="flex flex-col items-center text-center">
+          <div class="w-16 h-16 bg-surface flex items-center justify-center mb-6 shadow-sm">
+            <i data-lucide="users" class="w-7 h-7 text-secondary"></i>
+          </div>
+          <h4 class="font-headline italic text-2xl mb-3">Expert Blind Tests</h4>
+          <p class="text-sm text-on-surface-variant leading-relaxed font-body">Multi-user blind panels eliminate brand bias to find what actually performs in everyday use.</p>
+        </div>
+        <div class="flex flex-col items-center text-center">
+          <div class="w-16 h-16 bg-surface flex items-center justify-center mb-6 shadow-sm">
+            <i data-lucide="file-text" class="w-7 h-7 text-secondary"></i>
+          </div>
+          <h4 class="font-headline italic text-2xl mb-3">The Unfiltered Report</h4>
+          <p class="text-sm text-on-surface-variant leading-relaxed font-body">We publish the full picture — pros, cons, and failures. No manufacturer editing allowed.</p>
+        </div>
+      </div>
+
+      <div class="mt-20 flex justify-center">
+        <div class="px-6 py-4 glass-panel inline-flex items-center gap-4">
+          <div class="flex gap-1">
+            <div class="w-2 h-2 bg-secondary animate-pulse"></div>
+            <div class="w-2 h-2 bg-secondary opacity-50"></div>
+            <div class="w-2 h-2 bg-secondary opacity-25"></div>
+          </div>
+          <p class="label-text font-bold">Live Lab Status: Testing New Products Weekly</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="container-wide mt-40 mb-20">
+    <div class="bg-primary text-on-primary p-12 md:p-20 relative overflow-hidden grain-overlay">
+      <div class="relative z-20 max-w-2xl">
+        <h2 class="font-headline italic text-5xl mb-8 text-on-primary">Ready to end the search?</h2>
+        <p class="text-primary-fixed-dim mb-12 text-lg font-body">Browse by category or dive into our latest reviews. We've done the heavy lifting so you don't have to.</p>
+        <div class="flex flex-wrap gap-4">
+          <a href={url('/best/')} class="inline-flex items-center gap-3 bg-secondary text-on-secondary px-10 py-5 font-label uppercase text-xs tracking-widest font-bold hover:bg-secondary-container transition-colors duration-300 no-underline">
+            Browse Best Picks
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </a>
+          <a href={url('/reviews/')} class="inline-flex items-center gap-3 bg-on-primary/10 text-on-primary px-10 py-5 font-label uppercase text-xs tracking-widest font-bold hover:bg-on-primary/20 transition-colors no-underline">
+            Latest Reviews
+          </a>
+        </div>
+        <!-- TODO M2: link to actual category pages -->
+        <div class="mt-12 flex flex-wrap gap-4">
+          <span class="label-text opacity-40">Trending:</span>
+          <a class="label-text hover:text-secondary underline decoration-secondary underline-offset-4 text-primary-fixed-dim" href={url('/best/')}>Mechanical Keyboards</a>
+          <a class="label-text hover:text-secondary underline decoration-secondary underline-offset-4 text-primary-fixed-dim" href={url('/best/')}>Espresso Machines</a>
+          <a class="label-text hover:text-secondary underline decoration-secondary underline-offset-4 text-primary-fixed-dim" href={url('/best/')}>Studio Monitors</a>
+        </div>
+      </div>
+      <!-- Abstract gradient BG -->
+      <div class="absolute right-0 top-0 h-full w-1/2 opacity-30 pointer-events-none">
+        <div class="w-full h-full bg-gradient-to-br from-secondary/50 to-transparent"></div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
