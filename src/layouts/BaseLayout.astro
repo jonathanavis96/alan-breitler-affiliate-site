@@ -3,6 +3,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SearchOverlay from '../components/SearchOverlay.astro';
 import siteData from '../../data/site.json';
+import { url } from '../lib/base';
 import '../styles/global.css';
 
 interface Props {
@@ -18,7 +19,7 @@ interface Props {
 const {
   title,
   description = siteData.description,
-  ogImage = '/images/og-default.jpg',
+  ogImage = url('/images/og-default.jpg'),
   ogType = 'website',
   canonicalUrl,
   schema,
@@ -60,7 +61,7 @@ const canonical = canonicalUrl || Astro.url.href;
   <meta name="twitter:image" content={new URL(ogImage, siteData.url).href} />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
 
   <!-- Fonts: Newsreader (headlines), Plus Jakarta Sans (body), Inter (labels) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />

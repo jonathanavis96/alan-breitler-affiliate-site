@@ -1,21 +1,22 @@
 ---
 import productData from '../../data/products.json';
+import { url } from '../lib/base';
 
 // Build search index at build time
 const searchItems = [
   ...productData.products.map((p) => ({
     title: p.name,
     subtitle: `${p.brand} · ${p.category.replace(/-/g, ' ')}`,
-    href: `/reviews/${p.slug}/`,
+    href: url(`/reviews/${p.slug}/`),
     type: 'Review',
   })),
-  { title: 'How to Choose a Standing Desk in 2026', subtitle: 'Standing Desks · 8 min read', href: '/guides/standing-desks/', type: 'Guide' },
-  { title: "Mechanical Keyboards: A Buyer's Guide", subtitle: 'Keyboards · 12 min read', href: '/guides/keyboards/', type: 'Guide' },
-  { title: 'The Complete Monitor Arm Guide', subtitle: 'Monitor Arms · 6 min read', href: '/guides/monitor-arms/', type: 'Guide' },
-  { title: 'Desk Lighting: What Actually Reduces Eye Strain', subtitle: 'Desk Lighting · 7 min read', href: '/guides/desk-lighting/', type: 'Guide' },
-  { title: 'Best Home Office Picks 2026', subtitle: "Editor's Choice", href: '/best/', type: 'Best Picks' },
-  { title: 'About Us', subtitle: 'Our methodology and editorial standards', href: '/about/', type: 'Page' },
-  { title: 'Contact', subtitle: 'Get in touch', href: '/contact/', type: 'Page' },
+  { title: 'How to Choose a Standing Desk in 2026', subtitle: 'Standing Desks · 8 min read', href: url('/guides/standing-desks/'), type: 'Guide' },
+  { title: "Mechanical Keyboards: A Buyer's Guide", subtitle: 'Keyboards · 12 min read', href: url('/guides/keyboards/'), type: 'Guide' },
+  { title: 'The Complete Monitor Arm Guide', subtitle: 'Monitor Arms · 6 min read', href: url('/guides/monitor-arms/'), type: 'Guide' },
+  { title: 'Desk Lighting: What Actually Reduces Eye Strain', subtitle: 'Desk Lighting · 7 min read', href: url('/guides/desk-lighting/'), type: 'Guide' },
+  { title: 'Best Home Office Picks 2026', subtitle: "Editor's Choice", href: url('/best/'), type: 'Best Picks' },
+  { title: 'About Us', subtitle: 'Our methodology and editorial standards', href: url('/about/'), type: 'Page' },
+  { title: 'Contact', subtitle: 'Get in touch', href: url('/contact/'), type: 'Page' },
 ];
 ---
 
@@ -48,10 +49,10 @@ const searchItems = [
       <div id="search-quicklinks" class="text-on-primary/50">
         <p class="label-text mb-4">Quick links</p>
         <div class="flex flex-wrap gap-3">
-          <a href="/best/" class="label-text bg-on-primary/10 px-4 py-2 hover:bg-on-primary/20 transition-colors no-underline text-on-primary/70">Best Picks</a>
-          <a href="/reviews/" class="label-text bg-on-primary/10 px-4 py-2 hover:bg-on-primary/20 transition-colors no-underline text-on-primary/70">Reviews</a>
-          <a href="/guides/" class="label-text bg-on-primary/10 px-4 py-2 hover:bg-on-primary/20 transition-colors no-underline text-on-primary/70">Buying Guides</a>
-          <a href="/about/" class="label-text bg-on-primary/10 px-4 py-2 hover:bg-on-primary/20 transition-colors no-underline text-on-primary/70">About Us</a>
+          <a href={url('/best/')} class="label-text bg-on-primary/10 px-4 py-2 hover:bg-on-primary/20 transition-colors no-underline text-on-primary/70">Best Picks</a>
+          <a href={url('/reviews/')} class="label-text bg-on-primary/10 px-4 py-2 hover:bg-on-primary/20 transition-colors no-underline text-on-primary/70">Reviews</a>
+          <a href={url('/guides/')} class="label-text bg-on-primary/10 px-4 py-2 hover:bg-on-primary/20 transition-colors no-underline text-on-primary/70">Buying Guides</a>
+          <a href={url('/about/')} class="label-text bg-on-primary/10 px-4 py-2 hover:bg-on-primary/20 transition-colors no-underline text-on-primary/70">About Us</a>
         </div>
       </div>
 

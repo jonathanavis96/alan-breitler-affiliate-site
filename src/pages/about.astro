@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import siteData from '../../data/site.json';
+import { url } from '../lib/base';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -106,7 +107,7 @@ const schema = {
       <p class="text-on-surface-variant font-body leading-relaxed mb-4">
         {siteData.name} is supported through affiliate partnerships. When you click a link and make a purchase, we may earn a commission at no extra cost to you. This helps us keep the site running and continue producing free, helpful content.
       </p>
-      <a href="/disclosure/" class="btn-outline no-underline">
+      <a href={url('/disclosure/')} class="btn-outline no-underline">
         Read Full Disclosure
       </a>
     </div>
@@ -118,7 +119,7 @@ const schema = {
       <p class="text-on-surface-variant font-body leading-relaxed mb-6">
         Have a question, suggestion, or feedback? We'd love to hear from you.
       </p>
-      <a href="/contact/" class="btn-primary no-underline">
+      <a href={url('/contact/')} class="btn-primary no-underline">
         Contact Us
         <span class="material-symbols-outlined text-sm ml-3">arrow_forward</span>
       </a>

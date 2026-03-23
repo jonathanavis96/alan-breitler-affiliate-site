@@ -116,6 +116,8 @@ Fully tested on mobile, tablet, and desktop. The mobile version includes a botto
 
 ---
 
+<div style="page-break-before: always;"></div>
+
 ## 4. Core Pages
 
 Essential pages that every affiliate website needs from day one.

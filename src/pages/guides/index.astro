@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import siteData from '../../../data/site.json';
 import guidesJson from '../../../data/guides.json';
+import { url } from '../../lib/base';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -15,7 +16,7 @@ const guides = guidesJson.guides.map((g) => ({
   description: g.description,
   category: g.category,
   readTime: g.readTime,
-  href: `/guides/${g.slug}/`,
+  href: url(`/guides/${g.slug}/`),
 }));
 ---
 
@@ -71,6 +72,6 @@ const guides = guidesJson.guides.map((g) => ({
     <p class="text-on-surface-variant font-body leading-relaxed max-w-lg mx-auto mb-6">
       We're always expanding our guide library. If there's a product category you'd like us to cover, let us know.
     </p>
-    <a href="/contact/" class="btn-outline no-underline">Suggest a Guide</a>
+    <a href={url('/contact/')} class="btn-outline no-underline">Suggest a Guide</a>
   </section>
 </BaseLayout>

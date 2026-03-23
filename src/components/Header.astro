@@ -1,5 +1,6 @@
 ---
 import siteData from '../../data/site.json';
+import { url } from '../lib/base';
 
 const currentPath = Astro.url.pathname;
 ---
@@ -16,7 +17,7 @@ const currentPath = Astro.url.pathname;
       >
         <span class="material-symbols-outlined">menu</span>
       </button>
-      <a href="/" class="text-2xl font-headline font-black uppercase italic tracking-tight text-primary no-underline hover:opacity-70 transition-opacity">
+      <a href={url('/')} class="text-2xl font-headline font-black uppercase italic tracking-tight text-primary no-underline hover:opacity-70 transition-opacity">
         {siteData.name}
       </a>
     </div>
@@ -25,7 +26,7 @@ const currentPath = Astro.url.pathname;
     <nav class="hidden md:flex gap-8" aria-label="Main navigation">
       {siteData.navigation.map((item) => (
         <a
-          href={item.href}
+          href={url(item.href)}
           class:list={[
             'label-text no-underline transition-opacity',
             currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href))
@@ -51,7 +52,7 @@ const currentPath = Astro.url.pathname;
     <nav class="container-wide py-4 flex flex-col gap-4">
       {siteData.navigation.map((item) => (
         <a
-          href={item.href}
+          href={url(item.href)}
           class:list={[
             'label-text no-underline py-2',
             currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href))

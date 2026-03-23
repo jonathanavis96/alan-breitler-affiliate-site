@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import guidesJson from '../../../data/guides.json';
 import type { GetStaticPaths } from 'astro';
+import { url } from '../../lib/base';
 
 export const getStaticPaths: GetStaticPaths = () => {
   return guidesJson.guides.map((guide) => ({
@@ -89,7 +90,7 @@ const schema = {
       <div class="bg-primary text-on-primary p-10 text-center grain-overlay">
         <h3 class="font-headline italic text-2xl mb-4 text-on-primary">Ready to Buy?</h3>
         <p class="text-primary-fixed-dim font-body mb-6 max-w-lg mx-auto">See our curated picks based on the criteria covered in this guide.</p>
-        <a href="/best/" class="inline-flex items-center gap-3 bg-secondary text-on-secondary px-10 py-5 font-label uppercase text-xs tracking-widest font-bold hover:bg-secondary-container transition-colors duration-300 no-underline">
+        <a href={url('/best/')} class="inline-flex items-center gap-3 bg-secondary text-on-secondary px-10 py-5 font-label uppercase text-xs tracking-widest font-bold hover:bg-secondary-container transition-colors duration-300 no-underline">
           View Our Best Picks
           <span class="material-symbols-outlined text-sm">arrow_forward</span>
         </a>

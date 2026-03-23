@@ -1,5 +1,6 @@
 ---
 import siteData from '../../data/site.json';
+import { url } from '../lib/base';
 
 const currentYear = new Date().getFullYear();
 ---
@@ -15,7 +16,7 @@ const currentYear = new Date().getFullYear();
     <nav class="flex flex-wrap justify-center gap-8" aria-label="Footer navigation">
       {siteData.footer.links.map((link) => (
         <a
-          href={link.href}
+          href={url(link.href)}
           class="font-label text-xs tracking-tight uppercase opacity-60 hover:opacity-100 no-underline text-on-surface transition-opacity"
         >
           {link.label}
@@ -35,19 +36,19 @@ const currentYear = new Date().getFullYear();
 
 <!-- Mobile Bottom Nav -->
 <nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-2 bg-background/80 backdrop-blur-xl shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50" aria-label="Mobile navigation">
-  <a href="/" class="flex flex-col items-center justify-center text-secondary pt-2 active:scale-90 transition-transform no-underline">
+  <a href={url('/')} class="flex flex-col items-center justify-center text-secondary pt-2 active:scale-90 transition-transform no-underline">
     <span class="material-symbols-outlined">home</span>
     <span class="font-label text-[10px] uppercase tracking-widest font-bold">Home</span>
   </a>
-  <a href="/best/" class="flex flex-col items-center justify-center text-on-surface-variant pt-2 active:scale-90 transition-transform hover:text-primary no-underline">
+  <a href={url('/best/')} class="flex flex-col items-center justify-center text-on-surface-variant pt-2 active:scale-90 transition-transform hover:text-primary no-underline">
     <span class="material-symbols-outlined">explore</span>
     <span class="font-label text-[10px] uppercase tracking-widest font-bold">Discover</span>
   </a>
-  <a href="/reviews/" class="flex flex-col items-center justify-center text-on-surface-variant pt-2 active:scale-90 transition-transform hover:text-primary no-underline">
+  <a href={url('/reviews/')} class="flex flex-col items-center justify-center text-on-surface-variant pt-2 active:scale-90 transition-transform hover:text-primary no-underline">
     <span class="material-symbols-outlined">search</span>
     <span class="font-label text-[10px] uppercase tracking-widest font-bold">Search</span>
   </a>
-  <a href="/guides/" class="flex flex-col items-center justify-center text-on-surface-variant pt-2 active:scale-90 transition-transform hover:text-primary no-underline">
+  <a href={url('/guides/')} class="flex flex-col items-center justify-center text-on-surface-variant pt-2 active:scale-90 transition-transform hover:text-primary no-underline">
     <span class="material-symbols-outlined">bookmark</span>
     <span class="font-label text-[10px] uppercase tracking-widest font-bold">Saved</span>
   </a>

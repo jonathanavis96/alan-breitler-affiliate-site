@@ -1,4 +1,6 @@
 ---
+import { url } from '../lib/base';
+
 interface Props {
   eyebrow?: string;
   title: string;
@@ -20,10 +22,10 @@ const {
   highlightWords = ['Best'],
   subtitle,
   ctaText = 'Discover Our Best Picks',
-  ctaHref = '/best/',
+  ctaHref = url('/best/'),
   secondaryCtaText,
   secondaryCtaHref,
-  heroImage = '/images/hero-placeholder.svg',
+  heroImage = url('/images/hero-placeholder.svg'),
   heroImageAlt = 'Featured editorial image',
   overlayLabel,
   overlayTitle,

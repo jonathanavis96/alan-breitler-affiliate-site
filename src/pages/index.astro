@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import siteData from '../../data/site.json';
+import { url } from '../lib/base';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -20,9 +21,9 @@ const schema = {
     highlightWords={["the Best", "Perfect", "Quality", "Greater"]}
     subtitle="We dismantle market hype with rigorous testing and obsessive manual reviews. Discover the definitive list of products that deliver on their promises."
     ctaText="Discover Our 2026 Best Picks"
-    ctaHref="/best/"
+    ctaHref={url('/best/')}
     secondaryCtaText="View Editorial Standards"
-    secondaryCtaHref="/about/"
+    secondaryCtaHref={url('/about/')}
     heroImage="https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=800&q=80&auto=format"
     heroImageAlt="Overhead view of a curated home office desk setup with keyboard, monitor, and desk accessories"
     overlayLabel="Currently Testing"
@@ -42,7 +43,7 @@ const schema = {
 
     <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-auto md:h-[600px]">
       <!-- Big Feature: Best Picks -->
-      <a href="/best/" class="md:col-span-2 md:row-span-2 bg-surface-container-low p-10 flex flex-col justify-between relative overflow-hidden group no-underline text-on-surface scroll-reveal">
+      <a href={url('/best/')} class="md:col-span-2 md:row-span-2 bg-surface-container-low p-10 flex flex-col justify-between relative overflow-hidden group no-underline text-on-surface scroll-reveal">
         <div class="z-20">
           <span class="badge-editorial mb-6">Editor's Choice</span>
           <h3 class="font-headline italic text-4xl leading-tight">Best Picks 2026</h3>
@@ -63,7 +64,7 @@ const schema = {
       </a>
 
       <!-- Medium Feature: In-Depth Reviews -->
-      <a href="/reviews/" class="md:col-span-2 bg-primary text-on-primary p-8 flex flex-col justify-between grain-overlay no-underline scroll-reveal scroll-delay-100">
+      <a href={url('/reviews/')} class="md:col-span-2 bg-primary text-on-primary p-8 flex flex-col justify-between grain-overlay no-underline scroll-reveal scroll-delay-100">
         <div>
           <h3 class="font-headline italic text-3xl text-on-primary">In-Depth Reviews</h3>
           <p class="text-primary-fixed-dim text-sm mt-2 font-body">Comprehensive technical analysis for every product we cover.</p>
@@ -75,7 +76,7 @@ const schema = {
       </a>
 
       <!-- Small Feature: Buying Guides -->
-      <a href="/guides/" class="md:col-span-1 bg-secondary text-on-secondary p-8 flex flex-col justify-between no-underline scroll-reveal scroll-delay-200">
+      <a href={url('/guides/')} class="md:col-span-1 bg-secondary text-on-secondary p-8 flex flex-col justify-between no-underline scroll-reveal scroll-delay-200">
         <span class="material-symbols-outlined text-3xl text-on-secondary">auto_stories</span>
         <div>
           <h3 class="font-label uppercase font-bold text-xs tracking-widest text-on-secondary not-italic">Buying Guides</h3>
@@ -84,7 +85,7 @@ const schema = {
       </a>
 
       <!-- Small Feature: How We Test -->
-      <a href="/about/" class="md:col-span-1 bg-surface-container-highest p-8 flex flex-col justify-between border-l-4 border-on-tertiary-container no-underline text-on-surface scroll-reveal scroll-delay-300">
+      <a href={url('/about/')} class="md:col-span-1 bg-surface-container-highest p-8 flex flex-col justify-between border-l-4 border-on-tertiary-container no-underline text-on-surface scroll-reveal scroll-delay-300">
         <span class="material-symbols-outlined text-3xl text-on-tertiary-container">biotech</span>
         <div>
           <h3 class="font-label uppercase font-bold text-xs tracking-widest text-on-surface not-italic">How We Test</h3>
@@ -147,19 +148,19 @@ const schema = {
         <h2 class="font-headline italic text-5xl mb-8 text-on-primary">Ready to end the search?</h2>
         <p class="text-primary-fixed-dim mb-12 text-lg font-body">Browse by category or dive into our latest reviews. We've done the heavy lifting so you don't have to.</p>
         <div class="flex flex-wrap gap-4">
-          <a href="/best/" class="inline-flex items-center gap-3 bg-secondary text-on-secondary px-10 py-5 font-label uppercase text-xs tracking-widest font-bold hover:bg-secondary-container transition-colors duration-300 no-underline">
+          <a href={url('/best/')} class="inline-flex items-center gap-3 bg-secondary text-on-secondary px-10 py-5 font-label uppercase text-xs tracking-widest font-bold hover:bg-secondary-container transition-colors duration-300 no-underline">
             Browse Best Picks
             <span class="material-symbols-outlined text-sm">arrow_forward</span>
           </a>
-          <a href="/reviews/" class="inline-flex items-center gap-3 bg-on-primary/10 text-on-primary px-10 py-5 font-label uppercase text-xs tracking-widest font-bold hover:bg-on-primary/20 transition-colors no-underline">
+          <a href={url('/reviews/')} class="inline-flex items-center gap-3 bg-on-primary/10 text-on-primary px-10 py-5 font-label uppercase text-xs tracking-widest font-bold hover:bg-on-primary/20 transition-colors no-underline">
             Latest Reviews
           </a>
         </div>
         <div class="mt-12 flex flex-wrap gap-4">
           <span class="label-text opacity-40">Trending:</span>
-          <a class="label-text hover:text-secondary underline decoration-secondary underline-offset-4 text-primary-fixed-dim" href="/best/">Mechanical Keyboards</a>
-          <a class="label-text hover:text-secondary underline decoration-secondary underline-offset-4 text-primary-fixed-dim" href="/best/">Espresso Machines</a>
-          <a class="label-text hover:text-secondary underline decoration-secondary underline-offset-4 text-primary-fixed-dim" href="/best/">Studio Monitors</a>
+          <a class="label-text hover:text-secondary underline decoration-secondary underline-offset-4 text-primary-fixed-dim" href={url('/best/')}>Mechanical Keyboards</a>
+          <a class="label-text hover:text-secondary underline decoration-secondary underline-offset-4 text-primary-fixed-dim" href={url('/best/')}>Espresso Machines</a>
+          <a class="label-text hover:text-secondary underline decoration-secondary underline-offset-4 text-primary-fixed-dim" href={url('/best/')}>Studio Monitors</a>
         </div>
       </div>
       <!-- Abstract gradient BG -->

@@ -4,6 +4,7 @@ import ProductCard from '../../components/ProductCard.astro';
 import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
 import siteData from '../../../data/site.json';
 import productData from '../../../data/products.json';
+import { url } from '../../lib/base';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -63,6 +64,6 @@ const products = productData.products;
     <p class="text-on-surface-variant font-body leading-relaxed max-w-lg mx-auto mb-6">
       Every product on this list went through our multi-stage evaluation process. We research specifications, compare against competitors, and where possible verify claims through hands-on testing.
     </p>
-    <a href="/about/" class="btn-outline no-underline">Read Our Methodology</a>
+    <a href={url('/about/')} class="btn-outline no-underline">Read Our Methodology</a>
   </section>
 </BaseLayout>
