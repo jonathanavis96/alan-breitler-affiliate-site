@@ -5,7 +5,7 @@ import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
   site: 'https://jonathanavis96.github.io',
-  base: '/upwork-1/',
+  base: '/alan-breitler-affiliate-site/',
   integrations: [
     mdx(),
     sitemap(),
