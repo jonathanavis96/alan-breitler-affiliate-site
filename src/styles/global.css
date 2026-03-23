@@ -148,3 +148,74 @@
     font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
   }
 }
+
+/* ======================================
+   Premium Animations
+   ====================================== */
+
+/* --- Page-load fade-in --- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s var(--ease-smooth, cubic-bezier(0.2, 0, 0, 1)) both;
+}
+
+.animation-delay-100 { animation-delay: 0.1s; }
+.animation-delay-200 { animation-delay: 0.2s; }
+.animation-delay-300 { animation-delay: 0.3s; }
+.animation-delay-400 { animation-delay: 0.4s; }
+.animation-delay-500 { animation-delay: 0.5s; }
+
+/* --- Slide up (for overlays) --- */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s var(--ease-smooth) both;
+}
+
+/* --- Slow ambient pulse (decorative blurs) --- */
+@keyframes pulseSlow {
+  0%, 100% { opacity: 0.1; transform: scale(1); }
+  50% { opacity: 0.2; transform: scale(1.1); }
+}
+
+.animate-pulse-slow {
+  animation: pulseSlow 6s ease-in-out infinite;
+}
+
+/* --- Scroll-triggered reveal --- */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease-smooth), transform 0.7s var(--ease-smooth);
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered delays for scroll-reveal */
+.scroll-delay-100 { transition-delay: 0.1s; }
+.scroll-delay-200 { transition-delay: 0.2s; }
+.scroll-delay-300 { transition-delay: 0.3s; }
+.scroll-delay-400 { transition-delay: 0.4s; }
+

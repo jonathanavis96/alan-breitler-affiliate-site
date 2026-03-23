@@ -17,7 +17,7 @@ const schema = {
   <Hero
     eyebrow="2026 Editorial Outlook"
     title="The Search for the Best Ends Here."
-    highlightWord="Best"
+    highlightWords={["Best", "Right Choice", "Perfect Fit", "Top Pick"]}
     subtitle="We dismantle market hype with rigorous testing and obsessive manual reviews. Discover the definitive list of products that deliver on their promises."
     ctaText="Discover Our 2026 Best Picks"
     ctaHref="/best/"
@@ -42,7 +42,7 @@ const schema = {
 
     <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-auto md:h-[600px]">
       <!-- Big Feature: Best Picks -->
-      <a href="/best/" class="md:col-span-2 md:row-span-2 bg-surface-container-low p-10 flex flex-col justify-between relative overflow-hidden group no-underline text-on-surface">
+      <a href="/best/" class="md:col-span-2 md:row-span-2 bg-surface-container-low p-10 flex flex-col justify-between relative overflow-hidden group no-underline text-on-surface scroll-reveal">
         <div class="z-20">
           <span class="badge-editorial mb-6">Editor's Choice</span>
           <h3 class="font-headline italic text-4xl leading-tight">Best Picks 2026</h3>
@@ -50,12 +50,20 @@ const schema = {
         </div>
         <div class="flex justify-between items-end z-20">
           <span class="text-secondary font-label uppercase text-xs tracking-widest font-bold border-b-2 border-secondary pb-1 group-hover:pr-4 transition-all">Explore the list</span>
-          <span class="material-symbols-outlined text-6xl opacity-10">stars</span>
+        </div>
+        <!-- Background image -->
+        <div class="absolute right-[-5%] bottom-[-5%] w-2/3 h-2/3 opacity-20 group-hover:opacity-30 group-hover:scale-105 transition-all duration-700">
+          <img
+            class="w-full h-full object-cover"
+            src="https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=600&q=80&auto=format"
+            alt=""
+            loading="lazy"
+          />
         </div>
       </a>
 
       <!-- Medium Feature: In-Depth Reviews -->
-      <a href="/reviews/" class="md:col-span-2 bg-primary text-on-primary p-8 flex flex-col justify-between grain-overlay no-underline">
+      <a href="/reviews/" class="md:col-span-2 bg-primary text-on-primary p-8 flex flex-col justify-between grain-overlay no-underline scroll-reveal scroll-delay-100">
         <div>
           <h3 class="font-headline italic text-3xl text-on-primary">In-Depth Reviews</h3>
           <p class="text-primary-fixed-dim text-sm mt-2 font-body">Comprehensive technical analysis for every product we cover.</p>
@@ -67,7 +75,7 @@ const schema = {
       </a>
 
       <!-- Small Feature: Buying Guides -->
-      <a href="/guides/" class="md:col-span-1 bg-secondary text-on-secondary p-8 flex flex-col justify-between no-underline">
+      <a href="/guides/" class="md:col-span-1 bg-secondary text-on-secondary p-8 flex flex-col justify-between no-underline scroll-reveal scroll-delay-200">
         <span class="material-symbols-outlined text-3xl text-on-secondary">auto_stories</span>
         <div>
           <h3 class="font-label uppercase font-bold text-xs tracking-widest text-on-secondary not-italic">Buying Guides</h3>
@@ -76,7 +84,7 @@ const schema = {
       </a>
 
       <!-- Small Feature: How We Test -->
-      <a href="/about/" class="md:col-span-1 bg-surface-container-highest p-8 flex flex-col justify-between border-l-4 border-on-tertiary-container no-underline text-on-surface">
+      <a href="/about/" class="md:col-span-1 bg-surface-container-highest p-8 flex flex-col justify-between border-l-4 border-on-tertiary-container no-underline text-on-surface scroll-reveal scroll-delay-300">
         <span class="material-symbols-outlined text-3xl text-on-tertiary-container">biotech</span>
         <div>
           <h3 class="font-label uppercase font-bold text-xs tracking-widest text-on-surface not-italic">How We Test</h3>
@@ -89,7 +97,7 @@ const schema = {
   <!-- Trust Section: How We Test -->
   <section class="mt-40 bg-surface-container-low grain-overlay relative">
     <div class="container-wide py-12 md:py-24">
-      <div class="max-w-4xl mx-auto text-center mb-20">
+      <div class="max-w-4xl mx-auto text-center mb-20 scroll-reveal">
         <span class="label-text text-secondary font-bold mb-4 block">Our Methodology</span>
         <h2 class="font-headline italic text-5xl md:text-6xl mb-6">Built on Radical Transparency.</h2>
         <p class="text-on-surface-variant text-lg leading-relaxed font-body">Most sites read the box. We break the product. Every recommendation is backed by practical stress-testing and empirical measurement.</p>
@@ -98,21 +106,21 @@ const schema = {
       <div class="grid grid-cols-1 md:grid-cols-3 gap-16 relative z-10">
         <div class="flex flex-col items-center text-center">
           <div class="w-16 h-16 bg-surface flex items-center justify-center mb-6 shadow-sm">
-            <span class="material-symbols-outlined text-secondary">science</span>
+            <i data-lucide="flask-conical" class="w-7 h-7 text-secondary"></i>
           </div>
           <h4 class="font-headline italic text-2xl mb-3">Rigorous Benchmarking</h4>
           <p class="text-sm text-on-surface-variant leading-relaxed font-body">We use precision instruments and standardized tests to measure real performance, not marketing claims.</p>
         </div>
         <div class="flex flex-col items-center text-center">
           <div class="w-16 h-16 bg-surface flex items-center justify-center mb-6 shadow-sm">
-            <span class="material-symbols-outlined text-secondary">psychology_alt</span>
+            <i data-lucide="users" class="w-7 h-7 text-secondary"></i>
           </div>
           <h4 class="font-headline italic text-2xl mb-3">Expert Blind Tests</h4>
           <p class="text-sm text-on-surface-variant leading-relaxed font-body">Multi-user blind panels eliminate brand bias to find what actually performs in everyday use.</p>
         </div>
         <div class="flex flex-col items-center text-center">
           <div class="w-16 h-16 bg-surface flex items-center justify-center mb-6 shadow-sm">
-            <span class="material-symbols-outlined text-secondary">history_edu</span>
+            <i data-lucide="file-text" class="w-7 h-7 text-secondary"></i>
           </div>
           <h4 class="font-headline italic text-2xl mb-3">The Unfiltered Report</h4>
           <p class="text-sm text-on-surface-variant leading-relaxed font-body">We publish the full picture — pros, cons, and failures. No manufacturer editing allowed.</p>

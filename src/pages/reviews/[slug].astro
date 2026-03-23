@@ -1,0 +1,189 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
+import productData from '../../../data/products.json';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths: GetStaticPaths = () => {
+  return productData.products.map((product) => ({
+    params: { slug: product.slug },
+    props: { product },
+  }));
+};
+
+const { product } = Astro.props;
+const fullStars = Math.floor(product.rating);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Review',
+  name: `${product.name} Review`,
+  itemReviewed: {
+    '@type': 'Product',
+    name: product.name,
+    brand: { '@type': 'Brand', name: product.brand },
+  },
+  reviewRating: {
+    '@type': 'Rating',
+    ratingValue: product.rating,
+    bestRating: 5,
+  },
+};
+---
+
+<BaseLayout
+  title={`${product.name} Review`}
+  description={product.verdict}
+  schema={schema}
+>
+  <!-- Review Header -->
+  <section class="container-wide py-20 md:py-32">
+    <div class="flex flex-col md:flex-row gap-12 md:gap-20">
+      <!-- Product Image -->
+      <div class="md:w-2/5">
+        <div class="aspect-square bg-surface-container-high overflow-hidden">
+          <img
+            src={product.image}
+            alt={product.name}
+            class="w-full h-full object-cover"
+            loading="eager"
+          />
+        </div>
+      </div>
+
+      <!-- Product Info -->
+      <div class="md:w-3/5">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="label-text text-secondary font-bold">{product.brand}</span>
+          <span class="label-text text-on-surface-variant/40">·</span>
+          <span class="label-text text-on-surface-variant/60">{product.category.replace('-', ' ')}</span>
+        </div>
+
+        <h1 class="font-headline italic text-4xl md:text-5xl leading-[0.95] tracking-tighter mb-6">{product.name} Review</h1>
+
+        {product.badge && (
+          <span class="badge-editorial mb-6">{product.badge}</span>
+        )}
+
+        <!-- Rating -->
+        <div class="flex items-center gap-3 mb-6">
+          <div class="flex gap-0.5">
+            {Array.from({ length: 5 }, (_, i) => (
+              <span class={`text-lg ${i < fullStars ? 'text-on-tertiary-container' : 'text-surface-container-highest'}`}>★</span>
+            ))}
+          </div>
+          <span class="label-text text-on-surface-variant text-sm">{product.rating}/5</span>
+          <span class="label-text text-on-surface font-bold ml-auto text-sm">{product.price}</span>
+        </div>
+
+        <!-- Verdict -->
+        <p class="text-on-surface-variant text-lg font-body leading-relaxed mb-8 italic">{product.verdict}</p>
+
+        <!-- CTA -->
+        <a
+          href={`/go/${product.affiliateSlug}/`}
+          class="btn-primary no-underline inline-flex items-center gap-3"
+          target="_blank"
+          rel="nofollow sponsored noopener"
+        >
+          Check Price on Amazon
+          <span class="material-symbols-outlined text-sm">open_in_new</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Review Body (template mockup) -->
+  <section class="bg-surface-container-low py-16 md:py-24">
+    <div class="container-narrow">
+      <AffiliateDisclosure />
+
+      <!-- Pros & Cons -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+        <div class="bg-surface p-8">
+          <h3 class="font-label uppercase font-bold text-xs tracking-widest text-secondary mb-6 not-italic">What We Loved</h3>
+          <ul class="space-y-3">
+            {product.pros.map((pro: string) => (
+              <li class="flex items-start gap-3 font-body text-sm">
+                <span class="material-symbols-outlined text-secondary text-sm mt-0.5 flex-shrink-0">check_circle</span>
+                <span class="text-on-surface-variant">{pro}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="bg-surface p-8">
+          <h3 class="font-label uppercase font-bold text-xs tracking-widest text-on-tertiary-container mb-6 not-italic">What Could Improve</h3>
+          <ul class="space-y-3">
+            {product.cons.map((con: string) => (
+              <li class="flex items-start gap-3 font-body text-sm">
+                <span class="material-symbols-outlined text-on-tertiary-container text-sm mt-0.5 flex-shrink-0">cancel</span>
+                <span class="text-on-surface-variant">{con}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Specs Table -->
+      <div class="mb-16">
+        <h2 class="font-headline italic text-2xl mb-6">Key Specifications</h2>
+        <div class="bg-surface">
+          {Object.entries(product.specs).map(([key, value]) => (
+            <div class="flex justify-between items-center px-6 py-4 border-b border-outline-variant/15 last:border-b-0">
+              <span class="label-text text-on-surface-variant">{key.replace(/_/g, ' ')}</span>
+              <span class="font-body text-sm font-medium text-on-surface">{value}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Placeholder review content sections -->
+      <div class="space-y-12">
+        <div>
+          <h2 class="font-headline italic text-3xl mb-4">Design & Build Quality</h2>
+          <div class="space-y-4">
+            <div class="h-4 bg-surface-container-high w-full"></div>
+            <div class="h-4 bg-surface-container-high w-11/12"></div>
+            <div class="h-4 bg-surface-container-high w-10/12"></div>
+            <div class="h-4 bg-surface-container-high w-full"></div>
+            <div class="h-4 bg-surface-container-high w-9/12"></div>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="font-headline italic text-3xl mb-4">Performance</h2>
+          <div class="space-y-4">
+            <div class="h-4 bg-surface-container-high w-full"></div>
+            <div class="h-4 bg-surface-container-high w-10/12"></div>
+            <div class="h-4 bg-surface-container-high w-11/12"></div>
+            <div class="h-4 bg-surface-container-high w-8/12"></div>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="font-headline italic text-3xl mb-4">Value for Money</h2>
+          <div class="space-y-4">
+            <div class="h-4 bg-surface-container-high w-full"></div>
+            <div class="h-4 bg-surface-container-high w-9/12"></div>
+            <div class="h-4 bg-surface-container-high w-11/12"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Final CTA -->
+      <div class="mt-16 bg-primary text-on-primary p-10 text-center grain-overlay">
+        <h3 class="font-headline italic text-2xl mb-4 text-on-primary">Our Verdict: {product.rating}/5</h3>
+        <p class="text-primary-fixed-dim font-body mb-6 max-w-lg mx-auto">{product.verdict}</p>
+        <a
+          href={`/go/${product.affiliateSlug}/`}
+          class="inline-flex items-center gap-3 bg-secondary text-on-secondary px-10 py-5 font-label uppercase text-xs tracking-widest font-bold hover:bg-secondary-container transition-colors duration-300 no-underline"
+          target="_blank"
+          rel="nofollow sponsored noopener"
+        >
+          Check Price on Amazon
+          <span class="material-symbols-outlined text-sm">open_in_new</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

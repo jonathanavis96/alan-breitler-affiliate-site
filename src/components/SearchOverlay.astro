@@ -1,5 +1,22 @@
 ---
-// Search overlay - triggered by search button in Header
+import productData from '../../data/products.json';
+
+// Build search index at build time
+const searchItems = [
+  ...productData.products.map((p) => ({
+    title: p.name,
+    subtitle: `${p.brand} · ${p.category.replace(/-/g, ' ')}`,
+    href: `/reviews/${p.slug}/`,
+    type: 'Review',
+  })),
+  { title: 'How to Choose a Standing Desk in 2026', subtitle: 'Standing Desks · 8 min read', href: '/guides/standing-desks/', type: 'Guide' },
+  { title: "Mechanical Keyboards: A Buyer's Guide", subtitle: 'Keyboards · 12 min read', href: '/guides/keyboards/', type: 'Guide' },
+  { title: 'The Complete Monitor Arm Guide', subtitle: 'Monitor Arms · 6 min read', href: '/guides/monitor-arms/', type: 'Guide' },
+  { title: 'Desk Lighting: What Actually Reduces Eye Strain', subtitle: 'Desk Lighting · 7 min read', href: '/guides/desk-lighting/', type: 'Guide' },
+  { title: 'Best Home Office Picks 2026', subtitle: "Editor's Choice", href: '/best/', type: 'Best Picks' },
+  { title: 'About Us', subtitle: 'Our methodology and editorial standards', href: '/about/', type: 'Page' },
+  { title: 'Contact', subtitle: 'Get in touch', href: '/contact/', type: 'Page' },
+];
 ---
 
 <div id="search-overlay" class="fixed inset-0 z-[100] hidden" role="dialog" aria-label="Search">
@@ -7,7 +24,7 @@
   <div class="absolute inset-0 bg-primary/90 backdrop-blur-md" id="search-backdrop"></div>
 
   <!-- Search panel -->
-  <div class="relative z-10 flex flex-col items-center pt-[20vh] px-6">
+  <div class="relative z-10 flex flex-col items-center pt-[15vh] px-6">
     <div class="w-full max-w-2xl">
       <div class="flex items-center gap-4 mb-4">
         <span class="material-symbols-outlined text-on-primary/60">search</span>
@@ -24,8 +41,11 @@
       </div>
       <div class="h-[1px] bg-on-primary/20 mb-8"></div>
 
-      <!-- Quick links -->
-      <div class="text-on-primary/50">
+      <!-- Search results -->
+      <div id="search-results" class="space-y-2 mb-8"></div>
+
+      <!-- Quick links (shown when no query) -->
+      <div id="search-quicklinks" class="text-on-primary/50">
         <p class="label-text mb-4">Quick links</p>
         <div class="flex flex-wrap gap-3">
           <a href="/best/" class="label-text bg-on-primary/10 px-4 py-2 hover:bg-on-primary/20 transition-colors no-underline text-on-primary/70">Best Picks</a>
@@ -34,9 +54,20 @@
           <a href="/about/" class="label-text bg-on-primary/10 px-4 py-2 hover:bg-on-primary/20 transition-colors no-underline text-on-primary/70">About Us</a>
         </div>
       </div>
+
+      <!-- No results message -->
+      <div id="search-empty" class="hidden text-on-primary/40 text-center py-8">
+        <span class="material-symbols-outlined text-4xl mb-4 block opacity-30">search_off</span>
+        <p class="font-body">No results found. Try a different search term.</p>
+      </div>
     </div>
   </div>
 </div>
+
+<!-- Search index data embedded for client-side search -->
+<script define:vars={{ searchItems }}>
+  window.__SEARCH_INDEX__ = searchItems;
+</script>
 
 <script>
   const overlay = document.getElementById('search-overlay');
@@ -44,6 +75,11 @@
   const backdrop = document.getElementById('search-backdrop');
   const closeBtn = document.getElementById('search-close');
   const openBtn = document.getElementById('search-open');
+  const resultsEl = document.getElementById('search-results');
+  const quicklinksEl = document.getElementById('search-quicklinks');
+  const emptyEl = document.getElementById('search-empty');
+
+  const searchIndex = (window as any).__SEARCH_INDEX__ || [];
 
   function openSearch() {
     overlay?.classList.remove('hidden');
@@ -55,24 +91,86 @@
     overlay?.classList.add('hidden');
     document.body.style.overflow = '';
     if (input) input.value = '';
+    updateResults('');
+  }
+
+  function createResultLink(item: { title: string; subtitle: string; href: string; type: string }) {
+    const a = document.createElement('a');
+    a.href = item.href;
+    a.className = 'flex items-center gap-4 px-4 py-4 hover:bg-on-primary/10 transition-colors no-underline group';
+
+    const typeSpan = document.createElement('span');
+    typeSpan.className = 'label-text text-secondary/70 w-20 flex-shrink-0';
+    typeSpan.textContent = item.type;
+
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'flex-1 min-w-0';
+
+    const titleP = document.createElement('p');
+    titleP.className = 'text-on-primary font-body truncate';
+    titleP.textContent = item.title;
+
+    const subtitleP = document.createElement('p');
+    subtitleP.className = 'text-on-primary/40 text-xs font-label truncate';
+    subtitleP.textContent = item.subtitle;
+
+    contentDiv.appendChild(titleP);
+    contentDiv.appendChild(subtitleP);
+
+    const arrowSpan = document.createElement('span');
+    arrowSpan.className = 'material-symbols-outlined text-on-primary/30 group-hover:text-secondary transition-colors';
+    arrowSpan.textContent = 'arrow_forward';
+
+    a.appendChild(typeSpan);
+    a.appendChild(contentDiv);
+    a.appendChild(arrowSpan);
+
+    return a;
+  }
+
+  function updateResults(query: string) {
+    if (!resultsEl || !quicklinksEl || !emptyEl) return;
+
+    // Clear previous results
+    resultsEl.replaceChildren();
+
+    if (!query.trim()) {
+      quicklinksEl.classList.remove('hidden');
+      emptyEl.classList.add('hidden');
+      return;
+    }
+
+    const q = query.toLowerCase();
+    const matches = searchIndex.filter((item: any) =>
+      item.title.toLowerCase().includes(q) ||
+      item.subtitle.toLowerCase().includes(q)
+    );
+
+    quicklinksEl.classList.add('hidden');
+
+    if (matches.length === 0) {
+      emptyEl.classList.remove('hidden');
+      return;
+    }
+
+    emptyEl.classList.add('hidden');
+    matches.forEach((item: any) => {
+      resultsEl.appendChild(createResultLink(item));
+    });
   }
 
   openBtn?.addEventListener('click', openSearch);
   closeBtn?.addEventListener('click', closeSearch);
   backdrop?.addEventListener('click', closeSearch);
+  input?.addEventListener('input', (e) => updateResults((e.target as HTMLInputElement).value));
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && !overlay?.classList.contains('hidden')) {
       closeSearch();
     }
-    // Cmd/Ctrl+K to open search
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
       e.preventDefault();
-      if (overlay?.classList.contains('hidden')) {
-        openSearch();
-      } else {
-        closeSearch();
-      }
+      overlay?.classList.contains('hidden') ? openSearch() : closeSearch();
     }
   });
 </script>

@@ -33,12 +33,12 @@ const reviews = productData.products;
     <div class="container-wide">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {reviews.map((product) => (
-          <a href={`/reviews/#${product.slug}`} class="bg-surface p-8 group no-underline text-on-surface hover:bg-surface-container-high transition-colors duration-300">
-            <div class="aspect-[4/3] bg-surface-container-high mb-6 overflow-hidden">
+          <a href={`/reviews/${product.slug}/`} class="bg-surface p-8 group no-underline text-on-surface hover:bg-surface-container-high transition-colors duration-300">
+            <div class="aspect-square bg-white mb-6 flex items-center justify-center p-4">
               <img
                 src={product.image}
                 alt={product.name}
-                class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                class="max-w-full max-h-full object-contain group-hover:scale-105 transition-all duration-500"
                 loading="lazy"
               />
             </div>

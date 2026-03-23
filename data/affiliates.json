@@ -11,21 +11,21 @@
     {
       "slug": "keychron-q1-max",
       "name": "Keychron Q1 Max",
-      "destination": "https://www.amazon.com/dp/B0CG9N7TB2?tag=companyname-20",
+      "destination": "https://www.amazon.com/dp/B0CR1JCTKF?tag=companyname-20",
       "network": "amazon",
       "active": true
     },
     {
       "slug": "autonomous-smartdesk-pro",
       "name": "Autonomous SmartDesk Pro",
-      "destination": "https://www.amazon.com/dp/B08GY5MF3Y?tag=companyname-20",
+      "destination": "https://www.amazon.com/dp/B0GL85RG38?tag=companyname-20",
       "network": "amazon",
       "active": true
     },
     {
       "slug": "benq-screenbar-halo",
       "name": "BenQ ScreenBar Halo",
-      "destination": "https://www.amazon.com/dp/B0BN8Y2YG8?tag=companyname-20",
+      "destination": "https://www.amazon.com/dp/B08WT889V3?tag=companyname-20",
       "network": "amazon",
       "active": true
     },

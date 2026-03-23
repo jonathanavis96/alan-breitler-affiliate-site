@@ -12,6 +12,9 @@ dist/
 .env.production
 *.local
 
+# Playwright MCP logs
+.playwright-mcp/
+
 # Internal tooling
 brain/
 CLAUDE.md

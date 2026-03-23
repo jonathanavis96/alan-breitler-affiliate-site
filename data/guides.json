@@ -1,0 +1,36 @@
+{
+  "guides": [
+    {
+      "slug": "standing-desks",
+      "title": "How to Choose a Standing Desk in 2026",
+      "category": "Standing Desks",
+      "readTime": "8 min read",
+      "description": "Motor types, height ranges, desktop materials, and weight capacity — everything you need to know before spending $400–$1,500 on a sit-stand desk.",
+      "sections": ["Why a Standing Desk?", "Motor Types: Single vs Dual", "Height Range & Ergonomics", "Desktop Materials", "Weight Capacity", "Programmable Presets", "Budget Breakdown", "Our Top Recommendations"]
+    },
+    {
+      "slug": "keyboards",
+      "title": "Mechanical Keyboards: A Buyer's Guide",
+      "category": "Keyboards",
+      "readTime": "12 min read",
+      "description": "Switch types, layouts, connectivity, build materials, and programmability demystified. From budget boards to endgame customs.",
+      "sections": ["Why Mechanical?", "Switch Types Explained", "Keyboard Layouts (60% to Full)", "Connectivity Options", "Build Materials & Weight", "Hot-Swap vs Soldered", "Keycap Profiles", "Our Recommendations by Budget"]
+    },
+    {
+      "slug": "monitor-arms",
+      "title": "The Complete Monitor Arm Guide",
+      "category": "Monitor Arms",
+      "readTime": "6 min read",
+      "description": "VESA standards, clamp vs grommet mounts, weight limits, and ergonomic positioning. Set up a monitor arm that actually works.",
+      "sections": ["Why Use a Monitor Arm?", "VESA Standards", "Clamp vs Grommet Mount", "Weight Limits & Screen Size", "Ergonomic Positioning", "Cable Management", "Our Top Picks"]
+    },
+    {
+      "slug": "desk-lighting",
+      "title": "Desk Lighting: What Actually Reduces Eye Strain",
+      "category": "Desk Lighting",
+      "readTime": "7 min read",
+      "description": "Colour temperature, lux measurements, screen bar vs desk lamp, and ambient bias lighting. The science of comfortable screen time.",
+      "sections": ["The Science of Eye Strain", "Colour Temperature Explained", "Screen Bar vs Desk Lamp", "Lux & Brightness Levels", "Ambient Bias Lighting", "Smart Lighting Features", "Our Recommendations"]
+    }
+  ]
+}
