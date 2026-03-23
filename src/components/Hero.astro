@@ -45,10 +45,8 @@ const after = idx >= 0 ? title.slice(idx + firstWord.length) : '';
       </span>
     )}
 
-    <h1 class="font-headline italic font-extrabold text-5xl md:text-7xl lg:text-8xl leading-[0.9] tracking-tighter mb-8 animate-fade-in animation-delay-100">
-      The Search for the<br/>
-      <span class="text-secondary inline-block overflow-hidden" id="hero-rotating-word">{firstWord}</span><br class="hidden lg:inline" />
-      Ends Here.
+    <h1 class="font-headline italic font-extrabold text-5xl md:text-8xl leading-[0.9] tracking-tighter mb-8 animate-fade-in animation-delay-100">
+      The Search for the <span class="text-secondary border-r-[3px] border-secondary" id="hero-rotating-word">{firstWord}</span> Ends Here.
     </h1>
 
     {subtitle && (
@@ -98,7 +96,7 @@ const after = idx >= 0 ? title.slice(idx + firstWord.length) : '';
   </div>
 </section>
 
-<!-- Rotating word script -->
+<!-- Typewriter script -->
 <script define:vars={{ highlightWords }}>
   window.__HERO_WORDS__ = highlightWords;
 </script>
@@ -106,33 +104,49 @@ const after = idx >= 0 ? title.slice(idx + firstWord.length) : '';
 <script>
   const el = document.getElementById('hero-rotating-word');
   const words = (window as any).__HERO_WORDS__ || ['Best'];
+
   if (el && words.length > 1) {
+    const TYPE_SPEED = 80;
+    const DELETE_SPEED = 50;
+    const PAUSE_AFTER_TYPE = 2000;
+    const PAUSE_AFTER_DELETE = 300;
     let current = 0;
 
-    async function cycleWord() {
-      // Fade out + slide up
-      el!.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-      el!.style.opacity = '0';
-      el!.style.transform = 'translateY(-8px)';
-
-      await new Promise(r => setTimeout(r, 400));
-
-      current = (current + 1) % words.length;
-      el!.textContent = words[current];
-
-      // Reset below
-      el!.style.transition = 'none';
-      el!.style.transform = 'translateY(8px)';
-
-      // Force reflow
-      void el!.offsetHeight;
-
-      // Fade in + slide up to center
-      el!.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-      el!.style.opacity = '1';
-      el!.style.transform = 'translateY(0)';
+    function sleep(ms: number) {
+      return new Promise(r => setTimeout(r, ms));
     }
 
-    setInterval(cycleWord, 3000);
+    async function typeWord(word: string) {
+      for (let i = 0; i <= word.length; i++) {
+        el!.textContent = word.slice(0, i);
+        await sleep(TYPE_SPEED);
+      }
+    }
+
+    async function deleteWord(word: string) {
+      for (let i = word.length; i >= 0; i--) {
+        el!.textContent = word.slice(0, i);
+        await sleep(DELETE_SPEED);
+      }
+    }
+
+    async function loop() {
+      while (true) {
+        const word = words[current];
+        await typeWord(word);
+        await sleep(PAUSE_AFTER_TYPE);
+        await deleteWord(word);
+        await sleep(PAUSE_AFTER_DELETE);
+        current = (current + 1) % words.length;
+      }
+    }
+
+    // Start after initial word is visible for a moment
+    sleep(1500).then(async () => {
+      await deleteWord(words[0]);
+      await sleep(PAUSE_AFTER_DELETE);
+      current = 1;
+      loop();
+    });
   }
 </script>
