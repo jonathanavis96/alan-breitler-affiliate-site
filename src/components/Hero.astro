@@ -46,7 +46,7 @@ const after = idx >= 0 ? title.slice(idx + firstWord.length) : '';
     )}
 
     <h1 class="font-headline italic font-extrabold text-5xl md:text-8xl leading-[0.9] tracking-tighter mb-8 animate-fade-in animation-delay-100">
-      The Search for the <span class="text-secondary border-r-[3px] border-secondary" id="hero-rotating-word">{firstWord}</span> Ends Here.
+      The Search for <span class="text-secondary inline-block min-w-[7ch]" id="hero-rotating-wrapper"><span id="hero-rotating-word">{firstWord}</span><span id="hero-cursor" class="hidden"></span></span> Ends Here.
     </h1>
 
     {subtitle && (
@@ -103,9 +103,10 @@ const after = idx >= 0 ? title.slice(idx + firstWord.length) : '';
 
 <script>
   const el = document.getElementById('hero-rotating-word');
+  const cursor = document.getElementById('hero-cursor');
   const words = (window as any).__HERO_WORDS__ || ['Best'];
 
-  if (el && words.length > 1) {
+  if (el && cursor && words.length > 1) {
     const TYPE_SPEED = 80;
     const DELETE_SPEED = 50;
     const PAUSE_AFTER_TYPE = 2000;
@@ -117,13 +118,16 @@ const after = idx >= 0 ? title.slice(idx + firstWord.length) : '';
     }
 
     async function typeWord(word: string) {
+      cursor!.classList.add('visible');
       for (let i = 0; i <= word.length; i++) {
         el!.textContent = word.slice(0, i);
         await sleep(TYPE_SPEED);
       }
+      cursor!.classList.remove('visible');
     }
 
     async function deleteWord(word: string) {
+      cursor!.classList.add('visible');
       for (let i = word.length; i >= 0; i--) {
         el!.textContent = word.slice(0, i);
         await sleep(DELETE_SPEED);

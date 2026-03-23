@@ -193,12 +193,19 @@
 
 /* --- Typewriter cursor blink --- */
 @keyframes blink {
-  0%, 100% { border-color: currentColor; }
-  50% { border-color: transparent; }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
-#hero-rotating-word {
+#hero-cursor {
+  display: none;
+  border-right: 3px solid currentColor;
+  margin-left: 2px;
   animation: blink 0.8s step-end infinite;
+}
+
+#hero-cursor.visible {
+  display: inline;
 }
 
 /* --- Slow ambient pulse (decorative blurs) --- */
