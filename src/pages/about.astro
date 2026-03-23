@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Section from '../components/Section.astro';
 import siteData from '../../data/site.json';
 
 const schema = {
@@ -17,49 +16,112 @@ const schema = {
   description={`Learn about ${siteData.name} and our mission to provide honest, well-researched product recommendations.`}
   schema={schema}
 >
-  <Section narrow>
-    <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">About {siteData.name}</h1>
+  <!-- Hero -->
+  <section class="container-wide py-20 md:py-32">
+    <span class="label-text text-secondary font-bold mb-6 block">Our Story</span>
+    <h1 class="font-headline italic text-5xl md:text-6xl lg:text-7xl leading-[0.9] tracking-tighter max-w-3xl mb-8">
+      Built on Radical <span class="text-secondary">Transparency.</span>
+    </h1>
+    <p class="text-on-surface-variant text-lg md:text-xl max-w-xl leading-relaxed font-body">
+      We started {siteData.name} with a simple goal: help people make better purchasing decisions without the noise, hype, or hidden agendas.
+    </p>
+  </section>
 
-    <div class="prose prose-lg prose-gray max-w-none">
-      <p class="text-xl text-gray-600 leading-relaxed mb-8">
-        We started {siteData.name} with a simple goal: help people make better purchasing decisions without the noise, hype, or hidden agendas.
-      </p>
+  <!-- Mission -->
+  <section class="bg-surface-container-low py-16 md:py-24">
+    <div class="container-narrow">
+      <span class="label-text text-secondary font-bold mb-6 block">Our Mission</span>
+      <h2 class="font-headline italic text-3xl md:text-4xl mb-8">Honest Evaluation Over Commission.</h2>
+      <div class="space-y-6 text-on-surface-variant font-body text-base leading-relaxed">
+        <p>
+          Every product recommendation on this site is the result of careful research and honest evaluation. We believe you deserve straightforward, trustworthy information — not marketing fluff designed to push you toward the highest commission.
+        </p>
+      </div>
+    </div>
+  </section>
 
-      <h2>Our Mission</h2>
-      <p>
-        Every product recommendation on this site is the result of careful research and honest evaluation. We believe you deserve straightforward, trustworthy information — not marketing fluff designed to push you toward the highest commission.
-      </p>
+  <!-- How We Work -->
+  <section class="container-wide py-16 md:py-24">
+    <div class="mb-16">
+      <span class="label-text text-secondary font-bold mb-4 block">The Process</span>
+      <h2 class="font-headline italic text-3xl md:text-4xl">How We Work</h2>
+    </div>
 
-      <h2>How We Work</h2>
-      <p>Our review process follows a consistent methodology:</p>
-      <ol>
-        <li><strong>Research</strong> — We study specifications, manufacturer claims, and expert analysis.</li>
-        <li><strong>Compare</strong> — We evaluate products against their competitors on features, value, and reliability.</li>
-        <li><strong>Test</strong> — Where possible, we verify claims through hands-on use and real-world testing.</li>
-        <li><strong>Write</strong> — We share our honest findings, including both strengths and weaknesses.</li>
-      </ol>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="bg-surface-container-low p-8">
+        <span class="label-text text-on-tertiary-container font-bold mb-4 block">01</span>
+        <h3 class="font-headline italic text-xl mb-3 not-italic font-bold">Research</h3>
+        <p class="text-on-surface-variant text-sm font-body leading-relaxed">We study specifications, manufacturer claims, and expert analysis for every product we cover.</p>
+      </div>
+      <div class="bg-surface-container-low p-8">
+        <span class="label-text text-on-tertiary-container font-bold mb-4 block">02</span>
+        <h3 class="font-headline italic text-xl mb-3 not-italic font-bold">Compare</h3>
+        <p class="text-on-surface-variant text-sm font-body leading-relaxed">We evaluate products against their competitors on features, value, and reliability.</p>
+      </div>
+      <div class="bg-surface-container-low p-8">
+        <span class="label-text text-on-tertiary-container font-bold mb-4 block">03</span>
+        <h3 class="font-headline italic text-xl mb-3 not-italic font-bold">Test</h3>
+        <p class="text-on-surface-variant text-sm font-body leading-relaxed">Where possible, we verify claims through hands-on use and real-world testing.</p>
+      </div>
+      <div class="bg-surface-container-low p-8">
+        <span class="label-text text-on-tertiary-container font-bold mb-4 block">04</span>
+        <h3 class="font-headline italic text-xl mb-3 not-italic font-bold">Write</h3>
+        <p class="text-on-surface-variant text-sm font-body leading-relaxed">We share our honest findings, including both strengths and weaknesses.</p>
+      </div>
+    </div>
+  </section>
 
-      <h2>Our Standards</h2>
-      <ul>
-        <li>We include both pros <strong>and</strong> cons for every product we review.</li>
-        <li>We clearly disclose all affiliate relationships.</li>
-        <li>We never let affiliate commissions influence our rankings or ratings.</li>
-        <li>We update our content regularly to keep recommendations current.</li>
-      </ul>
+  <!-- Standards -->
+  <section class="bg-primary text-on-primary py-16 md:py-24 grain-overlay">
+    <div class="container-narrow relative z-20">
+      <span class="label-text text-secondary font-bold mb-6 block">Editorial Standards</span>
+      <h2 class="font-headline italic text-3xl md:text-4xl text-on-primary mb-10">What We Stand For</h2>
 
-      <h2>Affiliate Disclosure</h2>
-      <p>
+      <div class="space-y-6">
+        <div class="flex gap-6 items-start">
+          <span class="material-symbols-outlined text-secondary mt-1">verified</span>
+          <p class="text-primary-fixed-dim font-body">We include both pros <strong class="text-on-primary">and</strong> cons for every product we review.</p>
+        </div>
+        <div class="flex gap-6 items-start">
+          <span class="material-symbols-outlined text-secondary mt-1">visibility</span>
+          <p class="text-primary-fixed-dim font-body">We clearly disclose all affiliate relationships.</p>
+        </div>
+        <div class="flex gap-6 items-start">
+          <span class="material-symbols-outlined text-secondary mt-1">shield</span>
+          <p class="text-primary-fixed-dim font-body">We never let affiliate commissions influence our rankings or ratings.</p>
+        </div>
+        <div class="flex gap-6 items-start">
+          <span class="material-symbols-outlined text-secondary mt-1">update</span>
+          <p class="text-primary-fixed-dim font-body">We update our content regularly to keep recommendations current.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Affiliate note + CTA -->
+  <section class="container-narrow py-16 md:py-24">
+    <div class="mb-12">
+      <span class="label-text text-secondary font-bold mb-4 block">Transparency</span>
+      <h2 class="font-headline italic text-3xl mb-6">Affiliate Disclosure</h2>
+      <p class="text-on-surface-variant font-body leading-relaxed mb-4">
         {siteData.name} is supported through affiliate partnerships. When you click a link and make a purchase, we may earn a commission at no extra cost to you. This helps us keep the site running and continue producing free, helpful content.
       </p>
-      <p>
-        For full details, see our <a href="/disclosure/">affiliate disclosure page</a>.
-      </p>
-
-      <h2>Get in Touch</h2>
-      <p>
-        Have a question, suggestion, or feedback? We'd love to hear from you.
-        <a href="/contact/">Contact us here</a>.
-      </p>
+      <a href="/disclosure/" class="btn-outline no-underline">
+        Read Full Disclosure
+      </a>
     </div>
-  </Section>
+
+    <div class="h-[1px] bg-surface-container-highest mb-12"></div>
+
+    <div>
+      <h2 class="font-headline italic text-3xl mb-6">Get in Touch</h2>
+      <p class="text-on-surface-variant font-body leading-relaxed mb-6">
+        Have a question, suggestion, or feedback? We'd love to hear from you.
+      </p>
+      <a href="/contact/" class="btn-primary no-underline">
+        Contact Us
+        <span class="material-symbols-outlined text-sm ml-3">arrow_forward</span>
+      </a>
+    </div>
+  </section>
 </BaseLayout>

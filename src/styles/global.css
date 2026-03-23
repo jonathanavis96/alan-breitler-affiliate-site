@@ -4,10 +4,11 @@
 
 @layer base {
   :root {
-    --color-primary: #2563EB;
-    --color-primary-dark: #1D4ED8;
-    --color-secondary: #059669;
-    --color-accent: #F59E0B;
+    --color-primary: #000000;
+    --color-secondary: #4b41e1;
+    --color-tertiary: #e45405;
+    --color-surface: #f7f9fb;
+    --ease-smooth: cubic-bezier(0.2, 0, 0, 1);
   }
 
   html {
@@ -17,94 +18,133 @@
   }
 
   body {
-    @apply text-gray-800 bg-white font-sans leading-relaxed;
+    @apply text-on-surface bg-background font-body leading-relaxed;
+    min-height: max(884px, 100dvh);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading font-bold tracking-tight text-gray-900;
+    @apply font-headline italic font-bold tracking-tight text-on-surface;
   }
 
-  h1 { @apply text-3xl md:text-4xl lg:text-5xl; }
-  h2 { @apply text-2xl md:text-3xl; }
-  h3 { @apply text-xl md:text-2xl; }
+  h1 { @apply text-4xl md:text-5xl lg:text-6xl; }
+  h2 { @apply text-3xl md:text-4xl lg:text-5xl; }
+  h3 { @apply text-2xl md:text-3xl; }
 
   a {
-    @apply text-primary hover:text-primary-dark transition-colors;
+    @apply text-secondary transition-colors;
   }
 
   img {
     @apply max-w-full h-auto;
   }
+
+  ::selection {
+    @apply bg-secondary/30 text-primary;
+  }
 }
 
 @layer components {
+  /* Layout containers */
   .container-narrow {
     @apply max-w-3xl mx-auto px-4 sm:px-6;
   }
 
   .container-wide {
-    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-[1152px] mx-auto px-6;
   }
 
+  /* Buttons — sharp corners, editorial style */
   .btn-primary {
-    @apply inline-flex items-center justify-center px-6 py-3
-           bg-primary text-white font-semibold rounded-lg
-           hover:bg-primary-dark transition-colors
-           focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+    @apply inline-flex items-center justify-center px-10 py-5
+           bg-primary text-on-primary font-label uppercase text-xs tracking-widest font-bold
+           hover:bg-secondary transition-colors duration-300;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-6 py-3
-           bg-secondary text-white font-semibold rounded-lg
-           hover:bg-secondary-dark transition-colors
-           focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2;
+    @apply inline-flex items-center justify-center px-10 py-5
+           bg-surface-container-highest font-label uppercase text-xs tracking-widest font-bold
+           hover:bg-surface-dim transition-colors;
   }
 
   .btn-outline {
     @apply inline-flex items-center justify-center px-6 py-3
-           border-2 border-primary text-primary font-semibold rounded-lg
-           hover:bg-primary hover:text-white transition-colors
-           focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+           text-secondary font-label uppercase text-xs tracking-widest font-bold
+           border-b-2 border-secondary pb-1
+           hover:pr-4 transition-all;
   }
 
+  /* Glass panel — frosted overlay */
+  .glass-panel {
+    background: rgba(247, 249, 251, 0.8);
+    backdrop-filter: blur(20px);
+  }
+
+  /* Grain texture overlay */
+  .grain-overlay {
+    position: relative;
+  }
+
+  .grain-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  /* Anti-grid offset for asymmetric layouts */
+  .anti-grid-offset {
+    transform: translateY(15%);
+  }
+
+  /* Label text utility */
+  .label-text {
+    @apply font-label text-[10px] uppercase tracking-widest;
+  }
+
+  /* Cards — no borders, surface tone shifts */
   .card {
-    @apply bg-white rounded-xl border border-gray-200 p-6
-           shadow-sm hover:shadow-md transition-shadow;
+    @apply bg-surface-container-low p-8 shadow-none
+           transition-all duration-300;
   }
 
+  /* Badge variants */
   .badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full
-           text-xs font-medium;
+    @apply inline-flex items-center px-3 py-1
+           text-[9px] font-label uppercase tracking-widest;
   }
 
-  .badge-primary {
-    @apply badge bg-blue-100 text-blue-800;
+  .badge-editorial {
+    @apply badge bg-on-tertiary-container text-white;
   }
 
-  .badge-success {
-    @apply badge bg-green-100 text-green-800;
-  }
-
-  .badge-warning {
-    @apply badge bg-amber-100 text-amber-800;
+  .badge-outlook {
+    @apply badge bg-tertiary-container text-on-tertiary-container;
   }
 
   /* Affiliate disclosure banner */
   .affiliate-disclosure {
-    @apply text-sm text-gray-500 bg-gray-50 border border-gray-200
-           rounded-lg p-3 mb-6 italic;
+    @apply text-sm text-on-surface-variant bg-surface-container-low
+           p-3 mb-6 italic;
   }
 
   /* Product rating stars */
   .stars {
-    @apply inline-flex items-center gap-0.5 text-amber-400;
+    @apply inline-flex items-center gap-0.5 text-on-tertiary-container;
   }
 
   /* Article/review content styling */
   .prose-affiliate {
     @apply prose prose-lg prose-gray max-w-none
-           prose-headings:font-heading
-           prose-a:text-primary prose-a:no-underline hover:prose-a:underline
-           prose-img:rounded-lg;
+           prose-headings:font-headline prose-headings:italic
+           prose-a:text-secondary prose-a:no-underline hover:prose-a:underline
+           prose-img:shadow-lg;
+  }
+
+  /* Material Symbols */
+  .material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
   }
 }

@@ -17,6 +17,8 @@ brain/
 CLAUDE.md
 .claude/
 cortex-upwork.bash
+docs/DESIGN.md
+docs/stitch-*.html
 
 # OS files
 .DS_Store

@@ -1,0 +1,78 @@
+---
+// Search overlay - triggered by search button in Header
+---
+
+<div id="search-overlay" class="fixed inset-0 z-[100] hidden" role="dialog" aria-label="Search">
+  <!-- Backdrop -->
+  <div class="absolute inset-0 bg-primary/60 backdrop-blur-sm" id="search-backdrop"></div>
+
+  <!-- Search panel -->
+  <div class="relative z-10 flex flex-col items-center pt-[20vh] px-6">
+    <div class="w-full max-w-2xl">
+      <div class="flex items-center gap-4 mb-4">
+        <span class="material-symbols-outlined text-on-primary/60">search</span>
+        <input
+          type="search"
+          id="search-input"
+          placeholder="Search reviews, guides, best picks..."
+          class="w-full bg-transparent text-on-primary text-3xl md:text-4xl font-headline italic placeholder:text-on-primary/30 focus:outline-none border-none"
+          autocomplete="off"
+        />
+        <button id="search-close" class="text-on-primary/60 hover:text-on-primary transition-opacity" aria-label="Close search">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div class="h-[1px] bg-on-primary/20 mb-8"></div>
+
+      <!-- Quick links -->
+      <div class="text-on-primary/50">
+        <p class="label-text mb-4">Quick links</p>
+        <div class="flex flex-wrap gap-3">
+          <a href="/best/" class="label-text bg-on-primary/10 px-4 py-2 hover:bg-on-primary/20 transition-colors no-underline text-on-primary/70">Best Picks</a>
+          <a href="/reviews/" class="label-text bg-on-primary/10 px-4 py-2 hover:bg-on-primary/20 transition-colors no-underline text-on-primary/70">Reviews</a>
+          <a href="/guides/" class="label-text bg-on-primary/10 px-4 py-2 hover:bg-on-primary/20 transition-colors no-underline text-on-primary/70">Buying Guides</a>
+          <a href="/about/" class="label-text bg-on-primary/10 px-4 py-2 hover:bg-on-primary/20 transition-colors no-underline text-on-primary/70">About Us</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const overlay = document.getElementById('search-overlay');
+  const input = document.getElementById('search-input') as HTMLInputElement;
+  const backdrop = document.getElementById('search-backdrop');
+  const closeBtn = document.getElementById('search-close');
+  const openBtn = document.getElementById('search-open');
+
+  function openSearch() {
+    overlay?.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => input?.focus(), 100);
+  }
+
+  function closeSearch() {
+    overlay?.classList.add('hidden');
+    document.body.style.overflow = '';
+    if (input) input.value = '';
+  }
+
+  openBtn?.addEventListener('click', openSearch);
+  closeBtn?.addEventListener('click', closeSearch);
+  backdrop?.addEventListener('click', closeSearch);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !overlay?.classList.contains('hidden')) {
+      closeSearch();
+    }
+    // Cmd/Ctrl+K to open search
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      if (overlay?.classList.contains('hidden')) {
+        openSearch();
+      } else {
+        closeSearch();
+      }
+    }
+  });
+</script>

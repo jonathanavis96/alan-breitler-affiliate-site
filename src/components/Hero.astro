@@ -1,39 +1,110 @@
 ---
 interface Props {
+  eyebrow?: string;
   title: string;
+  highlightWord?: string;
   subtitle?: string;
   ctaText?: string;
   ctaHref?: string;
-  trustLine?: string;
+  secondaryCtaText?: string;
+  secondaryCtaHref?: string;
+  heroImage?: string;
+  heroImageAlt?: string;
+  overlayLabel?: string;
+  overlayTitle?: string;
 }
 
 const {
+  eyebrow,
   title,
+  highlightWord,
   subtitle,
-  ctaText = 'Explore Our Picks',
+  ctaText = 'Discover Our Best Picks',
   ctaHref = '/best/',
-  trustLine,
+  secondaryCtaText,
+  secondaryCtaHref,
+  heroImage = '/images/hero-placeholder.svg',
+  heroImageAlt = 'Featured editorial image',
+  overlayLabel,
+  overlayTitle,
 } = Astro.props;
+
+// Split title around highlight word if provided
+let titleParts: { before: string; highlight: string; after: string } | null = null;
+if (highlightWord) {
+  const idx = title.indexOf(highlightWord);
+  if (idx >= 0) {
+    titleParts = {
+      before: title.slice(0, idx),
+      highlight: highlightWord,
+      after: title.slice(idx + highlightWord.length),
+    };
+  }
+}
 ---
 
-<section class="relative bg-gradient-to-br from-gray-50 to-blue-50 py-16 md:py-24">
-  <div class="container-wide text-center">
-    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-6 max-w-4xl mx-auto leading-tight">
-      {title}
+<section class="relative min-h-[700px] flex flex-col md:flex-row items-center gap-12 py-20 overflow-visible grain-overlay container-wide">
+  <!-- Text Content -->
+  <div class="w-full md:w-3/5 z-20">
+    {eyebrow && (
+      <span class="badge-outlook mb-8 tracking-[0.2em]">
+        {eyebrow}
+      </span>
+    )}
+
+    <h1 class="font-headline italic font-extrabold text-5xl md:text-7xl lg:text-8xl leading-[0.9] tracking-tighter mb-8">
+      {titleParts ? (
+        <>
+          {titleParts.before}<span class="text-secondary">{titleParts.highlight}</span>{titleParts.after}
+        </>
+      ) : (
+        title
+      )}
     </h1>
+
     {subtitle && (
-      <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-8">
+      <p class="text-on-surface-variant text-lg md:text-xl max-w-lg mb-10 leading-relaxed font-body">
         {subtitle}
       </p>
     )}
-    <a href={ctaHref} class="btn-primary text-base no-underline">
-      {ctaText}
-      <svg class="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-      </svg>
-    </a>
-    {trustLine && (
-      <p class="mt-6 text-sm text-gray-500">{trustLine}</p>
-    )}
+
+    <div class="flex flex-wrap gap-4">
+      <a href={ctaHref} class="btn-primary grain-overlay no-underline">
+        {ctaText}
+        <span class="material-symbols-outlined text-sm ml-3">arrow_forward</span>
+      </a>
+      {secondaryCtaText && secondaryCtaHref && (
+        <a href={secondaryCtaHref} class="btn-secondary no-underline">
+          {secondaryCtaText}
+        </a>
+      )}
+    </div>
+  </div>
+
+  <!-- Hero Image -->
+  <div class="w-full md:w-2/5 relative flex justify-end">
+    <div class="relative w-full aspect-[4/5] bg-surface-container-high overflow-hidden shadow-2xl anti-grid-offset z-10">
+      <img
+        class="w-full h-full object-cover grayscale contrast-125"
+        src={heroImage}
+        alt={heroImageAlt}
+        loading="eager"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent"></div>
+
+      {(overlayLabel || overlayTitle) && (
+        <div class="absolute bottom-6 left-6 right-6 p-6 glass-panel border-l-2 border-secondary">
+          {overlayLabel && (
+            <p class="label-text mb-1 opacity-70">{overlayLabel}</p>
+          )}
+          {overlayTitle && (
+            <p class="font-headline italic text-xl">{overlayTitle}</p>
+          )}
+        </div>
+      )}
+    </div>
+
+    <!-- Asymmetric decorative blur -->
+    <div class="absolute top-[-10%] right-[-10%] w-64 h-64 bg-secondary/10 rounded-full blur-[100px] -z-10"></div>
   </div>
 </section>

@@ -4,66 +4,70 @@ import siteData from '../../data/site.json';
 const currentPath = Astro.url.pathname;
 ---
 
-<header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200">
-  <nav class="container-wide flex items-center justify-between h-16" aria-label="Main navigation">
-    <!-- Logo / Site Name -->
-    <a href="/" class="flex items-center gap-2 text-xl font-bold text-gray-900 hover:text-primary no-underline">
-      {siteData.name}
-    </a>
+<header class="fixed top-0 left-0 w-full z-50 bg-background/90 backdrop-blur-md">
+  <div class="container-wide flex justify-between items-center py-4">
+    <!-- Logo -->
+    <div class="flex items-center gap-4">
+      <button
+        type="button"
+        class="md:hidden text-primary active:scale-95 duration-200 hover:opacity-70 transition-opacity"
+        aria-label="Toggle menu"
+        id="mobile-menu-button"
+      >
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+      <a href="/" class="text-2xl font-headline font-black uppercase italic tracking-tight text-primary no-underline hover:opacity-70 transition-opacity">
+        {siteData.name}
+      </a>
+    </div>
 
     <!-- Desktop Navigation -->
-    <ul class="hidden md:flex items-center gap-8" role="list">
+    <nav class="hidden md:flex gap-8" aria-label="Main navigation">
       {siteData.navigation.map((item) => (
-        <li>
-          <a
-            href={item.href}
-            class:list={[
-              'text-sm font-medium transition-colors no-underline',
-              currentPath === item.href || currentPath.startsWith(item.href + '/')
-                ? 'text-primary'
-                : 'text-gray-600 hover:text-gray-900',
-            ]}
-          >
-            {item.label}
-          </a>
-        </li>
+        <a
+          href={item.href}
+          class:list={[
+            'label-text no-underline transition-opacity',
+            currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href))
+              ? 'text-secondary font-bold'
+              : 'text-on-surface-variant hover:opacity-70',
+          ]}
+        >
+          {item.label}
+        </a>
       ))}
-    </ul>
+    </nav>
 
-    <!-- Mobile Menu Button -->
-    <button
-      type="button"
-      class="md:hidden p-2 text-gray-600 hover:text-gray-900"
-      aria-label="Toggle menu"
-      id="mobile-menu-button"
-    >
-      <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-      </svg>
-    </button>
-  </nav>
+    <!-- Search -->
+    <div class="flex items-center gap-4">
+      <button id="search-open" class="text-primary active:scale-95 duration-200 hover:opacity-70 transition-opacity" aria-label="Search">
+        <span class="material-symbols-outlined">search</span>
+      </button>
+    </div>
+  </div>
 
   <!-- Mobile Navigation -->
-  <div class="hidden md:hidden border-t border-gray-200 bg-white" id="mobile-menu">
-    <ul class="py-2 px-4 space-y-1" role="list">
+  <div class="hidden md:hidden bg-background" id="mobile-menu">
+    <nav class="container-wide py-4 flex flex-col gap-4">
       {siteData.navigation.map((item) => (
-        <li>
-          <a
-            href={item.href}
-            class:list={[
-              'block py-2 px-3 rounded-lg text-sm font-medium no-underline',
-              currentPath === item.href || currentPath.startsWith(item.href + '/')
-                ? 'text-primary bg-blue-50'
-                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50',
-            ]}
-          >
-            {item.label}
-          </a>
-        </li>
+        <a
+          href={item.href}
+          class:list={[
+            'label-text no-underline py-2',
+            currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href))
+              ? 'text-secondary font-bold'
+              : 'text-on-surface-variant',
+          ]}
+        >
+          {item.label}
+        </a>
       ))}
-    </ul>
+    </nav>
   </div>
 </header>
+
+<!-- Spacer for fixed header -->
+<div class="h-16"></div>
 
 <script>
   const button = document.getElementById('mobile-menu-button');

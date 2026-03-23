@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Section from '../components/Section.astro';
 import siteData from '../../data/site.json';
 ---
 
@@ -8,51 +7,94 @@ import siteData from '../../data/site.json';
   title="Affiliate Disclosure"
   description={`${siteData.name} affiliate disclosure policy. Learn how we earn from affiliate partnerships and how it affects our recommendations.`}
 >
-  <Section narrow>
-    <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">Affiliate Disclosure</h1>
+  <!-- Header -->
+  <section class="container-narrow py-20 md:py-32">
+    <span class="label-text text-secondary font-bold mb-6 block">Legal</span>
+    <h1 class="font-headline italic text-4xl md:text-5xl leading-tight tracking-tighter mb-8">Affiliate Disclosure</h1>
+    <p class="text-on-surface-variant text-lg max-w-xl leading-relaxed font-body">
+      Transparency matters to us. Here's how {siteData.name} earns money and how that relates to our recommendations.
+    </p>
+  </section>
 
-    <div class="prose prose-lg prose-gray max-w-none">
-      <p class="text-xl text-gray-600 leading-relaxed mb-8">
-        Transparency matters to us. Here's how {siteData.name} earns money and how that relates to our recommendations.
-      </p>
+  <!-- Content -->
+  <section class="bg-surface-container-low py-16 md:py-24">
+    <div class="container-narrow space-y-12">
+      <div>
+        <h2 class="font-headline italic text-2xl mb-4">How We Earn</h2>
+        <div class="space-y-4 text-on-surface-variant font-body leading-relaxed">
+          <p>
+            {siteData.name} participates in various affiliate marketing programs. This means that when you click on certain links on our site and make a purchase, we may receive a small commission from the retailer or service provider.
+          </p>
+          <p>
+            <strong class="text-on-surface">This comes at absolutely no extra cost to you.</strong> The price you pay is the same whether you use our affiliate link or go directly to the retailer's website.
+          </p>
+        </div>
+      </div>
 
-      <h2>How We Earn</h2>
-      <p>
-        {siteData.name} participates in various affiliate marketing programs. This means that when you click on certain links on our site and make a purchase, we may receive a small commission from the retailer or service provider.
-      </p>
-      <p>
-        <strong>This comes at absolutely no extra cost to you.</strong> The price you pay is the same whether you use our affiliate link or go directly to the retailer's website.
-      </p>
+      <div class="h-[1px] bg-outline-variant/15"></div>
 
-      <h2>Our Editorial Independence</h2>
-      <p>
-        Affiliate commissions never influence our product ratings, rankings, or recommendations. Our editorial process is completely independent of our monetization:
-      </p>
-      <ul>
-        <li>We research and evaluate products based on their merits.</li>
-        <li>We include products in our recommendations because they're genuinely good — not because they pay higher commissions.</li>
-        <li>We always disclose both positives and negatives.</li>
-        <li>If a product doesn't meet our standards, it won't be recommended regardless of commission rates.</li>
-      </ul>
+      <div>
+        <h2 class="font-headline italic text-2xl mb-4">Our Editorial Independence</h2>
+        <p class="text-on-surface-variant font-body leading-relaxed mb-6">
+          Affiliate commissions never influence our product ratings, rankings, or recommendations. Our editorial process is completely independent of our monetization:
+        </p>
+        <div class="space-y-4">
+          <div class="flex gap-4 items-start">
+            <span class="material-symbols-outlined text-secondary text-lg mt-0.5">check_circle</span>
+            <p class="text-on-surface-variant font-body text-sm">We research and evaluate products based on their merits.</p>
+          </div>
+          <div class="flex gap-4 items-start">
+            <span class="material-symbols-outlined text-secondary text-lg mt-0.5">check_circle</span>
+            <p class="text-on-surface-variant font-body text-sm">We include products because they're genuinely good — not because they pay higher commissions.</p>
+          </div>
+          <div class="flex gap-4 items-start">
+            <span class="material-symbols-outlined text-secondary text-lg mt-0.5">check_circle</span>
+            <p class="text-on-surface-variant font-body text-sm">We always disclose both positives and negatives.</p>
+          </div>
+          <div class="flex gap-4 items-start">
+            <span class="material-symbols-outlined text-secondary text-lg mt-0.5">check_circle</span>
+            <p class="text-on-surface-variant font-body text-sm">If a product doesn't meet our standards, it won't be recommended regardless of commission rates.</p>
+          </div>
+        </div>
+      </div>
 
-      <h2>Affiliate Programs We Participate In</h2>
-      <p>
-        We may participate in affiliate programs including, but not limited to:
-      </p>
-      <ul>
-        <li>Amazon Associates Program</li>
-        <li>Other affiliate networks and direct brand partnerships</li>
-      </ul>
+      <div class="h-[1px] bg-outline-variant/15"></div>
 
-      <h2>FTC Disclosure</h2>
-      <p>
-        In accordance with the Federal Trade Commission (FTC) guidelines, we disclose that some of the links on {siteData.name} are affiliate links. We are a participant in various affiliate programs designed to provide a means for sites to earn commissions by linking to products and services.
-      </p>
+      <div>
+        <h2 class="font-headline italic text-2xl mb-4">Affiliate Programs</h2>
+        <p class="text-on-surface-variant font-body leading-relaxed mb-4">
+          We may participate in affiliate programs including, but not limited to:
+        </p>
+        <div class="space-y-2">
+          <div class="flex gap-3 items-center">
+            <span class="w-1.5 h-1.5 bg-secondary"></span>
+            <span class="text-on-surface-variant font-body text-sm">Amazon Associates Program</span>
+          </div>
+          <div class="flex gap-3 items-center">
+            <span class="w-1.5 h-1.5 bg-secondary"></span>
+            <span class="text-on-surface-variant font-body text-sm">Other affiliate networks and direct brand partnerships</span>
+          </div>
+        </div>
+      </div>
 
-      <h2>Questions?</h2>
-      <p>
-        If you have any questions about our affiliate relationships or editorial process, please don't hesitate to <a href="/contact/">contact us</a>.
-      </p>
+      <div class="h-[1px] bg-outline-variant/15"></div>
+
+      <div>
+        <h2 class="font-headline italic text-2xl mb-4">FTC Disclosure</h2>
+        <p class="text-on-surface-variant font-body leading-relaxed">
+          In accordance with the Federal Trade Commission (FTC) guidelines, we disclose that some of the links on {siteData.name} are affiliate links. We are a participant in various affiliate programs designed to provide a means for sites to earn commissions by linking to products and services.
+        </p>
+      </div>
+
+      <div class="h-[1px] bg-outline-variant/15"></div>
+
+      <div>
+        <h2 class="font-headline italic text-2xl mb-4">Questions?</h2>
+        <p class="text-on-surface-variant font-body leading-relaxed mb-6">
+          If you have any questions about our affiliate relationships or editorial process, please don't hesitate to get in touch.
+        </p>
+        <a href="/contact/" class="btn-outline no-underline">Contact Us</a>
+      </div>
     </div>
-  </Section>
+  </section>
 </BaseLayout>

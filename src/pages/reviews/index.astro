@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Section from '../../components/Section.astro';
 import siteData from '../../../data/site.json';
 
 const schema = {
@@ -16,16 +15,18 @@ const schema = {
   description="In-depth, honest product reviews covering features, performance, and value."
   schema={schema}
 >
-  <Section>
-    <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Product Reviews</h1>
-    <p class="text-lg text-gray-600 mb-10 max-w-2xl">
+  <section class="container-wide py-20 md:py-32">
+    <span class="label-text text-secondary font-bold mb-6 block">In-Depth Analysis</span>
+    <h1 class="font-headline italic text-5xl md:text-6xl leading-[0.9] tracking-tighter max-w-3xl mb-8">Product Reviews</h1>
+    <p class="text-on-surface-variant text-lg max-w-xl leading-relaxed font-body mb-16">
       Detailed, honest reviews of individual products. We cover features, performance, value, and who each product is best for.
     </p>
 
-    <!-- Placeholder: Review listings will go here -->
-    <div class="bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl p-12 text-center">
-      <p class="text-gray-500 text-lg mb-2">Content coming soon</p>
-      <p class="text-gray-400 text-sm">Our detailed product reviews will be published here as we build out the content library.</p>
+    <!-- Placeholder -->
+    <div class="bg-surface-container-low p-16 text-center">
+      <span class="material-symbols-outlined text-5xl text-on-surface-variant/20 mb-6">menu_book</span>
+      <p class="text-on-surface-variant font-body text-lg mb-2">Content coming soon</p>
+      <p class="text-on-surface-variant/60 font-body text-sm">Our detailed product reviews will be published here as we build out the content library.</p>
     </div>
-  </Section>
+  </section>
 </BaseLayout>
