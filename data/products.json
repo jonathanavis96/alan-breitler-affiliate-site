@@ -1,51 +1,145 @@
 {
-  "_comment": "Product database. Products are referenced by slug in content files. Affiliate link slugs should match entries in affiliates.json.",
   "products": [
     {
-      "slug": "example-product-1",
-      "name": "Example Product 1",
-      "brand": "Brand A",
-      "category": "category-placeholder",
-      "image": "/images/products/placeholder.jpg",
-      "rating": 4.5,
-      "affiliateSlug": "example-product-1",
-      "price": "$XX.XX",
+      "slug": "ergotron-lx-monitor-arm",
+      "name": "Ergotron LX Desk Monitor Arm",
+      "brand": "Ergotron",
+      "category": "monitor-arms",
+      "image": "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&q=80&auto=format",
+      "rating": 4.8,
+      "affiliateSlug": "ergotron-lx",
+      "price": "$179",
+      "badge": "Editor's Choice",
       "pros": [
-        "Pro point 1",
-        "Pro point 2",
-        "Pro point 3"
+        "Exceptional build quality — fully aluminium construction",
+        "Effortless single-hand adjustment",
+        "Supports monitors up to 34 inches / 11.3 kg",
+        "Integrated cable management"
       ],
       "cons": [
-        "Con point 1",
-        "Con point 2"
+        "Premium price point",
+        "Desk clamp requires 60mm clearance"
       ],
-      "verdict": "A solid choice for most users looking for [use case].",
+      "verdict": "The benchmark for monitor arms. Worth the investment for anyone spending 4+ hours at a desk daily.",
       "specs": {
-        "key1": "value1",
-        "key2": "value2"
+        "weight_capacity": "11.3 kg",
+        "vesa": "75x75 / 100x100",
+        "reach": "64 cm",
+        "height_range": "33 cm",
+        "warranty": "10 years"
       }
     },
     {
-      "slug": "example-product-2",
-      "name": "Example Product 2",
-      "brand": "Brand B",
-      "category": "category-placeholder",
-      "image": "/images/products/placeholder.jpg",
-      "rating": 4.2,
-      "affiliateSlug": "example-product-2",
-      "price": "$XX.XX",
+      "slug": "keychron-q1-max",
+      "name": "Keychron Q1 Max",
+      "brand": "Keychron",
+      "category": "mechanical-keyboards",
+      "image": "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=400&q=80&auto=format",
+      "rating": 4.6,
+      "affiliateSlug": "keychron-q1-max",
+      "price": "$219",
+      "badge": "Best Value",
       "pros": [
-        "Pro point 1",
-        "Pro point 2"
+        "Tri-mode connectivity (USB-C, Bluetooth, 2.4GHz)",
+        "Hot-swappable switches",
+        "CNC aluminium body feels premium",
+        "QMK/VIA programmable"
       ],
       "cons": [
-        "Con point 1",
-        "Con point 2"
+        "Heavier than plastic alternatives at 1.7 kg",
+        "Stock keycaps are average"
       ],
-      "verdict": "Best budget option for [use case].",
+      "verdict": "The best all-round mechanical keyboard under $250. Tri-mode connectivity and hot-swap make it future-proof.",
       "specs": {
-        "key1": "value1",
-        "key2": "value2"
+        "layout": "75%",
+        "switches": "Gateron Jupiter (hot-swap)",
+        "connectivity": "USB-C / Bluetooth 5.1 / 2.4GHz",
+        "battery": "4000 mAh",
+        "weight": "1.7 kg"
+      }
+    },
+    {
+      "slug": "autonomous-smartdesk-pro",
+      "name": "Autonomous SmartDesk Pro",
+      "brand": "Autonomous",
+      "category": "standing-desks",
+      "image": "https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?w=400&q=80&auto=format",
+      "rating": 4.4,
+      "affiliateSlug": "autonomous-smartdesk-pro",
+      "price": "$529",
+      "pros": [
+        "Quiet dual-motor system (under 45 dB)",
+        "Height range 63–130 cm suits most users",
+        "4 programmable memory presets",
+        "Anti-collision detection"
+      ],
+      "cons": [
+        "Desktop surface scratches easily",
+        "Assembly takes 45–60 minutes"
+      ],
+      "verdict": "A strong mid-range standing desk with reliable motors and smooth height transitions. The price-to-quality ratio is excellent.",
+      "specs": {
+        "height_range": "63–130 cm",
+        "weight_capacity": "136 kg",
+        "motor": "Dual motor",
+        "speed": "4 cm/s",
+        "noise": "< 45 dB"
+      }
+    },
+    {
+      "slug": "benq-screenbar-halo",
+      "name": "BenQ ScreenBar Halo",
+      "brand": "BenQ",
+      "category": "desk-lamps",
+      "image": "https://images.unsplash.com/photo-1573920111312-04f1b25c6b85?w=400&q=80&auto=format",
+      "rating": 4.7,
+      "affiliateSlug": "benq-screenbar-halo",
+      "price": "$179",
+      "pros": [
+        "Zero screen glare — asymmetric optics",
+        "Wireless dial controller is intuitive",
+        "Back-light reduces eye strain in dark rooms",
+        "Auto-dimming ambient sensor"
+      ],
+      "cons": [
+        "Expensive for a desk lamp",
+        "Back-light colour is cool white only"
+      ],
+      "verdict": "The best monitor light bar available. The wireless controller and back-light justify the price for heavy screen users.",
+      "specs": {
+        "colour_temp": "2700–6500K",
+        "brightness": "500 lux at 45cm",
+        "power": "USB (5V/1.3A)",
+        "width": "50 cm",
+        "controller": "Wireless dial"
+      }
+    },
+    {
+      "slug": "logitech-mx-master-3s",
+      "name": "Logitech MX Master 3S",
+      "brand": "Logitech",
+      "category": "mice",
+      "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&q=80&auto=format",
+      "rating": 4.5,
+      "affiliateSlug": "logitech-mx-master-3s",
+      "price": "$99",
+      "pros": [
+        "Ergonomic sculpted shape reduces wrist strain",
+        "MagSpeed scroll wheel is incredibly fast",
+        "Connects to 3 devices simultaneously",
+        "Works on any surface including glass"
+      ],
+      "cons": [
+        "Not ideal for gaming (high latency)",
+        "Thumb buttons are stiff out of the box"
+      ],
+      "verdict": "The gold standard for productivity mice. Multi-device workflow and MagSpeed scroll are genuinely transformative.",
+      "specs": {
+        "sensor": "8000 DPI Darkfield",
+        "battery": "70 days (USB-C rechargeable)",
+        "connectivity": "Bluetooth / USB receiver",
+        "weight": "141 g",
+        "os_support": "Windows, macOS, Linux, iPadOS"
       }
     }
   ]

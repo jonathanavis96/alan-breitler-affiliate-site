@@ -8,6 +8,41 @@ const schema = {
   name: `Buying Guides - ${siteData.name}`,
   description: 'Expert buying guides to help you understand what to look for before you buy.',
 };
+
+const guides = [
+  {
+    title: 'How to Choose a Standing Desk in 2026',
+    description: 'Motor types, height ranges, desktop materials, and weight capacity — everything you need to know before spending $400–$1,500 on a sit-stand desk.',
+    icon: 'desk',
+    category: 'Standing Desks',
+    readTime: '8 min read',
+    href: '/guides/#standing-desks',
+  },
+  {
+    title: 'Mechanical Keyboards: A Buyer\'s Guide',
+    description: 'Switch types, layouts, connectivity, build materials, and programmability demystified. From budget boards to endgame customs.',
+    icon: 'keyboard',
+    category: 'Keyboards',
+    readTime: '12 min read',
+    href: '/guides/#keyboards',
+  },
+  {
+    title: 'The Complete Monitor Arm Guide',
+    description: 'VESA standards, clamp vs grommet mounts, weight limits, and ergonomic positioning. Set up a monitor arm that actually works.',
+    icon: 'monitor',
+    category: 'Monitor Arms',
+    readTime: '6 min read',
+    href: '/guides/#monitor-arms',
+  },
+  {
+    title: 'Desk Lighting: What Actually Reduces Eye Strain',
+    description: 'Colour temperature, lux measurements, screen bar vs desk lamp, and ambient bias lighting. The science of comfortable screen time.',
+    icon: 'lightbulb',
+    category: 'Desk Lighting',
+    readTime: '7 min read',
+    href: '/guides/#desk-lighting',
+  },
+];
 ---
 
 <BaseLayout
@@ -15,18 +50,53 @@ const schema = {
   description="Expert buying guides to help you understand what to look for before making a purchase."
   schema={schema}
 >
+  <!-- Header -->
   <section class="container-wide py-20 md:py-32">
     <span class="label-text text-secondary font-bold mb-6 block">Smart Decisions</span>
     <h1 class="font-headline italic text-5xl md:text-6xl leading-[0.9] tracking-tighter max-w-3xl mb-8">Buying Guides</h1>
-    <p class="text-on-surface-variant text-lg max-w-xl leading-relaxed font-body mb-16">
-      Not sure what to look for? Our buying guides break down the key factors so you can make a confident decision.
+    <p class="text-on-surface-variant text-lg max-w-xl leading-relaxed font-body">
+      Not sure what to look for? Our buying guides break down the key factors, industry jargon, and common pitfalls so you can make a confident decision.
     </p>
+  </section>
 
-    <!-- Placeholder -->
-    <div class="bg-surface-container-low p-16 text-center">
-      <span class="material-symbols-outlined text-5xl text-on-surface-variant/20 mb-6">auto_stories</span>
-      <p class="text-on-surface-variant font-body text-lg mb-2">Content coming soon</p>
-      <p class="text-on-surface-variant/60 font-body text-sm">Our expert buying guides will be published here once the product categories are finalised.</p>
+  <!-- Guide listings -->
+  <section class="bg-surface-container-low py-16 md:py-24">
+    <div class="container-wide">
+      <div class="space-y-4">
+        {guides.map((guide, i) => (
+          <a href={guide.href} class="flex flex-col md:flex-row md:items-center gap-6 bg-surface p-8 md:p-10 group no-underline text-on-surface hover:bg-surface-container-high transition-colors duration-300">
+            <!-- Number -->
+            <span class="font-headline italic text-5xl text-surface-container-highest group-hover:text-secondary transition-colors">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+
+            <!-- Content -->
+            <div class="flex-1">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="label-text text-secondary font-bold">{guide.category}</span>
+                <span class="label-text text-on-surface-variant/40">·</span>
+                <span class="label-text text-on-surface-variant/60">{guide.readTime}</span>
+              </div>
+              <h3 class="font-headline italic text-xl md:text-2xl mb-2">{guide.title}</h3>
+              <p class="text-on-surface-variant text-sm font-body leading-relaxed max-w-2xl">{guide.description}</p>
+            </div>
+
+            <!-- Arrow -->
+            <span class="material-symbols-outlined text-surface-container-highest group-hover:text-secondary transition-colors text-3xl">
+              arrow_forward
+            </span>
+          </a>
+        ))}
+      </div>
     </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="container-narrow py-16 md:py-24 text-center">
+    <h2 class="font-headline italic text-2xl mb-4">Can't Find What You Need?</h2>
+    <p class="text-on-surface-variant font-body leading-relaxed max-w-lg mx-auto mb-6">
+      We're always expanding our guide library. If there's a product category you'd like us to cover, let us know.
+    </p>
+    <a href="/contact/" class="btn-outline no-underline">Suggest a Guide</a>
   </section>
 </BaseLayout>

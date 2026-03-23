@@ -1,17 +1,38 @@
 {
-  "_comment": "Affiliate link registry. Each entry maps a slug to a destination URL. Links are served via /go/[slug]/ with rel='nofollow sponsored'. Update destination URLs here when affiliate links change.",
+  "_comment": "Affiliate link registry. Update destination URLs when real affiliate accounts are set up.",
   "links": [
     {
-      "slug": "example-product-1",
-      "name": "Example Product 1",
-      "destination": "https://www.amazon.com/dp/PLACEHOLDER?tag=companyname-20",
+      "slug": "ergotron-lx",
+      "name": "Ergotron LX Desk Monitor Arm",
+      "destination": "https://www.amazon.com/dp/B00689HXI4?tag=companyname-20",
       "network": "amazon",
       "active": true
     },
     {
-      "slug": "example-product-2",
-      "name": "Example Product 2",
-      "destination": "https://www.amazon.com/dp/PLACEHOLDER?tag=companyname-20",
+      "slug": "keychron-q1-max",
+      "name": "Keychron Q1 Max",
+      "destination": "https://www.amazon.com/dp/B0CG9N7TB2?tag=companyname-20",
+      "network": "amazon",
+      "active": true
+    },
+    {
+      "slug": "autonomous-smartdesk-pro",
+      "name": "Autonomous SmartDesk Pro",
+      "destination": "https://www.amazon.com/dp/B08GY5MF3Y?tag=companyname-20",
+      "network": "amazon",
+      "active": true
+    },
+    {
+      "slug": "benq-screenbar-halo",
+      "name": "BenQ ScreenBar Halo",
+      "destination": "https://www.amazon.com/dp/B0BN8Y2YG8?tag=companyname-20",
+      "network": "amazon",
+      "active": true
+    },
+    {
+      "slug": "logitech-mx-master-3s",
+      "name": "Logitech MX Master 3S",
+      "destination": "https://www.amazon.com/dp/B09HM94VDS?tag=companyname-20",
       "network": "amazon",
       "active": true
     }
