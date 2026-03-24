@@ -1,6 +1,23 @@
 ---
 import productData from '../../data/products.json';
+import siteData from '../../data/site.json';
 import { url } from '../lib/base';
+
+// Collect all unique page links from navigation + footer
+const seenHrefs = new Set<string>();
+const pageItems: { title: string; subtitle: string; href: string; type: string }[] = [];
+
+for (const item of [...siteData.navigation, ...siteData.footer.links]) {
+  if (!seenHrefs.has(item.href)) {
+    seenHrefs.add(item.href);
+    pageItems.push({
+      title: item.label,
+      subtitle: '',
+      href: url(item.href),
+      type: 'Page',
+    });
+  }
+}
 
 // Build search index at build time
 const searchItems = [
@@ -15,8 +32,7 @@ const searchItems = [
   { title: 'The Complete Monitor Arm Guide', subtitle: 'Monitor Arms · 6 min read', href: url('/guides/monitor-arms/'), type: 'Guide' },
   { title: 'Desk Lighting: What Actually Reduces Eye Strain', subtitle: 'Desk Lighting · 7 min read', href: url('/guides/desk-lighting/'), type: 'Guide' },
   { title: 'Best Home Office Picks 2026', subtitle: "Editor's Choice", href: url('/best/'), type: 'Best Picks' },
-  { title: 'About Us', subtitle: 'Our methodology and editorial standards', href: url('/about/'), type: 'Page' },
-  { title: 'Contact', subtitle: 'Get in touch', href: url('/contact/'), type: 'Page' },
+  ...pageItems,
 ];
 ---
 
@@ -82,17 +98,45 @@ const searchItems = [
 
   const searchIndex = (window as any).__SEARCH_INDEX__ || [];
 
+  let opener: HTMLElement | null = null;
+
+  function trapFocus(e: KeyboardEvent) {
+    if (e.key !== 'Tab' || !overlay) return;
+    const focusable = overlay.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    );
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  }
+
   function openSearch() {
+    opener = document.activeElement as HTMLElement;
     overlay?.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', trapFocus);
     setTimeout(() => input?.focus(), 100);
   }
 
   function closeSearch() {
     overlay?.classList.add('hidden');
     document.body.style.overflow = '';
+    document.removeEventListener('keydown', trapFocus);
     if (input) input.value = '';
     updateResults('');
+    opener?.focus();
+    opener = null;
   }
 
   function createResultLink(item: { title: string; subtitle: string; href: string; type: string }) {

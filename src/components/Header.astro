@@ -26,19 +26,22 @@ const currentPath = Astro.url.pathname;
 
     <!-- Desktop Navigation -->
     <nav class="hidden md:flex gap-8" aria-label="Main navigation">
-      {siteData.navigation.map((item) => (
-        <a
-          href={url(item.href)}
-          class:list={[
-            'label-text no-underline transition-opacity',
-            currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href))
-              ? 'text-secondary font-bold'
-              : 'text-on-surface-variant hover:opacity-70',
-          ]}
-        >
-          {item.label}
-        </a>
-      ))}
+      {siteData.navigation.map((item) => {
+        const href = url(item.href);
+        return (
+          <a
+            href={href}
+            class:list={[
+              'label-text no-underline transition-opacity',
+              currentPath === href || (href !== url('/') && currentPath.startsWith(href))
+                ? 'text-secondary font-bold'
+                : 'text-on-surface-variant hover:opacity-70',
+            ]}
+          >
+            {item.label}
+          </a>
+        );
+      })}
     </nav>
 
     <!-- Search -->
@@ -52,19 +55,22 @@ const currentPath = Astro.url.pathname;
   <!-- Mobile Navigation -->
   <div class="hidden md:hidden bg-background" id="mobile-menu">
     <nav class="container-wide py-4 flex flex-col gap-4">
-      {siteData.navigation.map((item) => (
-        <a
-          href={url(item.href)}
-          class:list={[
-            'label-text no-underline py-2',
-            currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href))
-              ? 'text-secondary font-bold'
-              : 'text-on-surface-variant',
-          ]}
-        >
-          {item.label}
-        </a>
-      ))}
+      {siteData.navigation.map((item) => {
+        const href = url(item.href);
+        return (
+          <a
+            href={href}
+            class:list={[
+              'label-text no-underline py-2',
+              currentPath === href || (href !== url('/') && currentPath.startsWith(href))
+                ? 'text-secondary font-bold'
+                : 'text-on-surface-variant',
+            ]}
+          >
+            {item.label}
+          </a>
+        );
+      })}
     </nav>
   </div>
 </header>

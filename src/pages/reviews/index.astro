@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import siteData from '../../../data/site.json';
 import productData from '../../../data/products.json';
+import { url } from '../../lib/base';
 
 const schema = {
   '@context': 'https://schema.org',
@@ -33,7 +34,7 @@ const reviews = productData.products;
     <div class="container-wide">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {reviews.map((product) => (
-          <a href={`/reviews/${product.slug}/`} class="bg-surface p-8 group no-underline text-on-surface hover:bg-surface-container-high transition-colors duration-300">
+          <a href={url(`/reviews/${product.slug}/`)} class="bg-surface p-8 group no-underline text-on-surface hover:bg-surface-container-high transition-colors duration-300">
             <div class="aspect-square bg-white mb-6 flex items-center justify-center p-4">
               <img
                 src={product.image}

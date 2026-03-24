@@ -18,8 +18,8 @@
   }
 
   body {
-    @apply text-on-surface bg-background font-body leading-relaxed;
-    min-height: max(884px, 100dvh);
+    @apply text-on-surface bg-background font-body leading-relaxed flex flex-col;
+    min-height: 100dvh;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -139,7 +139,7 @@
   .prose-affiliate {
     @apply prose prose-lg prose-gray max-w-none
            prose-headings:font-headline prose-headings:italic
-           prose-a:text-secondary prose-a:no-underline hover:prose-a:underline
+           prose-a:text-secondary prose-a:no-underline prose-a:hover:underline
            prose-img:shadow-lg;
   }
 
