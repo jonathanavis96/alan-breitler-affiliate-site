@@ -33,9 +33,10 @@ const {
 
 // Split title at the first highlight word placeholder
 const firstWord = highlightWords[0];
-const idx = title.indexOf(firstWord);
-const before = idx >= 0 ? title.slice(0, idx) : title;
-const after = idx >= 0 ? title.slice(idx + firstWord.length) : '';
+const idx = firstWord ? title.indexOf(firstWord) : -1;
+const hasAnimatedWord = !!firstWord && idx >= 0;
+const before = hasAnimatedWord ? title.slice(0, idx) : '';
+const after = hasAnimatedWord ? title.slice(idx + firstWord.length) : '';
 ---
 
 <section class="relative min-h-[700px] flex flex-col md:flex-row items-center gap-12 py-20 overflow-visible grain-overlay container-wide">
@@ -48,7 +49,11 @@ const after = idx >= 0 ? title.slice(idx + firstWord.length) : '';
     )}
 
     <h1 class="font-headline italic font-extrabold text-5xl md:text-8xl leading-[0.9] tracking-tighter mb-8 animate-fade-in animation-delay-100">
-      {before}<span class="text-secondary inline-block min-w-[7ch]" id="hero-rotating-wrapper"><span id="hero-rotating-word">{firstWord}</span><span id="hero-cursor" class="hidden"></span></span>{after}
+      {hasAnimatedWord ? (
+        <>{before}<span class="text-secondary inline-block min-w-[7ch]" id="hero-rotating-wrapper"><span id="hero-rotating-word">{firstWord}</span><span id="hero-cursor" class="hidden"></span></span>{after}</>
+      ) : (
+        title
+      )}
     </h1>
 
     {subtitle && (
@@ -108,7 +113,9 @@ const after = idx >= 0 ? title.slice(idx + firstWord.length) : '';
   const cursor = document.getElementById('hero-cursor');
   const words = (window as any).__HERO_WORDS__ || ['Best'];
 
-  if (el && cursor && words.length > 1) {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (el && cursor && words.length > 1 && !prefersReducedMotion) {
     const TYPE_SPEED = 80;
     const DELETE_SPEED = 50;
     const PAUSE_AFTER_TYPE = 2000;

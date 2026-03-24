@@ -1,3 +1,5 @@
+import typography from '@tailwindcss/typography';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
@@ -56,7 +58,8 @@ export default {
         DEFAULT: '0.125rem',
         lg: '0.25rem',
         xl: '0.5rem',
-        full: '0.75rem',
+        full: '9999px',
+        pill: '0.75rem',
       },
       maxWidth: {
         content: '65ch',
@@ -64,5 +67,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [typography],
 };
