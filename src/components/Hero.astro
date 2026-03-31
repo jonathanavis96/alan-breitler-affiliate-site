@@ -113,9 +113,7 @@ const after = hasAnimatedWord ? title.slice(idx + firstWord.length) : '';
   const cursor = document.getElementById('hero-cursor');
   const words = (window as any).__HERO_WORDS__ || ['Best'];
 
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (el && cursor && words.length > 1 && !prefersReducedMotion) {
+  if (el && cursor && words.length > 1) {
     const TYPE_SPEED = 80;
     const DELETE_SPEED = 50;
     const PAUSE_AFTER_TYPE = 2000;
