@@ -1,0 +1,264 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GradientOrbs from '../../components/GradientOrbs.astro';
+import productData from '../../../data/products.json';
+import { url } from '../../lib/base';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const resources = await getCollection('resources', ({ data }) => !data.draft);
+  return resources.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry },
+  }));
+};
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const resource = entry.data;
+
+// Resolve related product data for Tool Recommendations section
+const relatedProducts = (resource.relatedProducts ?? [])
+  .map((slug) => productData.products.find((p) => p.slug === slug))
+  .filter(Boolean);
+
+// Level badge styling
+function levelColor(level: string): string {
+  switch (level) {
+    case 'beginner': return 'bg-success/10 text-success';
+    case 'intermediate': return 'bg-accent/10 text-accent';
+    case 'advanced': return 'bg-primary/10 text-primary';
+    default: return 'bg-muted/10 text-muted';
+  }
+}
+
+// Schema.org structured data
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: resource.title,
+  description: resource.description,
+  datePublished: resource.publishDate.toISOString(),
+  ...(resource.updatedDate && { dateModified: resource.updatedDate.toISOString() }),
+  author: {
+    '@type': 'Organization',
+    name: 'AIfocus',
+  },
+};
+---
+
+<BaseLayout
+  title={resource.title}
+  description={resource.description}
+  ogType="article"
+  schema={schema}
+>
+  <!-- ═══════════════════════════════════════
+       Resource Header
+       ═══════════════════════════════════════ -->
+  <section class="relative py-20 md:py-28 overflow-hidden">
+    <!-- Decorative gradient blur orbs -->
+    <GradientOrbs variant="section" />
+
+    <div class="container-wide relative z-10">
+      <div class="max-w-3xl animate-fade-in">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class="badge-editorial">{resource.category.replaceAll('-', ' ')}</span>
+          <span class={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${levelColor(resource.level)}`}>
+            {resource.level}
+          </span>
+          <span class="label-text text-muted">{resource.readTime} min read</span>
+        </div>
+
+        <h1 class="font-headline font-bold text-4xl md:text-5xl lg:text-[3.25rem] leading-tight tracking-tight mb-6 text-text">
+          {resource.title}
+        </h1>
+
+        <p class="text-muted text-lg leading-relaxed max-w-2xl mb-6">
+          {resource.description}
+        </p>
+
+        <div class="flex flex-wrap items-center gap-4 text-sm text-muted-dim">
+          <time datetime={resource.publishDate.toISOString().split('T')[0]}>
+            Published {resource.publishDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </time>
+          {resource.updatedDate && (
+            <span>
+              · Updated {resource.updatedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       Section 1: Introduction
+       ═══════════════════════════════════════ -->
+  <section id="introduction" class="py-12 md:py-16 bg-surface scroll-reveal">
+    <div class="container-narrow">
+      <div class="glass-panel rounded-xl p-8 md:p-10">
+        <h2 class="font-headline font-bold text-2xl md:text-3xl mb-6 flex items-center gap-3 text-text">
+          <span class="text-primary">📖</span> Introduction
+        </h2>
+        <p class="text-lg text-muted leading-relaxed">
+          {resource.description}
+        </p>
+        {relatedProducts.length > 0 && (
+          <p class="text-sm text-muted-dim mt-4">
+            Tools covered in this guide: {relatedProducts.map((p) => p.name).join(', ')}
+          </p>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       Section 2: Step-by-step (MDX Content)
+       ═══════════════════════════════════════ -->
+  <section id="step-by-step" class="py-16 md:py-20 scroll-reveal">
+    <div class="container-narrow">
+      <h2 class="font-headline font-bold text-2xl md:text-3xl mb-8 flex items-center gap-3 text-text">
+        <span class="text-accent">🔢</span> Step-by-step Guide
+      </h2>
+
+      <div class="prose-affiliate">
+        <Content />
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       Section 3: Tool Recommendations
+       ═══════════════════════════════════════ -->
+  <section id="tool-recommendations" class="py-16 md:py-20 bg-surface scroll-reveal">
+    <div class="container-narrow">
+      <h2 class="font-headline font-bold text-2xl md:text-3xl mb-8 flex items-center gap-3 text-text">
+        <span class="text-primary material-symbols-outlined">build</span> Tool Recommendations
+      </h2>
+
+      {relatedProducts.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {relatedProducts.map((product) => (
+            <div class="card">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                  <span class="text-primary text-xl font-headline font-bold">
+                    {product.name.charAt(0)}
+                  </span>
+                </div>
+                <div>
+                  <h3 class="font-headline font-bold text-lg text-text">{product.name}</h3>
+                  <p class="text-sm text-muted-dim">{product.brand}</p>
+                </div>
+              </div>
+
+              <!-- Score bar -->
+              <div class="flex items-center gap-3 mb-3">
+                <span class="text-xs text-muted shrink-0 w-24">Overall Score</span>
+                <div class="flex-1 h-2 bg-surface-container-highest rounded-full overflow-hidden">
+                  <div
+                    class="h-full rounded-full bg-gradient-to-r from-primary to-accent"
+                    style={`width: ${(product.overallScore / 10) * 100}%`}
+                  ></div>
+                </div>
+                <span class="text-sm font-bold font-headline text-accent">{product.overallScore}/10</span>
+              </div>
+
+              <p class="text-sm text-muted mb-4">{product.useCase}</p>
+
+              <div class="flex items-center justify-between">
+                <span class="text-xs text-muted-dim">{product.pricing}</span>
+                <a
+                  href={url(`/reviews/${product.slug}/`)}
+                  class="text-sm text-primary hover:text-primary-hover font-medium no-underline transition-colors"
+                >
+                  Read Review →
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div class="glass-panel rounded-xl p-8 text-center">
+          <p class="text-muted">
+            We're working on detailed tool recommendations for this topic. Check our
+            <a href={url('/top-tools/')} class="text-primary hover:text-primary-hover transition-colors">Top Tools</a>
+            page for current picks.
+          </p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       Section 4: Key Takeaways
+       ═══════════════════════════════════════ -->
+  <section id="key-takeaways" class="py-16 md:py-20 scroll-reveal">
+    <div class="container-narrow">
+      <div class="relative grain-overlay rounded-xl overflow-hidden">
+        <div class="bg-gradient-to-br from-primary/20 via-surface-alt to-accent/10 p-8 md:p-12">
+          <h2 class="font-headline font-bold text-2xl md:text-3xl mb-8 flex items-center gap-3 text-text">
+            <span class="text-accent material-symbols-outlined">lightbulb</span> Key Takeaways
+          </h2>
+
+          <div class="space-y-4">
+            <div class="flex items-start gap-3">
+              <span class="text-accent mt-1 shrink-0 text-lg">1.</span>
+              <p class="text-text leading-relaxed">
+                Start with clear goals — knowing exactly what you need from AI tools makes every subsequent step more effective.
+              </p>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-accent mt-1 shrink-0 text-lg">2.</span>
+              <p class="text-text leading-relaxed">
+                Practice iteratively — prompt engineering and tool mastery improve with consistent, deliberate experimentation.
+              </p>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-accent mt-1 shrink-0 text-lg">3.</span>
+              <p class="text-text leading-relaxed">
+                Always verify AI outputs — cross-reference results against primary sources and established databases in your field.
+              </p>
+            </div>
+            {relatedProducts.length > 0 && (
+              <div class="flex items-start gap-3">
+                <span class="text-accent mt-1 shrink-0 text-lg">4.</span>
+                <p class="text-text leading-relaxed">
+                  Explore the right tools — we recommend
+                  {relatedProducts.map((p, i) => (
+                    <>{i > 0 && (i === relatedProducts.length - 1 ? ' and ' : ', ')}
+                    <a href={url(`/reviews/${p.slug}/`)} class="text-primary hover:text-primary-hover transition-colors">{p.name}</a></>
+                  ))}
+                  {' '}for this workflow.
+                </p>
+              </div>
+            )}
+          </div>
+
+          <!-- CTA -->
+          <div class="mt-8 pt-8 border-t border-outline/30 flex flex-col sm:flex-row items-center gap-4">
+            <a href={url('/top-tools/')} class="btn-primary no-underline inline-flex items-center gap-2">
+              Browse All Tools
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+            </a>
+            <a href={url('/resources/')} class="btn-outline no-underline inline-flex items-center gap-2">
+              More Resources
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Navigation (desktop sidebar) -->
+  <nav class="hidden lg:block fixed right-6 top-1/2 -translate-y-1/2 z-40" aria-label="Resource sections">
+    <div class="glass-panel rounded-lg p-2 space-y-1">
+      <a href="#introduction" class="block px-3 py-1.5 text-xs text-muted hover:text-primary transition-colors rounded no-underline">Introduction</a>
+      <a href="#step-by-step" class="block px-3 py-1.5 text-xs text-muted hover:text-primary transition-colors rounded no-underline">Step-by-step</a>
+      <a href="#tool-recommendations" class="block px-3 py-1.5 text-xs text-muted hover:text-primary transition-colors rounded no-underline">Tool Recs</a>
+      <a href="#key-takeaways" class="block px-3 py-1.5 text-xs text-muted hover:text-primary transition-colors rounded no-underline">Key Takeaways</a>
+    </div>
+  </nav>
+</BaseLayout>

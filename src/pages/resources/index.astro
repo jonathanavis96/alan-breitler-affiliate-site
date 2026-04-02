@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import siteData from '../../../data/site.json';
+import { url } from '../../lib/base';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: `Resources - ${siteData.name}`,
+  description: 'Guides, tutorials, and practical tips for getting the most out of AI tools in academic work.',
+};
+
+// Resources will be populated from Content Collections in milestone 2
+const resources = [];
+---
+
+<BaseLayout
+  title="Resources"
+  description="Guides, tutorials, and practical tips for getting the most out of AI tools in academic work."
+  schema={schema}
+>
+  <!-- Header -->
+  <section class="container-wide py-20 md:py-32">
+    <span class="label-text text-secondary font-bold mb-6 block">Learn & Apply</span>
+    <h1 class="font-headline text-5xl md:text-6xl leading-[0.9] tracking-tighter max-w-3xl mb-8">Resources</h1>
+    <p class="text-on-surface-variant text-lg max-w-xl leading-relaxed font-body">
+      Practical guides and tutorials to help you integrate AI tools into your academic workflow — from prompt engineering tips to tool comparison frameworks.
+    </p>
+  </section>
+
+  <!-- Resource listings -->
+  <section class="bg-surface-container-low py-16 md:py-24">
+    <div class="container-wide">
+      {resources.length > 0 ? (
+        <div class="space-y-4">
+          {resources.map((resource, i) => (
+            <a href={resource.href} class="flex flex-col md:flex-row md:items-center gap-6 bg-surface p-8 md:p-10 group no-underline text-on-surface hover:bg-surface-container-high transition-colors duration-300">
+              <span class="font-headline text-5xl text-surface-container-highest group-hover:text-secondary transition-colors">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div class="flex-1">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="label-text text-secondary font-bold">{resource.category}</span>
+                  <span class="label-text text-on-surface-variant/40">·</span>
+                  <span class="label-text text-on-surface-variant/60">{resource.readTime}</span>
+                </div>
+                <h3 class="font-headline text-xl md:text-2xl mb-2">{resource.title}</h3>
+                <p class="text-on-surface-variant text-sm font-body leading-relaxed max-w-2xl">{resource.description}</p>
+              </div>
+              <span class="material-symbols-outlined text-surface-container-highest group-hover:text-secondary transition-colors text-3xl">
+                arrow_forward
+              </span>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-16">
+          <span class="material-symbols-outlined text-5xl text-on-surface-variant/20 mb-6 block">auto_stories</span>
+          <h2 class="font-headline text-2xl mb-4">Resources Coming Soon</h2>
+          <p class="text-on-surface-variant font-body leading-relaxed max-w-lg mx-auto">
+            We're preparing in-depth guides and tutorials to help you get the most out of AI tools in your academic work. Check back soon.
+          </p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="container-narrow py-16 md:py-24 text-center">
+    <h2 class="font-headline text-2xl mb-4">Have a Topic in Mind?</h2>
+    <p class="text-on-surface-variant font-body leading-relaxed max-w-lg mx-auto mb-6">
+      We're always expanding our resource library. If there's an AI topic you'd like us to cover, let us know.
+    </p>
+    <a href={url('/contact/')} class="btn-outline no-underline">Suggest a Topic</a>
+  </section>
+</BaseLayout>

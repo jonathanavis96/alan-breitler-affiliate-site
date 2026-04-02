@@ -1,0 +1,28 @@
+{
+  "categories": [
+    {
+      "name": "Writing Tools",
+      "slug": "writing-tools",
+      "description": "AI-powered writing assistants for drafting papers, editing prose, generating citations, and overcoming writer's block in academic workflows.",
+      "icon": "edit_note"
+    },
+    {
+      "name": "Research Assistants",
+      "slug": "research-assistants",
+      "description": "Intelligent research tools that help academics discover papers, summarise literature, extract insights, and manage references at scale.",
+      "icon": "science"
+    },
+    {
+      "name": "Image Generation",
+      "slug": "image-generation",
+      "description": "AI image generators for creating figures, diagrams, presentation visuals, and concept illustrations suited to academic publishing.",
+      "icon": "palette"
+    },
+    {
+      "name": "Coding Assistants",
+      "slug": "coding-assistants",
+      "description": "AI coding tools that accelerate data analysis, automate scripting tasks, debug research code, and streamline computational workflows.",
+      "icon": "terminal"
+    }
+  ]
+}

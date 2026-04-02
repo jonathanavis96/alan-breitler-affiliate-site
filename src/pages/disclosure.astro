@@ -2,99 +2,168 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import siteData from '../../data/site.json';
 import { url } from '../lib/base';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: `Affiliate Disclosure — ${siteData.name}`,
+  url: `${siteData.url}/disclosure/`,
+  description: `How ${siteData.name} earns revenue through affiliate partnerships with AI SaaS companies, and why it never affects our editorial independence.`,
+};
 ---
 
 <BaseLayout
   title="Affiliate Disclosure"
-  description={`${siteData.name} affiliate disclosure policy. Learn how we earn from affiliate partnerships and how it affects our recommendations.`}
+  description={`How ${siteData.name} earns revenue through affiliate partnerships with AI SaaS companies, and why it never affects our editorial independence.`}
+  schema={schema}
 >
-  <!-- Header -->
+  <!-- Hero -->
   <section class="container-narrow py-20 md:py-32">
-    <span class="label-text text-secondary font-bold mb-6 block">Legal</span>
-    <h1 class="font-headline italic text-4xl md:text-5xl leading-tight tracking-tighter mb-8">Affiliate Disclosure</h1>
-    <p class="text-on-surface-variant text-lg max-w-xl leading-relaxed font-body">
-      Transparency matters to us. Here's how {siteData.name} earns money and how that relates to our recommendations.
+    <span class="text-xs font-semibold uppercase tracking-widest text-primary mb-6 block">Transparency</span>
+    <h1 class="font-headline text-4xl md:text-5xl leading-tight tracking-tighter mb-8 font-bold text-primary">Affiliate Disclosure</h1>
+    <p class="text-muted text-lg max-w-xl leading-relaxed font-body">
+      Transparency is fundamental to everything we do. Here's exactly how {siteData.name} earns revenue and why it never compromises our reviews.
     </p>
   </section>
 
   <!-- Content -->
-  <section class="bg-surface-container-low py-16 md:py-24">
+  <section class="bg-surface py-16 md:py-24">
     <div class="container-narrow space-y-12">
+
+      <!-- How We Earn -->
       <div>
-        <h2 class="font-headline italic text-2xl mb-4">How We Earn</h2>
-        <div class="space-y-4 text-on-surface-variant font-body leading-relaxed">
+        <h2 class="font-headline text-2xl mb-4 font-bold tracking-tight text-primary">How We Earn Revenue</h2>
+        <div class="space-y-4 text-muted font-body leading-relaxed">
           <p>
-            {siteData.name} participates in various affiliate marketing programs. This means that when you click on certain links on our site and make a purchase, we may receive a small commission from the retailer or service provider.
+            {siteData.name} participates in affiliate programs operated by AI SaaS companies and affiliate networks. When you click on certain links on our site and <strong class="text-primary">sign up for a tool or service</strong>, we may receive a commission from the provider.
           </p>
           <p>
-            <strong class="text-on-surface">This comes at absolutely no extra cost to you.</strong> The price you pay is the same whether you use our affiliate link or go directly to the retailer's website.
+            <strong class="text-primary">This comes at absolutely no extra cost to you.</strong> The subscription price, free trial terms, and service you receive are identical whether you sign up through our link or go directly to the provider's website. Our commission is paid by the SaaS company, not by you.
           </p>
         </div>
       </div>
 
-      <div class="h-[1px] bg-outline-variant/15"></div>
+      <div class="h-[1px] bg-surface-alt"></div>
 
+      <!-- Editorial Independence -->
       <div>
-        <h2 class="font-headline italic text-2xl mb-4">Our Editorial Independence</h2>
-        <p class="text-on-surface-variant font-body leading-relaxed mb-6">
-          Affiliate commissions never influence our product ratings, rankings, or recommendations. Our editorial process is completely independent of our monetization:
+        <h2 class="font-headline text-2xl mb-4 font-bold tracking-tight text-primary">Our Editorial Independence</h2>
+        <p class="text-muted font-body leading-relaxed mb-6">
+          Affiliate commissions never influence our scores, rankings, or recommendations. Our editorial process is entirely separate from our monetization — here's what that means in practice:
         </p>
-        <div class="space-y-4">
+        <div class="space-y-5">
           <div class="flex gap-4 items-start">
-            <span class="material-symbols-outlined text-secondary text-lg mt-0.5">check_circle</span>
-            <p class="text-on-surface-variant font-body text-sm">We research and evaluate products based on their merits.</p>
+            <span class="text-primary text-xl mt-0.5">✓</span>
+            <p class="text-muted font-body text-sm"><strong class="text-primary">Merit-based evaluation.</strong> We score every tool on Ease of Use, Academic Value, and Price-to-Value — dimensions that matter to researchers, students, and educators. Commission rates play no role.</p>
           </div>
           <div class="flex gap-4 items-start">
-            <span class="material-symbols-outlined text-secondary text-lg mt-0.5">check_circle</span>
-            <p class="text-on-surface-variant font-body text-sm">We include products because they're genuinely good — not because they pay higher commissions.</p>
+            <span class="text-primary text-xl mt-0.5">✓</span>
+            <p class="text-muted font-body text-sm"><strong class="text-primary">Honest drawbacks.</strong> Every review includes genuine limitations and weaknesses alongside strengths. If a tool has problems, we say so — even if it's a high-commission partner.</p>
           </div>
           <div class="flex gap-4 items-start">
-            <span class="material-symbols-outlined text-secondary text-lg mt-0.5">check_circle</span>
-            <p class="text-on-surface-variant font-body text-sm">We always disclose both positives and negatives.</p>
+            <span class="text-primary text-xl mt-0.5">✓</span>
+            <p class="text-muted font-body text-sm"><strong class="text-primary">No pay-for-placement.</strong> Our comparison tables and "Top Tools" rankings are ordered by editorial score, not by who pays the most. We feature tools because they're genuinely useful for academics.</p>
           </div>
           <div class="flex gap-4 items-start">
-            <span class="material-symbols-outlined text-secondary text-lg mt-0.5">check_circle</span>
-            <p class="text-on-surface-variant font-body text-sm">If a product doesn't meet our standards, it won't be recommended regardless of commission rates.</p>
+            <span class="text-primary text-xl mt-0.5">✓</span>
+            <p class="text-muted font-body text-sm"><strong class="text-primary">Quality threshold.</strong> If a tool doesn't meet our standards for the academic community, it won't appear on our site — regardless of commission potential.</p>
+          </div>
+          <div class="flex gap-4 items-start">
+            <span class="text-primary text-xl mt-0.5">✓</span>
+            <p class="text-muted font-body text-sm"><strong class="text-primary">Non-affiliate coverage.</strong> We review and recommend tools even when no affiliate program exists. If a free or open-source tool is the best option, we'll tell you.</p>
           </div>
         </div>
       </div>
 
-      <div class="h-[1px] bg-outline-variant/15"></div>
+      <div class="h-[1px] bg-surface-alt"></div>
 
+      <!-- Affiliate Programs -->
       <div>
-        <h2 class="font-headline italic text-2xl mb-4">Affiliate Programs</h2>
-        <p class="text-on-surface-variant font-body leading-relaxed mb-4">
-          We may participate in affiliate programs including, but not limited to:
+        <h2 class="font-headline text-2xl mb-4 font-bold tracking-tight text-primary">Affiliate Programs We Participate In</h2>
+        <p class="text-muted font-body leading-relaxed mb-4">
+          We may earn commissions through the following types of affiliate partnerships:
         </p>
-        <div class="space-y-2">
+        <div class="space-y-3">
           <div class="flex gap-3 items-center">
-            <span class="w-1.5 h-1.5 bg-secondary"></span>
-            <span class="text-on-surface-variant font-body text-sm">Amazon Associates Program</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+            <span class="text-muted font-body text-sm"><strong class="text-primary">Direct SaaS affiliate programs</strong> — partnerships directly with AI tool providers (e.g., writing assistants, research platforms, coding tools)</span>
           </div>
           <div class="flex gap-3 items-center">
-            <span class="w-1.5 h-1.5 bg-secondary"></span>
-            <span class="text-on-surface-variant font-body text-sm">Other affiliate networks and direct brand partnerships</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+            <span class="text-muted font-body text-sm"><strong class="text-primary">Affiliate networks</strong> — third-party platforms that aggregate multiple SaaS affiliate programs (e.g., Impact, PartnerStack, ShareASale)</span>
+          </div>
+          <div class="flex gap-3 items-center">
+            <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
+            <span class="text-muted font-body text-sm"><strong class="text-primary">Referral programs</strong> — tools that offer referral bonuses or credits when new users sign up through a shared link</span>
+          </div>
+        </div>
+        <p class="text-muted-dim font-body text-sm leading-relaxed mt-4">
+          The specific programs we participate in may change over time as we add or remove tools from our coverage.
+        </p>
+      </div>
+
+      <div class="h-[1px] bg-surface-alt"></div>
+
+      <!-- How Affiliate Links Work -->
+      <div>
+        <h2 class="font-headline text-2xl mb-4 font-bold tracking-tight text-primary">How Affiliate Links Work</h2>
+        <div class="glass-panel p-8 rounded-lg space-y-4">
+          <div class="flex gap-4 items-start">
+            <span class="text-xs font-bold uppercase tracking-widest text-accent mt-1">01</span>
+            <p class="text-muted font-body text-sm">You read one of our reviews or guides and click a link to visit an AI tool's website.</p>
+          </div>
+          <div class="flex gap-4 items-start">
+            <span class="text-xs font-bold uppercase tracking-widest text-accent mt-1">02</span>
+            <p class="text-muted font-body text-sm">The link contains a tracking parameter that identifies {siteData.name} as the referral source.</p>
+          </div>
+          <div class="flex gap-4 items-start">
+            <span class="text-xs font-bold uppercase tracking-widest text-accent mt-1">03</span>
+            <p class="text-muted font-body text-sm">If you sign up for the tool (free trial, paid plan, or other qualifying action), the provider records the referral.</p>
+          </div>
+          <div class="flex gap-4 items-start">
+            <span class="text-xs font-bold uppercase tracking-widest text-accent mt-1">04</span>
+            <p class="text-muted font-body text-sm">We receive a small commission from the provider. You pay the same price you would have paid going directly.</p>
           </div>
         </div>
       </div>
 
-      <div class="h-[1px] bg-outline-variant/15"></div>
+      <div class="h-[1px] bg-surface-alt"></div>
 
+      <!-- FTC Disclosure -->
       <div>
-        <h2 class="font-headline italic text-2xl mb-4">FTC Disclosure</h2>
-        <p class="text-on-surface-variant font-body leading-relaxed">
-          In accordance with the Federal Trade Commission (FTC) guidelines, we disclose that some of the links on {siteData.name} are affiliate links. We are a participant in various affiliate programs designed to provide a means for sites to earn commissions by linking to products and services.
+        <h2 class="font-headline text-2xl mb-4 font-bold tracking-tight text-primary">FTC Compliance</h2>
+        <p class="text-muted font-body leading-relaxed mb-4">
+          In accordance with the Federal Trade Commission's guidelines on endorsements and testimonials (16 CFR Part 255), we disclose the following:
+        </p>
+        <div class="glass-panel p-6 rounded-lg border border-primary/20">
+          <p class="text-muted font-body text-sm leading-relaxed">
+            Some of the links on {siteData.name} are affiliate links. We are participants in various SaaS affiliate programs designed to provide a means for editorial sites to earn referral commissions by linking to AI tools and services. When you sign up for a product through our affiliate links, we may earn a commission at no additional cost to you. Our opinions, scores, and recommendations are our own and are not influenced by affiliate partnerships.
+          </p>
+        </div>
+      </div>
+
+      <div class="h-[1px] bg-surface-alt"></div>
+
+      <!-- Why This Matters -->
+      <div>
+        <h2 class="font-headline text-2xl mb-4 font-bold tracking-tight text-primary">Why This Model Works for Academics</h2>
+        <p class="text-muted font-body leading-relaxed">
+          Affiliate revenue allows us to keep {siteData.name} completely free to read — no paywalls, no premium tiers, no gated content. Every review, comparison table, and resource guide is available to every researcher, student, and educator. When you use our affiliate links, you directly support independent, unbiased coverage of AI tools for the academic community.
         </p>
       </div>
 
-      <div class="h-[1px] bg-outline-variant/15"></div>
+      <div class="h-[1px] bg-surface-alt"></div>
 
+      <!-- Questions -->
       <div>
-        <h2 class="font-headline italic text-2xl mb-4">Questions?</h2>
-        <p class="text-on-surface-variant font-body leading-relaxed mb-6">
-          If you have any questions about our affiliate relationships or editorial process, please don't hesitate to get in touch.
+        <h2 class="font-headline text-2xl mb-4 font-bold tracking-tight text-primary">Questions About Our Affiliate Relationships?</h2>
+        <p class="text-muted font-body leading-relaxed mb-6">
+          We believe in full transparency. If you have questions about a specific affiliate relationship, our editorial process, or how we handle potential conflicts of interest, we're happy to explain.
         </p>
-        <a href={url('/contact/')} class="btn-outline no-underline">Contact Us</a>
+        <a href={url('/contact/')} class="btn-outline no-underline inline-flex items-center gap-2">
+          Contact Us
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
       </div>
     </div>
   </section>

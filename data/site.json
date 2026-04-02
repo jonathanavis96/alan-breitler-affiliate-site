@@ -1,11 +1,13 @@
 {
-  "name": "Company Name",
-  "tagline": "Your Trusted Guide to Smart Choices",
-  "description": "Expert reviews, comparisons, and buying guides to help you find the best products for your needs.",
+  "name": "AIfocus",
+  "brandPrefix": "AI",
+  "brandSuffix": "focus",
+  "tagline": "Your Academic Edge in AI Tools",
+  "description": "Expert reviews, comparisons, and guides to help academics find the best AI tools for research, writing, and productivity.",
   "url": "https://jonathanavis96.github.io",
   "author": {
-    "name": "Company Name Team",
-    "bio": "We research, test, and review products to help you make informed purchasing decisions."
+    "name": "AIfocus Team",
+    "bio": "We research, test, and review AI tools to help academics make informed decisions."
   },
   "social": {
     "twitter": "",
@@ -13,23 +15,20 @@
     "instagram": ""
   },
   "colors": {
-    "primary": "#000000",
-    "secondary": "#4B41E1",
-    "tertiary": "#E45405",
-    "background": "#F7F9FB",
-    "surface": {
-      "low": "#F2F4F6",
-      "default": "#ECEEF0",
-      "high": "#E6E8EA",
-      "highest": "#E0E3E5"
-    }
+    "base": "#0F1115",
+    "surface": "#171A21",
+    "primary": "#00CFFF",
+    "accent": "#FFB347",
+    "text": "#F3F4F6",
+    "muted": "#A7AFBF"
   },
   "navigation": [
     { "label": "Home", "href": "/" },
-    { "label": "Best Picks", "href": "/best/" },
+    { "label": "Top Tools", "href": "/top-tools/" },
     { "label": "Reviews", "href": "/reviews/" },
-    { "label": "Guides", "href": "/guides/" },
-    { "label": "About", "href": "/about/" }
+    { "label": "Resources", "href": "/resources/" },
+    { "label": "About", "href": "/about/" },
+    { "label": "Contact", "href": "/contact/" }
   ],
   "footer": {
     "links": [

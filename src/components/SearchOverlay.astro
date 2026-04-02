@@ -1,6 +1,5 @@
 ---
 import productData from '../../data/products.json';
-import guidesData from '../../data/guides.json';
 import siteData from '../../data/site.json';
 import { url } from '../lib/base';
 
@@ -24,15 +23,9 @@ for (const item of [...siteData.navigation, ...siteData.footer.links]) {
 const searchItems = [
   ...productData.products.map((p) => ({
     title: p.name,
-    subtitle: `${p.brand} · ${p.category.replace(/-/g, ' ')}`,
+    subtitle: `${p.brand} · ${p.categories.map((c: string) => c.replace(/-/g, ' ')).join(', ')}`,
     href: url(`/reviews/${p.slug}/`),
     type: 'Review',
-  })),
-  ...guidesData.guides.map((g) => ({
-    title: g.title,
-    subtitle: `${g.category} · ${g.readTime}`,
-    href: url(`/guides/${g.slug}/`),
-    type: 'Guide',
   })),
   ...pageItems,
 ];
@@ -40,7 +33,7 @@ const searchItems = [
 
 <div id="search-overlay" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-label="Search">
   <!-- Backdrop -->
-  <div class="absolute inset-0 bg-primary/90 backdrop-blur-md" id="search-backdrop"></div>
+  <div class="absolute inset-0 bg-base/95 backdrop-blur-md" id="search-backdrop"></div>
 
   <!-- Search panel -->
   <div class="relative z-10 flex flex-col items-center pt-[15vh] px-6">
@@ -50,7 +43,7 @@ const searchItems = [
         <input
           type="search"
           id="search-input"
-          placeholder="Search reviews, guides, best picks..."
+          placeholder="Search AI tools, reviews, resources..."
           class="w-full bg-transparent text-on-primary text-3xl md:text-4xl font-headline italic placeholder:text-on-primary/30 focus:outline-none border-none"
           autocomplete="off"
         />
@@ -67,9 +60,9 @@ const searchItems = [
       <div id="search-quicklinks" class="text-on-primary/50">
         <p class="label-text mb-4">Quick links</p>
         <div class="flex flex-wrap gap-3">
-          <a href={url('/best/')} class="label-text bg-on-primary/10 px-4 py-2 hover:bg-on-primary/20 transition-colors no-underline text-on-primary/70">Best Picks</a>
+          <a href={url('/top-tools/')} class="label-text bg-on-primary/10 px-4 py-2 hover:bg-on-primary/20 transition-colors no-underline text-on-primary/70">Top Tools</a>
           <a href={url('/reviews/')} class="label-text bg-on-primary/10 px-4 py-2 hover:bg-on-primary/20 transition-colors no-underline text-on-primary/70">Reviews</a>
-          <a href={url('/guides/')} class="label-text bg-on-primary/10 px-4 py-2 hover:bg-on-primary/20 transition-colors no-underline text-on-primary/70">Buying Guides</a>
+          <a href={url('/resources/')} class="label-text bg-on-primary/10 px-4 py-2 hover:bg-on-primary/20 transition-colors no-underline text-on-primary/70">Resources</a>
           <a href={url('/about/')} class="label-text bg-on-primary/10 px-4 py-2 hover:bg-on-primary/20 transition-colors no-underline text-on-primary/70">About Us</a>
         </div>
       </div>

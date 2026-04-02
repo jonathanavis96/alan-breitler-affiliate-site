@@ -19,8 +19,8 @@ const currentPath = Astro.url.pathname;
       >
         <span class="material-symbols-outlined">menu</span>
       </button>
-      <a href={url('/')} class="text-2xl font-headline font-black uppercase italic tracking-tight text-primary no-underline hover:opacity-70 transition-opacity">
-        {siteData.name}
+      <a href={url('/')} class="text-2xl font-headline font-bold tracking-tight no-underline hover:opacity-70 transition-opacity">
+        <span class="text-primary">{siteData.brandPrefix}</span><span class="text-text">{siteData.brandSuffix}</span>
       </a>
     </div>
 

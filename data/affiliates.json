@@ -1,39 +1,46 @@
 {
-  "_comment": "Affiliate link registry. Update destination URLs when real affiliate accounts are set up.",
+  "_comment": "Affiliate link registry for AIfocus. Each slug matches an affiliateSlug in products.json. Replace placeholder destinations with real affiliate URLs when accounts are approved.",
   "links": [
     {
-      "slug": "ergotron-lx",
-      "name": "Ergotron LX Desk Monitor Arm",
-      "destination": "https://www.amazon.com/dp/B00689HXI4?tag=companyname-20",
-      "network": "amazon",
+      "slug": "chatgpt-plus",
+      "destination": "https://chat.openai.com/upgrade?ref=aifocus",
+      "network": "impact",
       "active": true
     },
     {
-      "slug": "keychron-q1-max",
-      "name": "Keychron Q1 Max",
-      "destination": "https://www.amazon.com/dp/B0CR1JCTKF?tag=companyname-20",
-      "network": "amazon",
+      "slug": "consensus-ai",
+      "destination": "https://consensus.app/?via=aifocus",
+      "network": "partnerstack",
       "active": true
     },
     {
-      "slug": "autonomous-smartdesk-pro",
-      "name": "Autonomous SmartDesk Pro",
-      "destination": "https://www.amazon.com/dp/B0GL85RG38?tag=companyname-20",
-      "network": "amazon",
+      "slug": "midjourney",
+      "destination": "https://www.midjourney.com/account/?ref=aifocus",
+      "network": "direct",
       "active": true
     },
     {
-      "slug": "benq-screenbar-halo",
-      "name": "BenQ ScreenBar Halo",
-      "destination": "https://www.amazon.com/dp/B08WT889V3?tag=companyname-20",
-      "network": "amazon",
+      "slug": "github-copilot",
+      "destination": "https://github.com/features/copilot?ref=aifocus",
+      "network": "impact",
       "active": true
     },
     {
-      "slug": "logitech-mx-master-3s",
-      "name": "Logitech MX Master 3S",
-      "destination": "https://www.amazon.com/dp/B09HM94VDS?tag=companyname-20",
-      "network": "amazon",
+      "slug": "elicit-ai",
+      "destination": "https://elicit.com/?ref=aifocus",
+      "network": "partnerstack",
+      "active": true
+    },
+    {
+      "slug": "grammarly-ai",
+      "destination": "https://www.grammarly.com/plans?ref=aifocus",
+      "network": "shareasale",
+      "active": true
+    },
+    {
+      "slug": "claude-pro",
+      "destination": "https://claude.ai/upgrade?ref=aifocus",
+      "network": "direct",
       "active": true
     }
   ]

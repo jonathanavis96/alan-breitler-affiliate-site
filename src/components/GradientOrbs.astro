@@ -1,0 +1,56 @@
+---
+/**
+ * GradientOrbs — Decorative violet & amber gradient blur orbs
+ *
+ * Drop into any section or page wrapper to add ambient background glow.
+ * All orbs are absolutely positioned, pointer-events-none, and aria-hidden.
+ *
+ * Variants:
+ *   "hero"    — Large, widely spaced orbs for full-viewport hero sections
+ *   "section" — Medium orbs, offset for content sections
+ *   "page"    — Subtle page-level ambient glow (top-left violet, bottom-right amber)
+ *   "minimal" — Single small violet orb, low opacity — for cards/panels
+ */
+
+interface Props {
+  variant?: 'hero' | 'section' | 'page' | 'minimal';
+  class?: string;
+}
+
+const { variant = 'section', class: className = '' } = Astro.props;
+---
+
+<div class:list={['absolute inset-0 pointer-events-none overflow-hidden', className]} aria-hidden="true">
+  {variant === 'hero' && (
+    <>
+      {/* Large violet orb — top left */}
+      <div class="orb orb-violet orb-lg absolute top-[5%] left-[3%]"></div>
+      {/* Medium amber orb — bottom right */}
+      <div class="orb orb-amber orb-md absolute bottom-[8%] right-[8%]" style="animation-delay: 3s;"></div>
+      {/* Small violet accent — mid right */}
+      <div class="orb orb-violet orb-sm absolute top-[40%] right-[15%]" style="animation-delay: 5s;"></div>
+    </>
+  )}
+
+  {variant === 'section' && (
+    <>
+      {/* Violet orb — upper left */}
+      <div class="orb orb-violet orb-md absolute -top-20 -left-20"></div>
+      {/* Amber orb — lower right */}
+      <div class="orb orb-amber orb-sm absolute -bottom-16 -right-16" style="animation-delay: 3s;"></div>
+    </>
+  )}
+
+  {variant === 'page' && (
+    <>
+      {/* Subtle page-level violet glow — top left */}
+      <div class="orb orb-violet orb-xl absolute -top-[20%] -left-[10%] opacity-[0.04]"></div>
+      {/* Subtle page-level amber glow — bottom right */}
+      <div class="orb orb-amber orb-xl absolute -bottom-[20%] -right-[10%] opacity-[0.03]" style="animation-delay: 4s;"></div>
+    </>
+  )}
+
+  {variant === 'minimal' && (
+    <div class="orb orb-violet orb-sm absolute -top-10 -right-10 opacity-[0.06]"></div>
+  )}
+</div>

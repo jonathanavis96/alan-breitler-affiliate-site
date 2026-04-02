@@ -1,0 +1,304 @@
+---
+/**
+ * ScoreCounter — Animated score counter that counts up to a target value
+ * when the element scrolls into the viewport.
+ *
+ * Uses IntersectionObserver + CSS counter animation for zero-framework overhead.
+ * Falls back to static display when prefers-reduced-motion is set.
+ *
+ * @prop value     — Target score (0–10, supports one decimal)
+ * @prop max       — Maximum score value (default 10)
+ * @prop label     — Optional label text beneath the score
+ * @prop size      — Display size: "sm" | "md" | "lg" | "xl" (default "md")
+ * @prop showBar   — Show an animated horizontal progress bar (default false)
+ * @prop barColor  — Bar gradient: "violet-amber" | "violet" | "amber" (default "violet-amber")
+ * @prop ring      — Show score inside a circular ring (default false)
+ * @prop suffix    — Text after the number, e.g. "/10" (default "/10")
+ * @prop class     — Extra CSS classes on the root element
+ */
+interface Props {
+  value: number;
+  max?: number;
+  label?: string;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  showBar?: boolean;
+  barColor?: 'violet-amber' | 'violet' | 'amber';
+  ring?: boolean;
+  suffix?: string;
+  class?: string;
+}
+
+const {
+  value,
+  max = 10,
+  label,
+  size = 'md',
+  showBar = false,
+  barColor = 'violet-amber',
+  ring = false,
+  suffix = '/10',
+  class: className = '',
+} = Astro.props;
+
+/* Percentage for bar fill and ring stroke */
+const pct = Math.min((value / max) * 100, 100);
+
+/* Color tier — green for high, amber for mid, muted for low */
+function tierClass(v: number): string {
+  if (v >= 8.5) return 'score-counter--high';
+  if (v >= 7) return 'score-counter--mid';
+  return 'score-counter--low';
+}
+
+const tier = tierClass(value);
+
+/* Size tokens */
+const sizeMap = {
+  sm: { text: 'text-sm', ring: 'w-10 h-10', bar: 'h-1', numSize: 'text-xs' },
+  md: { text: 'text-lg', ring: 'w-14 h-14', bar: 'h-1.5', numSize: 'text-base' },
+  lg: { text: 'text-2xl', ring: 'w-20 h-20', bar: 'h-2', numSize: 'text-lg' },
+  xl: { text: 'text-4xl', ring: 'w-24 h-24', bar: 'h-2.5', numSize: 'text-xl' },
+};
+
+const tokens = sizeMap[size];
+
+/* Bar gradient class */
+const barGradients: Record<string, string> = {
+  'violet-amber': 'from-primary to-accent',
+  violet: 'from-primary to-primary',
+  amber: 'from-accent to-accent',
+};
+const gradientCls = barGradients[barColor] ?? barGradients['violet-amber'];
+
+/* Unique ID for ring SVG */
+const uid = `sc-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<div
+  class:list={['score-counter', tier, className]}
+  data-score-counter
+  data-target={value.toString()}
+  data-decimals={value % 1 !== 0 ? '1' : '0'}
+>
+  {ring ? (
+    <!-- Ring variant -->
+    <div class:list={['score-counter__ring relative inline-flex items-center justify-center', tokens.ring]}>
+      <svg class="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 36 36">
+        <!-- Background track -->
+        <circle
+          cx="18" cy="18" r="15.5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          class="text-surface-alt opacity-50"
+        />
+        <!-- Animated score arc -->
+        <circle
+          cx="18" cy="18" r="15.5"
+          fill="none"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-dasharray={`${pct * 0.975} 100`}
+          stroke-dashoffset="0"
+          class="score-counter__arc"
+          data-target-dash={`${pct * 0.975}`}
+        />
+      </svg>
+      <span class:list={['score-counter__value font-headline font-bold relative z-[1]', tokens.text]} data-score-value>
+        {value % 1 !== 0 ? value.toFixed(1) : value}
+      </span>
+    </div>
+    {label && (
+      <span class="score-counter__label label-text text-muted-dim mt-1 block text-center">{label}</span>
+    )}
+  ) : showBar ? (
+    <!-- Bar variant -->
+    <div class="score-counter__bar-wrap w-full">
+      {label && (
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-xs text-muted font-label">{label}</span>
+          <span class:list={['font-bold font-headline', tokens.numSize]} data-score-value>
+            {value % 1 !== 0 ? value.toFixed(1) : value}<span class="text-muted-dim text-xs font-normal">{suffix}</span>
+          </span>
+        </div>
+      )}
+      <div class:list={['bg-surface-alt rounded-full overflow-hidden', tokens.bar]}>
+        <div
+          class:list={['score-counter__bar-fill h-full rounded-full bg-gradient-to-r', gradientCls]}
+          style={`width: 0%`}
+          data-target-width={`${pct}%`}
+        ></div>
+      </div>
+    </div>
+  ) : (
+    <!-- Inline number variant -->
+    <span class:list={['score-counter__value font-headline font-bold', tokens.text]} data-score-value>
+      {value % 1 !== 0 ? value.toFixed(1) : value}
+    </span>
+    {suffix && (
+      <span class="text-muted-dim text-xs font-normal">{suffix}</span>
+    )}
+    {label && (
+      <span class="score-counter__label label-text text-muted-dim ml-2">{label}</span>
+    )}
+  )}
+</div>
+
+<style>
+  /* ── Color tiers ── */
+  .score-counter--high { color: #22C55E; }
+  .score-counter--mid { color: #FFB347; }
+  .score-counter--low { color: #A7AFBF; }
+
+  .score-counter--high .score-counter__arc { stroke: #22C55E; }
+  .score-counter--mid .score-counter__arc { stroke: #FFB347; }
+  .score-counter--low .score-counter__arc { stroke: #A7AFBF; }
+
+  /* ── Ring arc animation ── */
+  .score-counter__arc {
+    stroke-dasharray: 0 100;
+    transition: stroke-dasharray 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .score-counter.is-counted .score-counter__arc {
+    /* final value set via data-target-dash attribute in JS */
+  }
+
+  /* ── Bar fill animation ── */
+  .score-counter__bar-fill {
+    width: 0%;
+    transition: width 1s cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  /* ── Ring border (inherits color tier) ── */
+  .score-counter__ring {
+    border-radius: 9999px;
+  }
+
+  /* ── Glow on hover for ring variant ── */
+  .score-counter--high .score-counter__ring:hover {
+    filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.3));
+  }
+  .score-counter--mid .score-counter__ring:hover {
+    filter: drop-shadow(0 0 8px rgba(255, 179, 71, 0.3));
+  }
+
+  /* ── Reduced motion: skip animation, show final state ── */
+  @media (prefers-reduced-motion: reduce) {
+    .score-counter__arc {
+      transition: none;
+    }
+    .score-counter__bar-fill {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  /**
+   * Score Counter — IntersectionObserver-driven count-up animation.
+   *
+   * Each [data-score-counter] element:
+   *   1. Waits until ≥30% visible in the viewport
+   *   2. Counts the numeric display from 0 → target
+   *   3. Animates bar fills and ring arcs to their target values
+   *   4. Fires once (unobserves after triggering)
+   *
+   * Respects prefers-reduced-motion by showing final value immediately.
+   */
+  function initScoreCounters() {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const DURATION = 1200; // ms — matches CSS transition duration
+    const FRAME_INTERVAL = 16; // ~60fps
+
+    function animateCounter(el: Element) {
+      const container = el as HTMLElement;
+      if (container.classList.contains('is-counted')) return;
+      container.classList.add('is-counted');
+
+      const target = parseFloat(container.dataset.target || '0');
+      const decimals = parseInt(container.dataset.decimals || '0', 10);
+      const valueEl = container.querySelector('[data-score-value]') as HTMLElement | null;
+      const barEl = container.querySelector('[data-target-width]') as HTMLElement | null;
+      const arcEl = container.querySelector('[data-target-dash]') as SVGCircleElement | null;
+
+      // Animate bar fill (CSS transition handles the easing)
+      if (barEl) {
+        const targetWidth = barEl.dataset.targetWidth || '0%';
+        barEl.style.width = targetWidth;
+      }
+
+      // Animate ring arc
+      if (arcEl) {
+        const targetDash = arcEl.dataset.targetDash || '0';
+        arcEl.style.strokeDasharray = `${targetDash} 100`;
+      }
+
+      // Count-up the numeric value
+      if (valueEl) {
+        if (prefersReducedMotion) {
+          valueEl.textContent = decimals > 0 ? target.toFixed(decimals) : target.toString();
+          return;
+        }
+
+        const start = performance.now();
+        const suffixEl = valueEl.querySelector('span');
+        const suffixHTML = suffixEl ? suffixEl.outerHTML : '';
+
+        function step(now: number) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / DURATION, 1);
+          // Ease-out cubic for natural deceleration
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const current = eased * target;
+
+          if (valueEl) {
+            const display = decimals > 0 ? current.toFixed(decimals) : Math.round(current).toString();
+            valueEl.innerHTML = display + suffixHTML;
+          }
+
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          }
+        }
+
+        requestAnimationFrame(step);
+      }
+    }
+
+    // If reduced motion, set final states immediately without animation
+    if (prefersReducedMotion) {
+      document.querySelectorAll('[data-score-counter]').forEach((el) => {
+        const container = el as HTMLElement;
+        container.classList.add('is-counted');
+        const barEl = container.querySelector('[data-target-width]') as HTMLElement | null;
+        const arcEl = container.querySelector('[data-target-dash]') as SVGCircleElement | null;
+        if (barEl) barEl.style.width = barEl.dataset.targetWidth || '0%';
+        if (arcEl) arcEl.style.strokeDasharray = `${arcEl.dataset.targetDash || '0'} 100`;
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animateCounter(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    document.querySelectorAll('[data-score-counter]').forEach((el) => {
+      observer.observe(el);
+    });
+  }
+
+  // Run on initial load
+  initScoreCounters();
+
+  // Re-run on Astro page transitions (View Transitions)
+  document.addEventListener('astro:page-load', initScoreCounters);
+</script>

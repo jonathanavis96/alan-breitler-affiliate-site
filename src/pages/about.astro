@@ -8,34 +8,37 @@ const schema = {
   '@type': 'AboutPage',
   name: `About ${siteData.name}`,
   url: `${siteData.url}/about/`,
-  description: `Learn about ${siteData.name} and our mission to provide honest, well-researched product recommendations.`,
+  description: `Learn about ${siteData.name} — an independent editorial team reviewing AI tools for academics, researchers, and students.`,
 };
 ---
 
 <BaseLayout
   title="About Us"
-  description={`Learn about ${siteData.name} and our mission to provide honest, well-researched product recommendations.`}
+  description={`Learn about ${siteData.name} — an independent editorial team reviewing AI tools for academics, researchers, and students.`}
   schema={schema}
 >
   <!-- Hero -->
   <section class="container-wide py-20 md:py-32">
-    <span class="label-text text-secondary font-bold mb-6 block">Our Story</span>
-    <h1 class="font-headline italic text-5xl md:text-6xl lg:text-7xl leading-[0.9] tracking-tighter max-w-3xl mb-8">
-      Built on Radical <span class="text-secondary">Transparency.</span>
+    <span class="text-xs font-semibold uppercase tracking-widest text-primary mb-6 block scroll-reveal-fade">About Us</span>
+    <h1 class="font-headline text-5xl md:text-6xl lg:text-7xl leading-[0.9] tracking-tighter max-w-3xl mb-8 font-bold text-primary scroll-reveal-blur">
+      AI Tools, Evaluated for <span class="text-accent">Academics.</span>
     </h1>
-    <p class="text-on-surface-variant text-lg md:text-xl max-w-xl leading-relaxed font-body">
-      We started {siteData.name} with a simple goal: help people make better purchasing decisions without the noise, hype, or hidden agendas.
+    <p class="text-muted text-lg md:text-xl max-w-xl leading-relaxed font-body scroll-reveal scroll-delay-200">
+      We built {siteData.name} because choosing the right AI tool shouldn't require a literature review of its own. We do the rigorous evaluation so you can focus on what matters — your research.
     </p>
   </section>
 
   <!-- Mission -->
-  <section class="bg-surface-container-low py-16 md:py-24">
+  <section class="bg-surface py-16 md:py-24">
     <div class="container-narrow">
-      <span class="label-text text-secondary font-bold mb-6 block">Our Mission</span>
-      <h2 class="font-headline italic text-3xl md:text-4xl mb-8">Honest Evaluation Over Commission.</h2>
-      <div class="space-y-6 text-on-surface-variant font-body text-base leading-relaxed">
+      <span class="text-xs font-semibold uppercase tracking-widest text-primary mb-6 block">Our Mission</span>
+      <h2 class="font-headline text-3xl md:text-4xl mb-8 font-bold tracking-tight text-primary">Honest Evaluation for the Academic Community.</h2>
+      <div class="space-y-6 text-muted font-body text-base leading-relaxed">
         <p>
-          Every product recommendation on this site is the result of careful research and honest evaluation. We believe you deserve straightforward, trustworthy information — not marketing fluff designed to push you toward the highest commission.
+          The AI tool landscape changes weekly. New writing assistants, research aggregators, citation managers, and coding copilots appear constantly — each promising to transform academic workflows. But most review sites optimize for affiliate commissions, not for the unique needs of researchers, professors, and graduate students.
+        </p>
+        <p>
+          {siteData.name} exists to fill that gap. We score every tool across three dimensions that matter to academics: <strong class="text-primary">Ease of Use</strong>, <strong class="text-primary">Academic Value</strong>, and <strong class="text-primary">Price-to-Value</strong>. No inflated ratings, no pay-for-placement, no marketing jargon — just clear, evidence-based analysis.
         </p>
       </div>
     </div>
@@ -44,56 +47,60 @@ const schema = {
   <!-- How We Work -->
   <section class="container-wide py-16 md:py-24">
     <div class="mb-16">
-      <span class="label-text text-secondary font-bold mb-4 block">The Process</span>
-      <h2 class="font-headline italic text-3xl md:text-4xl">How We Work</h2>
+      <span class="text-xs font-semibold uppercase tracking-widest text-primary mb-4 block">The Process</span>
+      <h2 class="font-headline text-3xl md:text-4xl font-bold tracking-tight text-primary">How We Evaluate</h2>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-      <div class="bg-surface-container-low p-8">
-        <span class="label-text text-on-tertiary-container font-bold mb-4 block">01</span>
-        <h3 class="font-headline italic text-xl mb-3 not-italic font-bold">Research</h3>
-        <p class="text-on-surface-variant text-sm font-body leading-relaxed">We study specifications, manufacturer claims, and expert analysis for every product we cover.</p>
+      <div class="glass-panel p-8 rounded-lg">
+        <span class="text-xs font-bold uppercase tracking-widest text-accent mb-4 block">01</span>
+        <h3 class="font-headline text-xl mb-3 font-bold text-primary">Identify</h3>
+        <p class="text-muted text-sm font-body leading-relaxed">We track new AI tools and updates relevant to academic workflows — writing, research discovery, data analysis, and coding.</p>
       </div>
-      <div class="bg-surface-container-low p-8">
-        <span class="label-text text-on-tertiary-container font-bold mb-4 block">02</span>
-        <h3 class="font-headline italic text-xl mb-3 not-italic font-bold">Compare</h3>
-        <p class="text-on-surface-variant text-sm font-body leading-relaxed">We evaluate products against their competitors on features, value, and reliability.</p>
+      <div class="glass-panel p-8 rounded-lg">
+        <span class="text-xs font-bold uppercase tracking-widest text-accent mb-4 block">02</span>
+        <h3 class="font-headline text-xl mb-3 font-bold text-primary">Evaluate</h3>
+        <p class="text-muted text-sm font-body leading-relaxed">We test each tool against real academic tasks — drafting abstracts, searching literature, generating citations, debugging code.</p>
       </div>
-      <div class="bg-surface-container-low p-8">
-        <span class="label-text text-on-tertiary-container font-bold mb-4 block">03</span>
-        <h3 class="font-headline italic text-xl mb-3 not-italic font-bold">Test</h3>
-        <p class="text-on-surface-variant text-sm font-body leading-relaxed">Where possible, we verify claims through hands-on use and real-world testing.</p>
+      <div class="glass-panel p-8 rounded-lg">
+        <span class="text-xs font-bold uppercase tracking-widest text-accent mb-4 block">03</span>
+        <h3 class="font-headline text-xl mb-3 font-bold text-primary">Score</h3>
+        <p class="text-muted text-sm font-body leading-relaxed">We rate tools on Ease of Use, Academic Value, and Price-to-Value — three dimensions that reflect what academics actually care about.</p>
       </div>
-      <div class="bg-surface-container-low p-8">
-        <span class="label-text text-on-tertiary-container font-bold mb-4 block">04</span>
-        <h3 class="font-headline italic text-xl mb-3 not-italic font-bold">Write</h3>
-        <p class="text-on-surface-variant text-sm font-body leading-relaxed">We share our honest findings, including both strengths and weaknesses.</p>
+      <div class="glass-panel p-8 rounded-lg">
+        <span class="text-xs font-bold uppercase tracking-widest text-accent mb-4 block">04</span>
+        <h3 class="font-headline text-xl mb-3 font-bold text-primary">Publish</h3>
+        <p class="text-muted text-sm font-body leading-relaxed">We share detailed reviews, head-to-head comparisons, and practical guides — including honest drawbacks alongside strengths.</p>
       </div>
     </div>
   </section>
 
   <!-- Standards -->
-  <section class="bg-primary text-on-primary py-16 md:py-24 grain-overlay">
+  <section class="bg-surface py-16 md:py-24 grain-overlay">
     <div class="container-narrow relative z-20">
-      <span class="label-text text-secondary font-bold mb-6 block">Editorial Standards</span>
-      <h2 class="font-headline italic text-3xl md:text-4xl text-on-primary mb-10">What We Stand For</h2>
+      <span class="text-xs font-semibold uppercase tracking-widest text-accent mb-6 block">Editorial Standards</span>
+      <h2 class="font-headline text-3xl md:text-4xl text-primary mb-10 font-bold tracking-tight">What We Stand For</h2>
 
       <div class="space-y-6">
         <div class="flex gap-6 items-start">
-          <span class="material-symbols-outlined text-secondary mt-1">verified</span>
-          <p class="text-primary-fixed-dim font-body">We include both pros <strong class="text-on-primary">and</strong> cons for every product we review.</p>
+          <span class="text-primary text-xl mt-0.5">✓</span>
+          <p class="text-muted font-body"><strong class="text-primary">Balanced reviews.</strong> We include both strengths and limitations for every tool we evaluate.</p>
         </div>
         <div class="flex gap-6 items-start">
-          <span class="material-symbols-outlined text-secondary mt-1">visibility</span>
-          <p class="text-primary-fixed-dim font-body">We clearly disclose all affiliate relationships.</p>
+          <span class="text-primary text-xl mt-0.5">✓</span>
+          <p class="text-muted font-body"><strong class="text-primary">Full transparency.</strong> We clearly disclose all affiliate relationships — when you sign up through our links, we may earn a commission at no cost to you.</p>
         </div>
         <div class="flex gap-6 items-start">
-          <span class="material-symbols-outlined text-secondary mt-1">shield</span>
-          <p class="text-primary-fixed-dim font-body">We never let affiliate commissions influence our rankings or ratings.</p>
+          <span class="text-primary text-xl mt-0.5">✓</span>
+          <p class="text-muted font-body"><strong class="text-primary">Editorial independence.</strong> Affiliate partnerships never influence our scores, rankings, or recommendations.</p>
         </div>
         <div class="flex gap-6 items-start">
-          <span class="material-symbols-outlined text-secondary mt-1">update</span>
-          <p class="text-primary-fixed-dim font-body">We update our content regularly to keep recommendations current.</p>
+          <span class="text-primary text-xl mt-0.5">✓</span>
+          <p class="text-muted font-body"><strong class="text-primary">Academic focus.</strong> Every evaluation considers the specific needs of researchers, students, and educators.</p>
+        </div>
+        <div class="flex gap-6 items-start">
+          <span class="text-primary text-xl mt-0.5">✓</span>
+          <p class="text-muted font-body"><strong class="text-primary">Regular updates.</strong> AI tools evolve rapidly — we revisit and re-score tools as they ship meaningful updates.</p>
         </div>
       </div>
     </div>
@@ -102,26 +109,26 @@ const schema = {
   <!-- Affiliate note + CTA -->
   <section class="container-narrow py-16 md:py-24">
     <div class="mb-12">
-      <span class="label-text text-secondary font-bold mb-4 block">Transparency</span>
-      <h2 class="font-headline italic text-3xl mb-6">Affiliate Disclosure</h2>
-      <p class="text-on-surface-variant font-body leading-relaxed mb-4">
-        {siteData.name} is supported through affiliate partnerships. When you click a link and make a purchase, we may earn a commission at no extra cost to you. This helps us keep the site running and continue producing free, helpful content.
+      <span class="text-xs font-semibold uppercase tracking-widest text-primary mb-4 block">Transparency</span>
+      <h2 class="font-headline text-3xl mb-6 font-bold tracking-tight text-primary">Affiliate Disclosure</h2>
+      <p class="text-muted font-body leading-relaxed mb-4">
+        {siteData.name} is supported through affiliate partnerships with SaaS companies. When you sign up for a tool through one of our links, we may earn a commission at no extra cost to you. This helps us keep the site running and continue producing free, unbiased content for the academic community.
       </p>
       <a href={url('/disclosure/')} class="btn-outline no-underline">
         Read Full Disclosure
       </a>
     </div>
 
-    <div class="h-[1px] bg-surface-container-highest mb-12"></div>
+    <div class="h-[1px] bg-surface-alt mb-12"></div>
 
     <div>
-      <h2 class="font-headline italic text-3xl mb-6">Get in Touch</h2>
-      <p class="text-on-surface-variant font-body leading-relaxed mb-6">
-        Have a question, suggestion, or feedback? We'd love to hear from you.
+      <h2 class="font-headline text-3xl mb-6 font-bold tracking-tight text-primary">Get in Touch</h2>
+      <p class="text-muted font-body leading-relaxed mb-6">
+        Know an AI tool we should review? Have feedback on our methodology? We'd love to hear from the academic community.
       </p>
-      <a href={url('/contact/')} class="btn-primary no-underline">
+      <a href={url('/contact/')} class="btn-primary no-underline inline-flex items-center gap-2">
         Contact Us
-        <span class="material-symbols-outlined text-sm ml-3">arrow_forward</span>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
       </a>
     </div>
   </section>

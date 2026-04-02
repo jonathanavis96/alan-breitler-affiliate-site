@@ -2,103 +2,175 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import siteData from '../../data/site.json';
 import { url } from '../lib/base';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: `Privacy Policy — ${siteData.name}`,
+  url: `${siteData.url}/privacy/`,
+  description: `How ${siteData.name} handles your data. We collect minimal information and never sell personal data to third parties.`,
+};
 ---
 
 <BaseLayout
   title="Privacy Policy"
-  description={`${siteData.name} privacy policy. Learn how we handle your data and protect your privacy.`}
+  description={`How ${siteData.name} handles your data. We collect minimal information and never sell personal data to third parties.`}
+  schema={schema}
 >
-  <!-- Header -->
+  <!-- Hero -->
   <section class="container-narrow py-20 md:py-32">
-    <span class="label-text text-secondary font-bold mb-6 block">Legal</span>
-    <h1 class="font-headline italic text-4xl md:text-5xl leading-tight tracking-tighter mb-8">Privacy Policy</h1>
-    <p class="label-text text-on-surface-variant">Last updated: March 2026</p>
+    <span class="text-xs font-semibold uppercase tracking-widest text-primary mb-6 block">Legal</span>
+    <h1 class="font-headline text-4xl md:text-5xl leading-tight tracking-tighter mb-8 font-bold text-primary">Privacy Policy</h1>
+    <p class="text-muted text-lg max-w-xl leading-relaxed font-body">
+      We believe in minimal data collection and maximum transparency. Here's exactly what we collect, why, and how you stay in control.
+    </p>
+    <p class="text-muted-dim text-sm mt-4 font-body">Last updated: March 2026</p>
   </section>
 
   <!-- Content -->
-  <section class="bg-surface-container-low py-16 md:py-24">
+  <section class="bg-surface py-16 md:py-24">
     <div class="container-narrow space-y-12">
-      <p class="text-on-surface-variant font-body leading-relaxed">
-        At {siteData.name}, we take your privacy seriously. This policy explains what information we collect, how we use it, and your rights regarding your data.
-      </p>
 
-      <div class="h-[1px] bg-outline-variant/15"></div>
-
-      <div>
-        <h2 class="font-headline italic text-2xl mb-6">Information We Collect</h2>
-
-        <div class="space-y-8">
-          <div>
-            <h3 class="font-label text-xs uppercase tracking-widest font-bold text-secondary mb-3">Automatically Collected</h3>
-            <p class="text-on-surface-variant font-body text-sm leading-relaxed mb-3">When you visit our website, we may automatically collect:</p>
-            <div class="space-y-2">
-              <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 bg-secondary"></span><span class="text-on-surface-variant font-body text-sm">Browser type and version</span></div>
-              <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 bg-secondary"></span><span class="text-on-surface-variant font-body text-sm">Pages visited and time spent</span></div>
-              <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 bg-secondary"></span><span class="text-on-surface-variant font-body text-sm">Referring website</span></div>
-              <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 bg-secondary"></span><span class="text-on-surface-variant font-body text-sm">General location (country/region level)</span></div>
-            </div>
-          </div>
-
-          <div>
-            <h3 class="font-label text-xs uppercase tracking-widest font-bold text-secondary mb-3">Voluntarily Provided</h3>
-            <p class="text-on-surface-variant font-body text-sm leading-relaxed mb-3">If you contact us, we may collect:</p>
-            <div class="space-y-2">
-              <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 bg-secondary"></span><span class="text-on-surface-variant font-body text-sm">Name and email address</span></div>
-              <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 bg-secondary"></span><span class="text-on-surface-variant font-body text-sm">Any information you include in your message</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="h-[1px] bg-outline-variant/15"></div>
-
-      <div>
-        <h2 class="font-headline italic text-2xl mb-4">How We Use Your Information</h2>
-        <div class="space-y-2">
-          <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 bg-secondary"></span><span class="text-on-surface-variant font-body text-sm">Understand how visitors use our site so we can improve it</span></div>
-          <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 bg-secondary"></span><span class="text-on-surface-variant font-body text-sm">Respond to your enquiries</span></div>
-          <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 bg-secondary"></span><span class="text-on-surface-variant font-body text-sm">Ensure the site functions correctly</span></div>
-        </div>
-      </div>
-
-      <div class="h-[1px] bg-outline-variant/15"></div>
-
-      <div>
-        <h2 class="font-headline italic text-2xl mb-4">Cookies</h2>
-        <p class="text-on-surface-variant font-body text-sm leading-relaxed">
-          Our site may use cookies for basic functionality and analytics. Affiliate links may also set cookies from third-party retailers (such as Amazon) to track referrals. These cookies are governed by those third parties' privacy policies.
+      <!-- Overview -->
+      <div class="glass-panel p-8 rounded-lg">
+        <h2 class="font-headline text-2xl mb-4 font-bold tracking-tight text-primary">The Short Version</h2>
+        <p class="text-muted font-body leading-relaxed">
+          {siteData.name} is a static website with no user accounts, no databases, and no server-side processing. We don't sell your data. We don't build user profiles. We use standard analytics to understand how visitors interact with our content so we can write better reviews and guides for the academic community.
         </p>
       </div>
 
-      <div class="h-[1px] bg-outline-variant/15"></div>
+      <div class="h-[1px] bg-surface-alt"></div>
 
+      <!-- Information We Collect -->
       <div>
-        <h2 class="font-headline italic text-2xl mb-4">Third-Party Services</h2>
-        <p class="text-on-surface-variant font-body text-sm leading-relaxed mb-4">We may use third-party services that collect data independently:</p>
-        <div class="space-y-2">
-          <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 bg-secondary"></span><span class="text-on-surface-variant font-body text-sm"><strong class="text-on-surface">Analytics:</strong> To understand site traffic and usage patterns</span></div>
-          <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 bg-secondary"></span><span class="text-on-surface-variant font-body text-sm"><strong class="text-on-surface">Affiliate networks:</strong> To track referral commissions</span></div>
+        <h2 class="font-headline text-2xl mb-6 font-bold tracking-tight text-primary">Information We Collect</h2>
+
+        <div class="space-y-8">
+          <div>
+            <h3 class="text-xs font-bold uppercase tracking-widest text-accent mb-3">Automatically Collected</h3>
+            <p class="text-muted font-body text-sm leading-relaxed mb-4">When you visit {siteData.name}, standard web analytics may collect:</p>
+            <div class="space-y-3">
+              <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span class="text-muted font-body text-sm">Browser type and version</span></div>
+              <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span class="text-muted font-body text-sm">Pages visited and approximate time on page</span></div>
+              <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span class="text-muted font-body text-sm">Referring URL (where you came from)</span></div>
+              <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span class="text-muted font-body text-sm">General geographic region (country or region level only)</span></div>
+              <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span class="text-muted font-body text-sm">Device type and screen resolution</span></div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-xs font-bold uppercase tracking-widest text-accent mb-3">Voluntarily Provided</h3>
+            <p class="text-muted font-body text-sm leading-relaxed mb-4">If you contact us via email or submit a tool suggestion, we may receive:</p>
+            <div class="space-y-3">
+              <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span class="text-muted font-body text-sm">Your name and email address</span></div>
+              <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span class="text-muted font-body text-sm">Any details you include in your message</span></div>
+            </div>
+            <p class="text-muted-dim font-body text-sm leading-relaxed mt-4">We use this information only to respond to your enquiry. We do not add you to any mailing list without your explicit consent.</p>
+          </div>
         </div>
-        <p class="text-on-surface-variant font-body text-sm leading-relaxed mt-4">Each third-party service operates under its own privacy policy.</p>
       </div>
 
-      <div class="h-[1px] bg-outline-variant/15"></div>
+      <div class="h-[1px] bg-surface-alt"></div>
 
+      <!-- How We Use Information -->
       <div>
-        <h2 class="font-headline italic text-2xl mb-4">Your Rights</h2>
-        <div class="space-y-2">
-          <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 bg-secondary"></span><span class="text-on-surface-variant font-body text-sm">Request access to any personal data we hold about you</span></div>
-          <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 bg-secondary"></span><span class="text-on-surface-variant font-body text-sm">Request deletion of your personal data</span></div>
-          <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 bg-secondary"></span><span class="text-on-surface-variant font-body text-sm">Opt out of analytics tracking</span></div>
+        <h2 class="font-headline text-2xl mb-4 font-bold tracking-tight text-primary">How We Use Your Information</h2>
+        <p class="text-muted font-body leading-relaxed mb-4">We use the data described above solely to:</p>
+        <div class="space-y-3">
+          <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span class="text-muted font-body text-sm">Understand which reviews and guides are most useful to our academic audience</span></div>
+          <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span class="text-muted font-body text-sm">Improve site navigation, content quality, and overall experience</span></div>
+          <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span class="text-muted font-body text-sm">Respond to enquiries, tool suggestions, and feedback</span></div>
+          <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span class="text-muted font-body text-sm">Ensure the site functions correctly across devices</span></div>
+        </div>
+        <p class="text-muted font-body leading-relaxed mt-4">
+          <strong class="text-primary">We never sell, rent, or share your personal information with third parties for marketing purposes.</strong>
+        </p>
+      </div>
+
+      <div class="h-[1px] bg-surface-alt"></div>
+
+      <!-- Cookies -->
+      <div>
+        <h2 class="font-headline text-2xl mb-4 font-bold tracking-tight text-primary">Cookies &amp; Tracking</h2>
+        <p class="text-muted font-body leading-relaxed mb-4">
+          {siteData.name} may use cookies for basic site analytics. Additionally, when you click an affiliate link and sign up for an AI tool through our site, the SaaS provider or affiliate network may set their own cookies to track the referral. These third-party cookies are governed by the respective provider's privacy policy, not ours.
+        </p>
+        <p class="text-muted font-body leading-relaxed">
+          Most browsers allow you to block or delete cookies through their settings. Blocking cookies will not affect your ability to read our content.
+        </p>
+      </div>
+
+      <div class="h-[1px] bg-surface-alt"></div>
+
+      <!-- Third-Party Services -->
+      <div>
+        <h2 class="font-headline text-2xl mb-4 font-bold tracking-tight text-primary">Third-Party Services</h2>
+        <p class="text-muted font-body leading-relaxed mb-4">We may use the following categories of third-party services:</p>
+        <div class="space-y-4">
+          <div class="flex gap-4 items-start">
+            <span class="text-accent text-lg mt-0.5 font-bold">→</span>
+            <p class="text-muted font-body text-sm"><strong class="text-primary">Analytics providers</strong> — to understand aggregate traffic patterns and content performance. We do not use analytics that build individual user profiles.</p>
+          </div>
+          <div class="flex gap-4 items-start">
+            <span class="text-accent text-lg mt-0.5 font-bold">→</span>
+            <p class="text-muted font-body text-sm"><strong class="text-primary">Affiliate networks</strong> — to track referral commissions when you sign up for AI tools through our links. These networks operate under their own privacy policies.</p>
+          </div>
+          <div class="flex gap-4 items-start">
+            <span class="text-accent text-lg mt-0.5 font-bold">→</span>
+            <p class="text-muted font-body text-sm"><strong class="text-primary">Hosting provider (GitHub Pages)</strong> — our static site is hosted on GitHub Pages, which may collect standard server logs. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" class="text-primary underline hover:text-accent transition-colors" target="_blank" rel="noopener noreferrer">GitHub's privacy statement</a> for details.</p>
+          </div>
         </div>
       </div>
 
-      <div class="h-[1px] bg-outline-variant/15"></div>
+      <div class="h-[1px] bg-surface-alt"></div>
 
+      <!-- Data Retention -->
       <div>
-        <h2 class="font-headline italic text-2xl mb-4">Contact</h2>
-        <p class="text-on-surface-variant font-body text-sm leading-relaxed mb-6">For privacy-related enquiries, please get in touch.</p>
-        <a href={url('/contact/')} class="btn-outline no-underline">Contact Us</a>
+        <h2 class="font-headline text-2xl mb-4 font-bold tracking-tight text-primary">Data Retention</h2>
+        <p class="text-muted font-body leading-relaxed">
+          Analytics data is retained in aggregate form only. Any personal information you provide through direct contact (email, tool suggestions) is retained only as long as necessary to respond to your enquiry and is not stored in any permanent database.
+        </p>
+      </div>
+
+      <div class="h-[1px] bg-surface-alt"></div>
+
+      <!-- Your Rights -->
+      <div>
+        <h2 class="font-headline text-2xl mb-4 font-bold tracking-tight text-primary">Your Rights</h2>
+        <p class="text-muted font-body leading-relaxed mb-4">You have the right to:</p>
+        <div class="space-y-3">
+          <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span class="text-muted font-body text-sm">Request access to any personal data we may hold about you</span></div>
+          <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span class="text-muted font-body text-sm">Request correction or deletion of your personal data</span></div>
+          <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span class="text-muted font-body text-sm">Opt out of analytics tracking via your browser settings or a do-not-track extension</span></div>
+          <div class="flex gap-3 items-center"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span><span class="text-muted font-body text-sm">Withdraw consent for any data processing at any time</span></div>
+        </div>
+        <p class="text-muted font-body leading-relaxed mt-4">
+          If you are located in the European Economic Area, you may also have rights under the GDPR, including the right to lodge a complaint with your local data protection authority.
+        </p>
+      </div>
+
+      <div class="h-[1px] bg-surface-alt"></div>
+
+      <!-- Changes -->
+      <div>
+        <h2 class="font-headline text-2xl mb-4 font-bold tracking-tight text-primary">Changes to This Policy</h2>
+        <p class="text-muted font-body leading-relaxed">
+          We may update this privacy policy from time to time. Any changes will be reflected on this page with an updated "Last updated" date. We encourage you to review this policy periodically.
+        </p>
+      </div>
+
+      <div class="h-[1px] bg-surface-alt"></div>
+
+      <!-- Contact -->
+      <div>
+        <h2 class="font-headline text-2xl mb-4 font-bold tracking-tight text-primary">Questions About Privacy?</h2>
+        <p class="text-muted font-body leading-relaxed mb-6">
+          If you have questions about how we handle your data, or if you'd like to exercise any of your rights, we're happy to help.
+        </p>
+        <a href={url('/contact/')} class="btn-outline no-underline inline-flex items-center gap-2">
+          Contact Us
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
       </div>
     </div>
   </section>

@@ -4,21 +4,87 @@ interface Props {
   description: string;
   href: string;
   icon?: string;
+  toolCount?: number;
+  index?: number;
 }
 
-const { title, description, href, icon = '📦' } = Astro.props;
+const { title, description, href, icon = 'category', toolCount = 0, index = 0 } = Astro.props;
+
+/* Alternate violet / amber accent per card */
+const isViolet = index % 2 === 0;
 ---
 
-<a href={href} class="card group block no-underline hover:border-primary/30">
-  <div class="text-3xl mb-3">{icon}</div>
-  <h3 class="text-lg font-bold text-gray-900 group-hover:text-primary transition-colors mb-2">
+<a
+  href={href}
+  class:list={[
+    'category-card group block no-underline rounded-xl p-8 relative overflow-hidden',
+    'bg-surface border border-outline',
+    isViolet ? 'hover-glow-violet' : 'hover-glow-amber',
+    `scroll-reveal scroll-delay-${index * 100}`,
+  ]}
+>
+  <!-- Icon -->
+  <div class:list={['mb-5', isViolet ? 'text-primary' : 'text-accent']}>
+    <span class="material-symbols-outlined text-4xl">{icon}</span>
+  </div>
+
+  <!-- Title -->
+  <h3
+    class:list={[
+      'font-headline font-bold text-lg text-text mb-2 transition-colors duration-300',
+      isViolet ? 'group-hover:text-primary' : 'group-hover:text-accent',
+    ]}
+  >
     {title}
   </h3>
-  <p class="text-sm text-gray-600">{description}</p>
-  <span class="inline-flex items-center text-sm font-medium text-primary mt-3">
-    View picks
-    <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-    </svg>
-  </span>
+
+  <!-- Description -->
+  <p class="text-sm text-muted font-body leading-relaxed line-clamp-3 mb-6">{description}</p>
+
+  <!-- Footer: tool count + arrow -->
+  <div class="flex items-center justify-between mt-auto">
+    {toolCount > 0 && (
+      <span class:list={[
+        'label-text font-bold',
+        isViolet ? 'text-primary/70' : 'text-accent/70',
+      ]}>
+        {toolCount} {toolCount === 1 ? 'tool' : 'tools'}
+      </span>
+    )}
+    <span
+      class:list={[
+        'inline-flex items-center text-sm font-label font-bold uppercase tracking-widest transition-all duration-300',
+        isViolet ? 'text-primary' : 'text-accent',
+      ]}
+    >
+      Explore
+      <svg
+        class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+      </svg>
+    </span>
+  </div>
+
+  <!-- Decorative gradient on hover -->
+  <div
+    class:list={[
+      'absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none',
+      isViolet
+        ? 'bg-gradient-to-br from-primary/5 via-transparent to-primary/[0.02]'
+        : 'bg-gradient-to-br from-accent/5 via-transparent to-accent/[0.02]',
+    ]}
+  ></div>
+
+  <!-- Grid pattern decoration -->
+  <div
+    class:list={[
+      'absolute inset-0 opacity-0 group-hover:opacity-[0.03] transition-opacity duration-700 pointer-events-none',
+    ]}
+    style={`background-image: linear-gradient(${isViolet ? 'rgba(0,207,255,0.4)' : 'rgba(255,179,71,0.4)'} 1px, transparent 1px), linear-gradient(90deg, ${isViolet ? 'rgba(0,207,255,0.4)' : 'rgba(255,179,71,0.4)'} 1px, transparent 1px); background-size: 32px 32px;`}
+  ></div>
 </a>

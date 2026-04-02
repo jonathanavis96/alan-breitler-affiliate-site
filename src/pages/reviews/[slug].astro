@@ -1,189 +1,396 @@
 ---
+import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
+import GradientOrbs from '../../components/GradientOrbs.astro';
 import productData from '../../../data/products.json';
+import { url } from '../../lib/base';
 import type { GetStaticPaths } from 'astro';
 
-export const getStaticPaths: GetStaticPaths = () => {
-  return productData.products.map((product) => ({
-    params: { slug: product.slug },
-    props: { product },
+export const getStaticPaths = (async () => {
+  const reviews = await getCollection('reviews', ({ data }) => !data.draft);
+  return reviews.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry },
   }));
-};
+}) satisfies GetStaticPaths;
 
-const { product } = Astro.props;
-const fullStars = Math.floor(product.rating);
+type ReviewEntry = Awaited<ReturnType<typeof getStaticPaths>>[number]['props']['entry'];
 
+const { entry } = Astro.props as { entry: ReviewEntry };
+const { Content } = await render(entry);
+const review = entry.data;
+
+// Look up matching product data for supplementary info
+const product = productData.products.find((p) => p.slug === review.productSlug);
+
+// Score dimensions with human labels (3 dimensions, each /10)
+const scoreEntries = [
+  { key: 'easeOfUse', label: 'Ease of Use', value: review.scores.easeOfUse },
+  { key: 'academicValue', label: 'Academic Value', value: review.scores.academicValue },
+  { key: 'priceToValue', label: 'Price-to-Value', value: review.scores.priceToValue },
+];
+
+function scoreColor(score: number): string {
+  if (score >= 9) return 'text-success';
+  if (score >= 7) return 'text-accent';
+  return 'text-muted';
+}
+
+function overallColor(score: number): string {
+  if (score >= 8.5) return 'text-success border-success';
+  if (score >= 7) return 'text-accent border-accent';
+  return 'text-muted border-muted';
+}
+
+// Schema.org structured data
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Review',
-  name: `${product.name} Review`,
+  name: review.title,
+  description: review.description,
+  datePublished: review.publishDate.toISOString(),
+  ...(review.updatedDate && { dateModified: review.updatedDate.toISOString() }),
   itemReviewed: {
-    '@type': 'Product',
-    name: product.name,
-    brand: { '@type': 'Brand', name: product.brand },
+    '@type': 'SoftwareApplication',
+    name: product?.name ?? review.productSlug,
+    applicationCategory: 'AI Tool',
+    ...(product && { brand: { '@type': 'Brand', name: product.brand } }),
   },
   reviewRating: {
     '@type': 'Rating',
-    ratingValue: product.rating,
-    bestRating: 5,
+    ratingValue: review.overallScore,
+    bestRating: 10,
+    worstRating: 0,
+  },
+  author: {
+    '@type': 'Organization',
+    name: 'AIfocus',
   },
 };
 ---
 
 <BaseLayout
-  title={`${product.name} Review`}
-  description={product.verdict}
+  title={review.title}
+  description={review.description}
+  ogType="article"
   schema={schema}
 >
-  <!-- Review Header -->
-  <section class="container-wide py-20 md:py-32">
-    <div class="flex flex-col md:flex-row gap-12 md:gap-20">
-      <!-- Product Image -->
-      <div class="md:w-2/5">
-        <div class="aspect-square bg-white flex items-center justify-center p-6">
-          <img
-            src={product.image}
-            alt={product.name}
-            class="max-w-full max-h-full object-contain"
-            loading="eager"
-          />
-        </div>
-      </div>
+  <!-- ═══════════════════════════════════════
+       Review Header
+       ═══════════════════════════════════════ -->
+  <section class="relative py-20 md:py-28 overflow-hidden">
+    <!-- Decorative gradient blur orbs -->
+    <GradientOrbs variant="section" />
 
-      <!-- Product Info -->
-      <div class="md:w-3/5">
-        <div class="flex items-center gap-3 mb-4">
-          <span class="label-text text-secondary font-bold">{product.brand}</span>
-          <span class="label-text text-on-surface-variant/40">·</span>
-          <span class="label-text text-on-surface-variant/60">{product.category.replaceAll('-', ' ')}</span>
-        </div>
-
-        <h1 class="font-headline italic text-4xl md:text-5xl leading-[0.95] tracking-tighter mb-6">{product.name} Review</h1>
-
-        {product.badge && (
-          <span class="badge-editorial mb-6">{product.badge}</span>
-        )}
-
-        <!-- Rating -->
-        <div class="flex items-center gap-3 mb-6">
-          <div class="flex gap-0.5">
-            {Array.from({ length: 5 }, (_, i) => (
-              <span class={`text-lg ${i < fullStars ? 'text-on-tertiary-container' : 'text-surface-container-highest'}`}>★</span>
+    <div class="container-wide relative z-10">
+      <div class="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
+        <!-- Left: Meta + Title -->
+        <div class="lg:w-3/5 animate-fade-in">
+          <div class="flex flex-wrap items-center gap-3 mb-4">
+            {review.categories.map((cat: string) => (
+              <span class="badge-editorial">{cat.replaceAll('-', ' ')}</span>
             ))}
+            {review.badge && <span class="badge-outlook">{review.badge}</span>}
+            <span class="label-text text-muted">{review.readTime} min read</span>
           </div>
-          <span class="label-text text-on-surface-variant text-sm">{product.rating}/5</span>
-          <span class="label-text text-on-surface font-bold ml-auto text-sm">{product.price}</span>
+
+          <h1 class="font-headline font-bold text-4xl md:text-5xl lg:text-[3.25rem] leading-tight tracking-tight mb-6 text-text">
+            {review.title}
+          </h1>
+
+          <p class="text-muted text-lg leading-relaxed max-w-2xl mb-6">
+            {review.description}
+          </p>
+
+          <div class="flex flex-wrap items-center gap-4 text-sm text-muted-dim">
+            <time datetime={review.publishDate.toISOString().split('T')[0]}>
+              Published {review.publishDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </time>
+            {review.updatedDate && (
+              <span>
+                · Updated {review.updatedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+              </span>
+            )}
+          </div>
         </div>
 
-        <!-- Verdict -->
-        <p class="text-on-surface-variant text-lg font-body leading-relaxed mb-8 italic">{product.verdict}</p>
+        <!-- Right: Score Card -->
+        <div class="lg:w-2/5 w-full animate-fade-in animation-delay-200">
+          <div class="glass-panel rounded-xl p-8">
+            <!-- Overall Score -->
+            <div class="text-center mb-6">
+              <div class={`inline-flex items-center justify-center w-20 h-20 rounded-full border-2 mb-3 ${overallColor(review.overallScore)}`}>
+                <span class="font-headline text-3xl font-bold">{review.overallScore}</span>
+              </div>
+              <p class="label-text text-muted">Overall Score</p>
+            </div>
 
-        <!-- CTA -->
-        <a
-          href={`/go/${product.affiliateSlug}/`}
-          class="btn-primary no-underline inline-flex items-center gap-3"
-          target="_blank"
-          rel="nofollow sponsored noopener"
-        >
-          Check Price on Amazon
-          <span class="material-symbols-outlined text-sm">open_in_new</span>
-        </a>
+            <!-- Individual Scores -->
+            <div class="space-y-3">
+              {scoreEntries.map(({ label, value }) => (
+                <div class="flex items-center gap-3">
+                  <span class="text-sm text-muted w-36 shrink-0">{label}</span>
+                  <div class="flex-1 h-2 bg-surface-container-highest rounded-full overflow-hidden">
+                    <div
+                      class="h-full rounded-full bg-gradient-to-r from-primary to-accent"
+                      style={`width: ${(value / 10) * 100}%`}
+                    ></div>
+                  </div>
+                  <span class={`text-sm font-bold w-8 text-right font-headline ${scoreColor(value)}`}>{value}</span>
+                </div>
+              ))}
+            </div>
+
+            <!-- Pricing + Use Case -->
+            <div class="mt-6 pt-6 border-t border-outline flex justify-between items-center">
+              <div>
+                <p class="label-text text-muted-dim mb-1">Pricing</p>
+                <p class="text-text font-medium">{review.pricing}</p>
+              </div>
+              <div class="text-right">
+                <p class="label-text text-muted-dim mb-1">Best For</p>
+                <p class="text-text font-medium">{review.useCase}</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Review Body (template mockup) -->
-  <section class="bg-surface-container-low py-16 md:py-24">
+  <!-- ═══════════════════════════════════════
+       Section 1: TL;DR
+       ═══════════════════════════════════════ -->
+  <section id="tldr" class="py-12 md:py-16 bg-surface scroll-reveal">
+    <div class="container-narrow">
+      <div class="glass-panel rounded-xl p-8 md:p-10">
+        <h2 class="font-headline font-bold text-2xl md:text-3xl mb-6 flex items-center gap-3 text-text">
+          <span class="text-accent material-symbols-outlined">bolt</span> TL;DR
+        </h2>
+        <p class="text-lg text-muted leading-relaxed italic mb-8">
+          {review.verdict}
+        </p>
+
+        <!-- Pros & Cons -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="label-text text-success mb-4 font-bold">What We Loved</h3>
+            <ul class="space-y-2">
+              {review.pros.map((pro: string) => (
+                <li class="flex items-start gap-2 text-sm text-muted">
+                  <span class="text-success mt-0.5 shrink-0">✓</span>
+                  <span>{pro}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 class="label-text text-accent mb-4 font-bold">Could Be Better</h3>
+            <ul class="space-y-2">
+              {review.cons.map((con: string) => (
+                <li class="flex items-start gap-2 text-sm text-muted">
+                  <span class="text-accent mt-0.5 shrink-0">✗</span>
+                  <span>{con}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       Section 2: Deep Dive (MDX Content)
+       ═══════════════════════════════════════ -->
+  <section id="deep-dive" class="py-16 md:py-20 scroll-reveal">
     <div class="container-narrow">
       <AffiliateDisclosure />
 
-      <!-- Pros & Cons -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-        <div class="bg-surface p-8">
-          <h3 class="font-label uppercase font-bold text-xs tracking-widest text-secondary mb-6 not-italic">What We Loved</h3>
-          <ul class="space-y-3">
-            {product.pros.map((pro: string) => (
-              <li class="flex items-start gap-3 font-body text-sm">
-                <span class="material-symbols-outlined text-secondary text-sm mt-0.5 flex-shrink-0">check_circle</span>
-                <span class="text-on-surface-variant">{pro}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div class="bg-surface p-8">
-          <h3 class="font-label uppercase font-bold text-xs tracking-widest text-on-tertiary-container mb-6 not-italic">What Could Improve</h3>
-          <ul class="space-y-3">
-            {product.cons.map((con: string) => (
-              <li class="flex items-start gap-3 font-body text-sm">
-                <span class="material-symbols-outlined text-on-tertiary-container text-sm mt-0.5 flex-shrink-0">cancel</span>
-                <span class="text-on-surface-variant">{con}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+      <h2 class="font-headline font-bold text-2xl md:text-3xl mb-8 flex items-center gap-3 text-text">
+        <span class="text-primary material-symbols-outlined">science</span> Deep Dive
+      </h2>
 
-      <!-- Specs Table -->
-      <div class="mb-16">
-        <h2 class="font-headline italic text-2xl mb-6">Key Specifications</h2>
-        <div class="bg-surface">
-          {Object.entries(product.specs).map(([key, value]) => (
-            <div class="flex justify-between items-center px-6 py-4 border-b border-outline-variant/15 last:border-b-0">
-              <span class="label-text text-on-surface-variant">{key.replace(/_/g, ' ')}</span>
-              <span class="font-body text-sm font-medium text-on-surface">{value}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <!-- Placeholder review content sections -->
-      <div class="space-y-12">
-        <div>
-          <h2 class="font-headline italic text-3xl mb-4">Design & Build Quality</h2>
-          <div class="space-y-4">
-            <div class="h-4 bg-surface-container-high w-full"></div>
-            <div class="h-4 bg-surface-container-high w-11/12"></div>
-            <div class="h-4 bg-surface-container-high w-10/12"></div>
-            <div class="h-4 bg-surface-container-high w-full"></div>
-            <div class="h-4 bg-surface-container-high w-9/12"></div>
-          </div>
-        </div>
-
-        <div>
-          <h2 class="font-headline italic text-3xl mb-4">Performance</h2>
-          <div class="space-y-4">
-            <div class="h-4 bg-surface-container-high w-full"></div>
-            <div class="h-4 bg-surface-container-high w-10/12"></div>
-            <div class="h-4 bg-surface-container-high w-11/12"></div>
-            <div class="h-4 bg-surface-container-high w-8/12"></div>
-          </div>
-        </div>
-
-        <div>
-          <h2 class="font-headline italic text-3xl mb-4">Value for Money</h2>
-          <div class="space-y-4">
-            <div class="h-4 bg-surface-container-high w-full"></div>
-            <div class="h-4 bg-surface-container-high w-9/12"></div>
-            <div class="h-4 bg-surface-container-high w-11/12"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Final CTA -->
-      <div class="mt-16 bg-primary text-on-primary p-10 text-center grain-overlay">
-        <h3 class="font-headline italic text-2xl mb-4 text-on-primary">Our Verdict: {product.rating}/5</h3>
-        <p class="text-primary-fixed-dim font-body mb-6 max-w-lg mx-auto">{product.verdict}</p>
-        <a
-          href={`/go/${product.affiliateSlug}/`}
-          class="inline-flex items-center gap-3 bg-secondary text-on-secondary px-10 py-5 font-label uppercase text-xs tracking-widest font-bold hover:bg-secondary-container transition-colors duration-300 no-underline"
-          target="_blank"
-          rel="nofollow sponsored noopener"
-        >
-          Check Price on Amazon
-          <span class="material-symbols-outlined text-sm">open_in_new</span>
-        </a>
+      <div class="prose-affiliate">
+        <Content />
       </div>
     </div>
   </section>
+
+  <!-- ═══════════════════════════════════════
+       Section 3: Pricing
+       ═══════════════════════════════════════ -->
+  <section id="pricing" class="py-16 md:py-20 bg-surface scroll-reveal">
+    <div class="container-narrow">
+      <h2 class="font-headline font-bold text-2xl md:text-3xl mb-8 flex items-center gap-3 text-text">
+        <span class="text-accent material-symbols-outlined">payments</span> Pricing
+      </h2>
+
+      <div class="glass-panel rounded-xl p-8 md:p-10">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+          <div>
+            <p class="label-text text-muted-dim mb-1">Starting Price</p>
+            <p class="text-2xl font-headline font-bold text-text">{review.pricing}</p>
+          </div>
+          {product?.freeTier && (
+            <span class="badge-editorial">Free Tier Available</span>
+          )}
+        </div>
+
+        {product?.freeTierNote && (
+          <p class="text-muted text-sm mb-6">{product.freeTierNote}</p>
+        )}
+
+        <!-- Value for Money Score -->
+        <div class="flex items-center gap-3 p-4 bg-surface-alt rounded-lg">
+          <span class="label-text text-muted shrink-0">Price-to-Value</span>
+          <div class="flex-1 h-2 bg-surface-container-highest rounded-full overflow-hidden">
+            <div
+              class="h-full rounded-full bg-gradient-to-r from-primary to-accent"
+              style={`width: ${(review.scores.priceToValue / 10) * 100}%`}
+            ></div>
+          </div>
+          <span class={`text-lg font-bold font-headline ${scoreColor(review.scores.priceToValue)}`}>{review.scores.priceToValue}/10</span>
+        </div>
+
+        <p class="text-sm text-muted-dim mt-6 italic">
+          Pricing last verified on {review.publishDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}. Visit the official site for the latest plans and academic discounts.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       Section 4: Who It's For
+       ═══════════════════════════════════════ -->
+  <section id="who-its-for" class="py-16 md:py-20 scroll-reveal">
+    <div class="container-narrow">
+      <h2 class="font-headline font-bold text-2xl md:text-3xl mb-8 flex items-center gap-3 text-text">
+        <span class="text-primary material-symbols-outlined">school</span> Who It's For
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Academic Relevance card -->
+        <div class="card">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-primary-muted flex items-center justify-center">
+              <span class="text-primary material-symbols-outlined text-lg">menu_book</span>
+            </div>
+            <h3 class="font-headline font-bold text-lg text-text">Academic Relevance</h3>
+          </div>
+          <div class="flex items-center gap-3 mb-3">
+            <div class="flex-1 h-2 bg-surface-container-highest rounded-full overflow-hidden">
+              <div
+                class="h-full rounded-full bg-primary"
+                style={`width: ${(review.scores.academicValue / 10) * 100}%`}
+              ></div>
+            </div>
+            <span class={`text-lg font-bold font-headline ${scoreColor(review.scores.academicValue)}`}>{review.scores.academicValue}/10</span>
+          </div>
+          <p class="text-sm text-muted">
+            Measures how well this tool integrates into scholarly workflows — from literature reviews and data analysis to manuscript preparation.
+          </p>
+        </div>
+
+        <!-- Ease of Use card -->
+        <div class="card">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-accent-muted flex items-center justify-center">
+              <span class="text-accent material-symbols-outlined text-lg">bolt</span>
+            </div>
+            <h3 class="font-headline font-bold text-lg text-text">Ease of Use</h3>
+          </div>
+          <div class="flex items-center gap-3 mb-3">
+            <div class="flex-1 h-2 bg-surface-container-highest rounded-full overflow-hidden">
+              <div
+                class="h-full rounded-full bg-accent"
+                style={`width: ${(review.scores.easeOfUse / 10) * 100}%`}
+              ></div>
+            </div>
+            <span class={`text-lg font-bold font-headline ${scoreColor(review.scores.easeOfUse)}`}>{review.scores.easeOfUse}/10</span>
+          </div>
+          <p class="text-sm text-muted">
+            How quickly a busy academic can get productive. Considers onboarding, documentation, and day-to-day UX.
+          </p>
+        </div>
+
+        <!-- Best use case -->
+        <div class="card md:col-span-2">
+          <h3 class="font-headline font-bold text-lg text-text mb-3">Ideal Use Case</h3>
+          <p class="text-accent font-medium text-lg mb-3">{review.useCase}</p>
+          <p class="text-sm text-muted">
+            We recommend this tool primarily for academics and researchers who need a reliable solution for <span class="text-text">{review.useCase.toLowerCase()}</span>. Whether you're a graduate student, postdoc, or established faculty member, it can meaningfully improve your workflow.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       Section 5: Verdict
+       ═══════════════════════════════════════ -->
+  <section id="verdict" class="py-16 md:py-20 bg-surface scroll-reveal">
+    <div class="container-narrow">
+      <h2 class="font-headline font-bold text-2xl md:text-3xl mb-8 flex items-center gap-3 text-text">
+        <span class="text-accent material-symbols-outlined">trophy</span> Final Verdict
+      </h2>
+
+      <div class="relative grain-overlay rounded-xl overflow-hidden">
+        <div class="bg-gradient-to-br from-primary/20 via-surface-alt to-accent/10 p-8 md:p-12">
+          <!-- Score + Verdict -->
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-8">
+            <div class={`flex items-center justify-center w-24 h-24 rounded-2xl border-2 shrink-0 ${overallColor(review.overallScore)}`} style="background: rgba(0, 207, 255, 0.1);">
+              <div class="text-center">
+                <span class="font-headline text-4xl font-bold">{review.overallScore}</span>
+                <p class="label-text mt-1 opacity-70">/10</p>
+              </div>
+            </div>
+            <p class="text-lg md:text-xl text-text leading-relaxed font-medium">
+              {review.verdict}
+            </p>
+          </div>
+
+          <!-- Score Summary Grid -->
+          <div class="grid grid-cols-3 gap-4 mb-8">
+            {scoreEntries.map(({ label, value }) => (
+              <div class="text-center p-3 bg-base/40 rounded-lg">
+                <p class={`text-xl font-bold font-headline ${scoreColor(value)}`}>{value}</p>
+                <p class="label-text text-muted-dim mt-1">{label}</p>
+              </div>
+            ))}
+          </div>
+
+          <!-- CTA -->
+          {review.affiliateSlug && (
+            <div class="flex flex-col sm:flex-row items-center gap-4">
+              <a
+                href={url(`/go/${review.affiliateSlug}/`)}
+                class="btn-primary no-underline inline-flex items-center gap-3"
+                target="_blank"
+                rel="nofollow sponsored noopener"
+              >
+                Try {product?.name ?? 'This Tool'}
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+              </a>
+              <p class="text-xs text-muted-dim italic">
+                Affiliate link — we may earn a commission at no cost to you.
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Navigation (desktop sidebar) -->
+  <nav class="hidden lg:block fixed right-6 top-1/2 -translate-y-1/2 z-40" aria-label="Review sections">
+    <div class="glass-panel rounded-lg p-2 space-y-1">
+      <a href="#tldr" class="block px-3 py-1.5 text-xs text-muted hover:text-primary transition-colors rounded no-underline">TL;DR</a>
+      <a href="#deep-dive" class="block px-3 py-1.5 text-xs text-muted hover:text-primary transition-colors rounded no-underline">Deep Dive</a>
+      <a href="#pricing" class="block px-3 py-1.5 text-xs text-muted hover:text-primary transition-colors rounded no-underline">Pricing</a>
+      <a href="#who-its-for" class="block px-3 py-1.5 text-xs text-muted hover:text-primary transition-colors rounded no-underline">Who It's For</a>
+      <a href="#verdict" class="block px-3 py-1.5 text-xs text-muted hover:text-primary transition-colors rounded no-underline">Verdict</a>
+    </div>
+  </nav>
 </BaseLayout>

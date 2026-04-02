@@ -1,82 +1,158 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import siteData from '../../data/site.json';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  name: `Contact ${siteData.name}`,
+  url: `${siteData.url}/contact/`,
+  description: `Get in touch with ${siteData.name}. Suggest an AI tool for review, report an issue, or reach out about partnerships.`,
+};
 ---
 
 <BaseLayout
   title="Contact"
-  description={`Get in touch with ${siteData.name}. We'd love to hear your questions, suggestions, or feedback.`}
+  description={`Get in touch with ${siteData.name}. Suggest an AI tool for review, report an issue, or reach out about partnerships.`}
+  schema={schema}
 >
-  <!-- Header -->
-  <section class="container-narrow py-20 md:py-32">
-    <span class="label-text text-secondary font-bold mb-6 block">Get in Touch</span>
-    <h1 class="font-headline italic text-4xl md:text-5xl leading-tight tracking-tighter mb-8">Contact Us</h1>
-    <p class="text-on-surface-variant text-lg max-w-xl leading-relaxed font-body">
-      Have a question, suggestion, or want to work with us? Drop us a message and we'll get back to you as soon as we can.
+  <!-- Hero -->
+  <section class="container-wide py-20 md:py-32">
+    <span class="text-xs font-semibold uppercase tracking-widest text-primary mb-6 block">Contact</span>
+    <h1 class="font-headline text-5xl md:text-6xl lg:text-7xl leading-[0.9] tracking-tighter max-w-3xl mb-8 font-bold text-primary">
+      Let's Talk <span class="text-accent">AI Tools.</span>
+    </h1>
+    <p class="text-muted text-lg md:text-xl max-w-xl leading-relaxed font-body">
+      Whether you've found an AI tool we should review, spotted an error in our coverage, or want to discuss a partnership — we'd love to hear from you.
     </p>
   </section>
 
-  <!-- Form -->
-  <section class="bg-surface-container-low py-16 md:py-24">
-    <div class="container-narrow">
-      <!-- TODO: Replace xplaceholder with a real Formspree form ID -->
-      <form class="space-y-8" action="https://formspree.io/f/xplaceholder" method="POST">
-        <div>
-          <label for="name" class="label-text text-on-surface font-bold mb-3 block">Name *</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            required
-            class="w-full px-0 py-4 bg-transparent border-0 border-b-2 border-surface-container-highest text-on-surface font-body
-                   focus:outline-none focus:border-secondary transition-colors placeholder:text-on-surface-variant/40"
-            placeholder="Your name"
-          />
+  <!-- Contact Options -->
+  <section class="bg-surface py-16 md:py-24">
+    <div class="container-wide">
+      <div class="grid md:grid-cols-2 gap-12 lg:gap-16">
+
+        <!-- Suggest a Tool Form (visual placeholder) -->
+        <div class="glass-panel rounded-2xl p-8 md:p-10">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+            </div>
+            <h2 class="font-headline text-2xl font-bold text-primary tracking-tight">Suggest a Tool</h2>
+          </div>
+          <p class="text-muted text-sm mb-8 leading-relaxed">
+            Know an AI tool that deserves a spot in our reviews? We prioritize tools relevant to academic research, writing, and productivity.
+          </p>
+
+          <!-- Visual placeholder form — no submission backend -->
+          <form class="space-y-6" onsubmit="return false;">
+            <div>
+              <label for="tool-name" class="text-xs font-semibold uppercase tracking-widest text-muted mb-2 block">Tool Name *</label>
+              <input
+                type="text"
+                id="tool-name"
+                name="tool-name"
+                class="w-full px-4 py-3 bg-base/50 border border-white/10 rounded-lg text-primary font-body
+                       focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/25 transition-colors placeholder:text-muted/40"
+                placeholder="e.g. Semantic Scholar, Elicit, Scite"
+              />
+            </div>
+
+            <div>
+              <label for="tool-url" class="text-xs font-semibold uppercase tracking-widest text-muted mb-2 block">Tool URL</label>
+              <input
+                type="url"
+                id="tool-url"
+                name="tool-url"
+                class="w-full px-4 py-3 bg-base/50 border border-white/10 rounded-lg text-primary font-body
+                       focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/25 transition-colors placeholder:text-muted/40"
+                placeholder="https://..."
+              />
+            </div>
+
+            <div>
+              <label for="tool-reason" class="text-xs font-semibold uppercase tracking-widest text-muted mb-2 block">Why should we review it?</label>
+              <textarea
+                id="tool-reason"
+                name="tool-reason"
+                rows="3"
+                class="w-full px-4 py-3 bg-base/50 border border-white/10 rounded-lg text-primary font-body
+                       focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/25 transition-colors resize-y placeholder:text-muted/40"
+                placeholder="How does it help with research, writing, or academic workflows?"
+              ></textarea>
+            </div>
+
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary/10 text-primary font-semibold text-sm
+                     hover:bg-primary/20 transition-colors cursor-default"
+              disabled
+            >
+              Submit Suggestion
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </button>
+            <p class="text-muted/60 text-xs">Form coming soon — for now, email us directly.</p>
+          </form>
         </div>
 
-        <div>
-          <label for="email" class="label-text text-on-surface font-bold mb-3 block">Email *</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            class="w-full px-0 py-4 bg-transparent border-0 border-b-2 border-surface-container-highest text-on-surface font-body
-                   focus:outline-none focus:border-secondary transition-colors placeholder:text-on-surface-variant/40"
-            placeholder="you@example.com"
-          />
+        <!-- Direct Contact & Info -->
+        <div class="space-y-8">
+          <!-- Email -->
+          <div class="glass-panel rounded-2xl p-8 md:p-10">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center">
+                <svg class="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h2 class="font-headline text-2xl font-bold text-primary tracking-tight">Email Us</h2>
+            </div>
+            <p class="text-muted text-sm mb-6 leading-relaxed">
+              For tool suggestions, corrections, partnership inquiries, or general feedback — email is the fastest way to reach us.
+            </p>
+            <a
+              href="mailto:hello@aifocus.site"
+              class="inline-flex items-center gap-2 text-accent hover:text-accent/80 font-semibold transition-colors"
+            >
+              hello@aifocus.site
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </a>
+          </div>
+
+          <!-- What We Want to Hear -->
+          <div class="glass-panel rounded-2xl p-8 md:p-10">
+            <h3 class="font-headline text-xl font-bold text-primary tracking-tight mb-4">What We'd Love to Hear About</h3>
+            <ul class="space-y-3">
+              {[
+                { icon: 'search', text: 'AI tools you use in your academic workflow' },
+                { icon: 'edit_note', text: 'Corrections or updates to our reviews' },
+                { icon: 'handshake', text: 'Partnership or sponsorship opportunities' },
+                { icon: 'lightbulb', text: 'Feature requests for the site' },
+                { icon: 'bug_report', text: 'Bug reports or accessibility issues' },
+              ].map(item => (
+                <li class="flex items-start gap-3 text-muted text-sm leading-relaxed">
+                  <span class="material-symbols-outlined text-base text-primary mt-0.5">{item.icon}</span>
+                  <span>{item.text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Response Time -->
+          <div class="glass-panel rounded-2xl p-8 md:p-10 border-primary/20">
+            <p class="text-muted text-sm leading-relaxed">
+              <span class="text-primary font-semibold">Response time:</span> We typically reply within 48 hours. Tool suggestions are queued for our editorial review pipeline and may take longer to act on.
+            </p>
+          </div>
         </div>
 
-        <div>
-          <label for="subject" class="label-text text-on-surface font-bold mb-3 block">Subject</label>
-          <input
-            type="text"
-            id="subject"
-            name="subject"
-            class="w-full px-0 py-4 bg-transparent border-0 border-b-2 border-surface-container-highest text-on-surface font-body
-                   focus:outline-none focus:border-secondary transition-colors placeholder:text-on-surface-variant/40"
-            placeholder="What is this about?"
-          />
-        </div>
-
-        <div>
-          <label for="message" class="label-text text-on-surface font-bold mb-3 block">Message *</label>
-          <textarea
-            id="message"
-            name="message"
-            rows="6"
-            required
-            class="w-full px-0 py-4 bg-transparent border-0 border-b-2 border-surface-container-highest text-on-surface font-body
-                   focus:outline-none focus:border-secondary transition-colors resize-y placeholder:text-on-surface-variant/40"
-            placeholder="Your message..."
-          ></textarea>
-        </div>
-
-        <button type="submit" class="btn-primary grain-overlay">
-          Send Message
-          <span class="material-symbols-outlined text-sm ml-3">send</span>
-        </button>
-      </form>
+      </div>
     </div>
   </section>
 </BaseLayout>

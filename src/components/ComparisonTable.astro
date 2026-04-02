@@ -1,64 +1,123 @@
 ---
+import { url } from '../lib/base';
+
+interface Scores {
+  ease_of_use: number;
+  academic_value: number;
+  price_to_value: number;
+}
+
 interface Product {
   name: string;
+  slug?: string;
   affiliateSlug: string;
-  specs: Record<string, string>;
-  rating: number;
-  price?: string;
+  scores: Scores;
+  overallScore: number;
+  pricing?: string;
+  useCase?: string;
   badge?: string;
 }
 
 interface Props {
   products: Product[];
-  specLabels: Record<string, string>;
 }
 
-const { products, specLabels } = Astro.props;
+const { products: rawProducts } = Astro.props;
+
+// Sort products by overall score descending (fixed sort order — no client-side interactivity)
+const products = [...rawProducts].sort((a, b) => b.overallScore - a.overallScore);
+
+const scoreDimensions: { key: keyof Scores; label: string }[] = [
+  { key: 'ease_of_use', label: 'Ease of Use' },
+  { key: 'academic_value', label: 'Academic Value' },
+  { key: 'price_to_value', label: 'Price-to-Value' },
+];
+
+function scoreColor(score: number): string {
+  if (score >= 9) return 'text-success';
+  if (score >= 7) return 'text-accent';
+  return 'text-muted';
+}
+
+function overallColor(score: number): string {
+  if (score >= 8.5) return 'text-success';
+  if (score >= 7) return 'text-accent';
+  return 'text-muted';
+}
 ---
 
 <div class="overflow-x-auto">
   <table class="w-full border-collapse text-sm">
     <thead>
-      <tr class="border-b-2 border-gray-200">
-        <th class="text-left py-3 px-4 font-semibold text-gray-600">Feature</th>
+      <tr class="border-b border-outline">
+        <th class="text-left py-3 px-4 font-headline font-semibold text-muted text-xs uppercase tracking-wide">Feature</th>
         {products.map((product) => (
-          <th class="text-center py-3 px-4 font-bold text-gray-900 relative">
+          <th class="text-center py-3 px-4 relative">
             {product.badge && (
-              <span class="badge-editorial text-xs mb-1 inline-block">{product.badge}</span>
+              <span class="inline-block px-2 py-0.5 text-[10px] font-label font-semibold uppercase tracking-wide bg-primary/15 text-primary rounded-full mb-1">
+                {product.badge}
+              </span>
             )}
-            <div>{product.name}</div>
+            <div class="font-headline font-bold text-text">{product.name}</div>
           </th>
         ))}
       </tr>
     </thead>
     <tbody>
-      <!-- Rating Row -->
-      <tr class="border-b border-gray-100 bg-gray-50">
-        <td class="py-3 px-4 font-medium text-gray-600">Rating</td>
+      <!-- Overall Score Row -->
+      <tr class="border-b border-outline bg-surface-alt/50">
+        <td class="py-3 px-4 font-label font-semibold text-text text-xs uppercase tracking-wide">Overall Score</td>
         {products.map((product) => (
           <td class="py-3 px-4 text-center">
-            <span class="font-bold text-amber-600">{product.rating}/5</span>
+            <span class={`text-lg font-headline font-bold ${overallColor(product.overallScore)}`}>
+              {product.overallScore.toFixed(1)}
+            </span>
+            <span class="text-muted-dim text-xs">/10</span>
           </td>
         ))}
       </tr>
 
-      <!-- Price Row -->
-      <tr class="border-b border-gray-100">
-        <td class="py-3 px-4 font-medium text-gray-600">Price</td>
-        {products.map((product) => (
-          <td class="py-3 px-4 text-center font-semibold">{product.price || 'Check Price'}</td>
-        ))}
-      </tr>
-
-      <!-- Spec Rows -->
-      {Object.entries(specLabels).map(([key, label], index) => (
-        <tr class:list={['border-b border-gray-100', index % 2 === 0 ? 'bg-gray-50' : '']}>
-          <td class="py-3 px-4 font-medium text-gray-600">{label}</td>
+      <!-- Score Dimension Rows -->
+      {scoreDimensions.map(({ key, label }, index) => (
+        <tr class:list={['border-b border-outline/50', index % 2 === 0 ? 'bg-surface-alt/25' : '']}>
+          <td class="py-3 px-4 font-label text-muted">{label}</td>
           {products.map((product) => (
-            <td class="py-3 px-4 text-center">{product.specs[key] || '—'}</td>
+            <td class="py-3 px-4 text-center">
+              <div class="flex items-center justify-center gap-2">
+                <div class="w-16 h-1.5 bg-surface-alt rounded-full overflow-hidden hidden sm:block">
+                  <div
+                    class="h-full rounded-full bg-gradient-to-r from-primary to-accent"
+                    style={`width: ${product.scores[key] * 10}%`}
+                  ></div>
+                </div>
+                <span class={`font-headline font-bold ${scoreColor(product.scores[key])}`}>
+                  {product.scores[key]}
+                </span>
+              </div>
+            </td>
           ))}
         </tr>
       ))}
+
+      <!-- Pricing Row -->
+      <tr class="border-b border-outline bg-surface-alt/25">
+        <td class="py-3 px-4 font-label text-muted">Pricing</td>
+        {products.map((product) => (
+          <td class="py-3 px-4 text-center font-headline font-semibold text-accent">
+            {product.pricing || '—'}
+          </td>
+        ))}
+      </tr>
+
+      <!-- Use Case Row -->
+      <tr class="border-b border-outline">
+        <td class="py-3 px-4 font-label text-muted">Best For</td>
+        {products.map((product) => (
+          <td class="py-3 px-4 text-center text-muted text-xs">
+            {product.useCase || '—'}
+          </td>
+        ))}
+      </tr>
 
       <!-- CTA Row -->
       <tr>
@@ -66,12 +125,12 @@ const { products, specLabels } = Astro.props;
         {products.map((product) => (
           <td class="py-4 px-4 text-center">
             <a
-              href={`/go/${product.affiliateSlug}/`}
-              class="btn-primary text-xs no-underline"
+              href={url(`/go/${product.affiliateSlug}/`)}
+              class="inline-block px-4 py-2 bg-primary hover:bg-primary-hover text-on-primary text-xs font-label font-semibold uppercase tracking-wide rounded transition-colors duration-200 no-underline"
               target="_blank"
               rel="nofollow sponsored noopener"
             >
-              Check Price
+              Try Free
             </a>
           </td>
         ))}

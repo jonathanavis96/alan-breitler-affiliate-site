@@ -1,123 +1,102 @@
 ---
+import GradientOrbs from './GradientOrbs.astro';
 import { url } from '../lib/base';
 
 interface Props {
   eyebrow?: string;
   title: string;
-  highlightWords?: string[];
+  rotatingWords?: string[];
   subtitle?: string;
   ctaText?: string;
   ctaHref?: string;
   secondaryCtaText?: string;
   secondaryCtaHref?: string;
-  heroImage?: string;
-  heroImageAlt?: string;
-  overlayLabel?: string;
-  overlayTitle?: string;
 }
 
 const {
-  eyebrow,
-  title,
-  highlightWords = ['Best'],
-  subtitle,
-  ctaText = 'Discover Our Best Picks',
-  ctaHref = url('/best/'),
-  secondaryCtaText,
-  secondaryCtaHref,
-  heroImage = url('/images/hero-placeholder.svg'),
-  heroImageAlt = 'Featured editorial image',
-  overlayLabel,
-  overlayTitle,
+  eyebrow = 'Academic AI Intelligence',
+  title = 'Find the Right AI Tools for',
+  rotatingWords = ['Research', 'Writing', 'Analysis', 'Discovery'],
+  subtitle = 'We rigorously evaluate AI tools so academics don\'t have to. Unbiased reviews, head-to-head comparisons, and scoring built for scholarly workflows.',
+  ctaText = 'Explore Top Tools',
+  ctaHref = url('/top-tools/'),
+  secondaryCtaText = 'Join the Newsletter',
+  secondaryCtaHref = '#newsletter',
 } = Astro.props;
-
-// Split title at the first highlight word placeholder
-const firstWord = highlightWords[0];
-const idx = firstWord ? title.indexOf(firstWord) : -1;
-const hasAnimatedWord = !!firstWord && idx >= 0;
-const before = hasAnimatedWord ? title.slice(0, idx) : '';
-const after = hasAnimatedWord ? title.slice(idx + firstWord.length) : '';
 ---
 
-<section class="relative min-h-[700px] flex flex-col md:flex-row items-center gap-12 py-20 overflow-visible grain-overlay container-wide">
-  <!-- Text Content -->
-  <div class="w-full md:w-3/5 z-20">
-    {eyebrow && (
-      <span class="badge-outlook mb-8 tracking-[0.2em] animate-fade-in">
-        {eyebrow}
-      </span>
-    )}
+<section class="relative min-h-[85vh] flex items-center overflow-hidden grain-overlay">
+  <!-- Decorative gradient blur orbs -->
+  <GradientOrbs variant="hero" />
+  <!-- Grid lines decoration -->
+  <div class="absolute inset-0 pointer-events-none opacity-[0.03]" aria-hidden="true" style="background-image: linear-gradient(rgba(0,207,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(0,207,255,0.3) 1px, transparent 1px); background-size: 60px 60px;"></div>
 
-    <h1 class="font-headline italic font-extrabold text-5xl md:text-8xl leading-[0.9] tracking-tighter mb-8 animate-fade-in animation-delay-100">
-      {hasAnimatedWord ? (
-        <>{before}<span class="text-secondary inline-block min-w-[7ch]" id="hero-rotating-wrapper"><span id="hero-rotating-word">{firstWord}</span><span id="hero-cursor" class="hidden"></span></span>{after}</>
-      ) : (
-        title
+  <div class="container-wide relative z-20 py-20 md:py-32">
+    <div class="max-w-4xl">
+      <!-- Eyebrow -->
+      {eyebrow && (
+        <div class="flex items-center gap-3 mb-8 animate-fade-in">
+          <span class="inline-block w-8 h-[2px] bg-primary"></span>
+          <span class="font-label text-[11px] uppercase tracking-[0.25em] text-primary font-semibold">{eyebrow}</span>
+        </div>
       )}
-    </h1>
 
-    {subtitle && (
-      <p class="text-on-surface-variant text-lg md:text-xl max-w-lg mb-10 leading-relaxed font-body animate-fade-in animation-delay-200">
-        {subtitle}
-      </p>
-    )}
+      <!-- Main headline with typewriter -->
+      <h1 class="font-headline font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-text mb-8 animate-fade-in animation-delay-100">
+        {title}{' '}
+        <span class="block mt-2">
+          <span class="text-primary" id="hero-rotating-word">{rotatingWords[0]}</span><span id="hero-cursor" class="hero-cursor"></span><span class="text-accent">.</span>
+        </span>
+      </h1>
 
-    <div class="flex flex-wrap gap-4 animate-fade-in animation-delay-300">
-      <a href={ctaHref} class="btn-primary grain-overlay no-underline">
-        {ctaText}
-        <span class="material-symbols-outlined text-sm ml-3">arrow_forward</span>
-      </a>
-      {secondaryCtaText && secondaryCtaHref && (
+      <!-- Subtitle -->
+      {subtitle && (
+        <p class="text-muted text-lg md:text-xl max-w-2xl leading-relaxed font-body mb-12 animate-fade-in animation-delay-200">
+          {subtitle}
+        </p>
+      )}
+
+      <!-- Split CTA -->
+      <div class="flex flex-wrap gap-4 animate-fade-in animation-delay-300">
+        <a href={ctaHref} class="btn-primary no-underline">
+          {ctaText}
+          <svg class="w-4 h-4 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+        </a>
         <a href={secondaryCtaHref} class="btn-secondary no-underline">
           {secondaryCtaText}
         </a>
-      )}
-    </div>
-  </div>
+      </div>
 
-  <!-- Hero Image -->
-  <div class="w-full md:w-2/5 relative flex justify-end animate-fade-in animation-delay-200">
-    <div class="relative w-full aspect-[4/5] bg-surface-container-high overflow-hidden shadow-2xl anti-grid-offset z-10">
-      <img
-        class="w-full h-full object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-1000"
-        src={heroImage}
-        alt={heroImageAlt}
-        loading="eager"
-      />
-      <div class="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent"></div>
-
-      {(overlayLabel || overlayTitle) && (
-        <div class="absolute bottom-6 left-6 right-6 p-6 glass-panel border-l-2 border-secondary animate-slide-up animation-delay-500">
-          {overlayLabel && (
-            <p class="label-text mb-1 opacity-70">{overlayLabel}</p>
-          )}
-          {overlayTitle && (
-            <p class="font-headline italic text-xl">{overlayTitle}</p>
-          )}
+      <!-- Trust signals -->
+      <div class="mt-16 flex flex-wrap items-center gap-6 animate-fade-in animation-delay-400">
+        <div class="flex items-center gap-2">
+          <div class="w-2 h-2 rounded-full bg-success animate-pulse"></div>
+          <span class="text-muted text-sm font-body">Updated weekly</span>
         </div>
-      )}
+        <span class="text-outline-variant hidden sm:inline">|</span>
+        <span class="text-muted text-sm font-body">50+ AI tools reviewed</span>
+        <span class="text-outline-variant hidden sm:inline">|</span>
+        <span class="text-muted text-sm font-body">Built for academics</span>
+      </div>
     </div>
-
-    <!-- Asymmetric decorative blur -->
-    <div class="absolute top-[-10%] right-[-10%] w-64 h-64 bg-secondary/10 rounded-full blur-[100px] -z-10 animate-pulse-slow"></div>
   </div>
 </section>
 
 <!-- Typewriter script -->
-<script define:vars={{ highlightWords }}>
-  window.__HERO_WORDS__ = highlightWords;
+<script define:vars={{ rotatingWords }}>
+  window.__HERO_WORDS__ = rotatingWords;
 </script>
 
 <script>
   const el = document.getElementById('hero-rotating-word');
   const cursor = document.getElementById('hero-cursor');
-  const words = (window as any).__HERO_WORDS__ || ['Best'];
+  const words = (window as any).__HERO_WORDS__ || ['Research'];
 
   if (el && cursor && words.length > 1) {
     const TYPE_SPEED = 80;
     const DELETE_SPEED = 50;
-    const PAUSE_AFTER_TYPE = 2000;
-    const PAUSE_AFTER_DELETE = 300;
+    const PAUSE_AFTER_TYPE = 2200;
+    const PAUSE_AFTER_DELETE = 400;
     let current = 0;
 
     function sleep(ms: number) {
@@ -130,6 +109,7 @@ const after = hasAnimatedWord ? title.slice(idx + firstWord.length) : '';
         el!.textContent = word.slice(0, i);
         await sleep(TYPE_SPEED);
       }
+      await sleep(200);
       cursor!.classList.remove('visible');
     }
 
@@ -152,8 +132,8 @@ const after = hasAnimatedWord ? title.slice(idx + firstWord.length) : '';
       }
     }
 
-    // Start after initial word is visible for a moment
-    sleep(1500).then(async () => {
+    // Start after initial word is visible
+    sleep(2000).then(async () => {
       await deleteWord(words[0]);
       await sleep(PAUSE_AFTER_DELETE);
       current = 1;

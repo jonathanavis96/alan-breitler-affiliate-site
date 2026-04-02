@@ -2,6 +2,7 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SearchOverlay from '../components/SearchOverlay.astro';
+import GradientOrbs from '../components/GradientOrbs.astro';
 import siteData from '../../data/site.json';
 import { url } from '../lib/base';
 import '../styles/global.css';
@@ -63,10 +64,19 @@ const canonical = canonicalUrl || Astro.url.href;
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
 
-  <!-- Fonts: Newsreader (headlines), Plus Jakarta Sans (body), Inter (labels) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Plus+Jakarta+Sans:wght@200..800&family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+  <!-- Fonts: Space Grotesk (headings), IBM Plex Sans (body) — self-hosted -->
+  <link rel="preload" href={url('/fonts/space-grotesk/space-grotesk-700.woff2')} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={url('/fonts/ibm-plex-sans/ibm-plex-sans-400.woff2')} as="font" type="font/woff2" crossorigin />
+  <style set:html={`
+    @font-face { font-family: 'Space Grotesk'; src: url('${url('/fonts/space-grotesk/space-grotesk-400.woff2')}') format('woff2'), url('${url('/fonts/space-grotesk/space-grotesk-400.woff')}') format('woff'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Space Grotesk'; src: url('${url('/fonts/space-grotesk/space-grotesk-500.woff2')}') format('woff2'), url('${url('/fonts/space-grotesk/space-grotesk-500.woff')}') format('woff'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Space Grotesk'; src: url('${url('/fonts/space-grotesk/space-grotesk-600.woff2')}') format('woff2'), url('${url('/fonts/space-grotesk/space-grotesk-600.woff')}') format('woff'); font-weight: 600; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Space Grotesk'; src: url('${url('/fonts/space-grotesk/space-grotesk-700.woff2')}') format('woff2'), url('${url('/fonts/space-grotesk/space-grotesk-700.woff')}') format('woff'); font-weight: 700; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'IBM Plex Sans'; src: url('${url('/fonts/ibm-plex-sans/ibm-plex-sans-400.woff2')}') format('woff2'), url('${url('/fonts/ibm-plex-sans/ibm-plex-sans-400.woff')}') format('woff'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'IBM Plex Sans'; src: url('${url('/fonts/ibm-plex-sans/ibm-plex-sans-500.woff2')}') format('woff2'), url('${url('/fonts/ibm-plex-sans/ibm-plex-sans-500.woff')}') format('woff'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'IBM Plex Sans'; src: url('${url('/fonts/ibm-plex-sans/ibm-plex-sans-600.woff2')}') format('woff2'), url('${url('/fonts/ibm-plex-sans/ibm-plex-sans-600.woff')}') format('woff'); font-weight: 600; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'IBM Plex Sans'; src: url('${url('/fonts/ibm-plex-sans/ibm-plex-sans-700.woff2')}') format('woff2'), url('${url('/fonts/ibm-plex-sans/ibm-plex-sans-700.woff')}') format('woff'); font-weight: 700; font-style: normal; font-display: swap; }
+  `} />
 
   <!-- Material Symbols (icons) -->
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
@@ -89,8 +99,9 @@ const canonical = canonicalUrl || Astro.url.href;
         lucide.createIcons();
       }
 
-      // Scroll-reveal: animate elements into view
-      const reveals = document.querySelectorAll('.scroll-reveal');
+      // Scroll-reveal: animate elements into view (supports all variants)
+      const revealSelectors = '.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale, .scroll-reveal-blur, .scroll-reveal-fade';
+      const reveals = document.querySelectorAll(revealSelectors);
       if (reveals.length > 0) {
         const observer = new IntersectionObserver(
           (entries) => {
@@ -101,13 +112,15 @@ const canonical = canonicalUrl || Astro.url.href;
               }
             });
           },
-          { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+          { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
         );
         reveals.forEach((el) => observer.observe(el));
       }
     });
   </script>
-  <main class="flex-1">
+  <main class="flex-1 relative">
+    <!-- Page-level ambient gradient orbs -->
+    <GradientOrbs variant="page" />
     <slot />
   </main>
   <Footer />

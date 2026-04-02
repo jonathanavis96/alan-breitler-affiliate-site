@@ -1,42 +1,78 @@
 ---
 import { url } from '../lib/base';
 
+interface Scores {
+  ease_of_use: number;
+  academic_value: number;
+  price_to_value: number;
+}
+
 interface Props {
   name: string;
   slug?: string;
+  brand?: string;
+  category?: string;
   image?: string;
-  rating: number;
-  price?: string;
+  scores: Scores;
+  overallScore: number;
+  pricing?: string;
+  freeTier?: boolean;
+  freeTierNote?: string;
   pros?: string[];
   cons?: string[];
   verdict?: string;
   affiliateSlug: string;
   badge?: string;
+  useCase?: string;
 }
 
 const {
   name,
   slug,
-  image = url('/images/products/placeholder.jpg'),
-  rating,
-  price,
+  brand,
+  category,
+  image = url('/images/products/placeholder.svg'),
+  scores,
+  overallScore,
+  pricing,
+  freeTier = false,
+  freeTierNote,
   pros = [],
   cons = [],
   verdict,
   affiliateSlug,
   badge,
+  useCase,
 } = Astro.props;
 
-const fullStars = Math.floor(rating);
-const hasHalfStar = rating % 1 >= 0.5;
+const scoreDimensions = [
+  { key: 'ease_of_use', label: 'Ease of Use', value: scores.ease_of_use },
+  { key: 'academic_value', label: 'Academic Value', value: scores.academic_value },
+  { key: 'price_to_value', label: 'Price-to-Value', value: scores.price_to_value },
+];
+
+/* Color tier for the overall score ring */
+function scoreColor(score: number): string {
+  if (score >= 8.5) return 'score-high';
+  if (score >= 7) return 'score-mid';
+  return 'score-low';
+}
+
+function barPercent(value: number): string {
+  return `${value * 10}%`;
+}
+
+const scoreClass = scoreColor(overallScore);
 ---
 
-<div class="bg-surface relative overflow-hidden group hover:bg-surface-container-low transition-colors duration-300">
+<article class="product-card glass-panel relative overflow-hidden group transition-all duration-300">
   {badge && (
     <div class="absolute top-0 right-0 z-10">
       <span class:list={[
-        'badge',
-        badge === "Editor's Choice" ? 'badge-editorial' : 'bg-secondary text-on-secondary',
+        'inline-block px-3 py-1 text-xs font-label font-semibold uppercase tracking-wide',
+        badge === "Editor's Choice"
+          ? 'bg-primary text-on-primary'
+          : 'bg-accent text-on-tertiary',
       ]}>
         {badge}
       </span>
@@ -45,29 +81,81 @@ const hasHalfStar = rating % 1 >= 0.5;
 
   <div class="flex flex-col sm:flex-row">
     <!-- Product Image -->
-    <div class="sm:w-56 flex-shrink-0 bg-white flex items-center justify-center p-4">
+    <div class="sm:w-56 flex-shrink-0 bg-surface-alt/50 flex items-center justify-center p-6 relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
       <img
-        src={image}
+        src={image.startsWith('/') ? url(image) : image}
         alt={name}
-        class="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out"
+        class="max-w-full max-h-32 sm:max-h-full object-contain grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out relative z-[1]"
         loading="lazy"
       />
     </div>
 
     <!-- Product Info -->
-    <div class="flex-1 min-w-0 p-8">
-      <h3 class="font-headline italic text-xl mb-3">{name}</h3>
-
-      <!-- Rating + Price -->
-      <div class="flex items-center gap-3 mb-4">
-        <div class="flex gap-0.5" aria-label={`Rating: ${rating} out of 5`}>
-          {Array.from({ length: 5 }, (_, i) => (
-            <span class={`text-xs ${i < fullStars ? 'text-on-tertiary-container' : (i === fullStars && hasHalfStar ? 'text-on-tertiary-container' : 'text-surface-container-highest')}`}>★</span>
-          ))}
+    <div class="flex-1 min-w-0 p-6 sm:p-8">
+      <div class="flex items-start justify-between gap-4 mb-4">
+        <div>
+          <h3 class="font-headline text-xl text-text mb-1 group-hover:text-primary transition-colors duration-200">{name}</h3>
+          <div class="flex flex-wrap items-center gap-2 text-sm">
+            {brand && (
+              <span class="text-muted-dim font-body">{brand}</span>
+            )}
+            {brand && category && (
+              <span class="text-muted-dim/40">·</span>
+            )}
+            {category && (
+              <span class="inline-flex items-center px-2 py-0.5 text-xs font-label font-medium text-primary bg-primary-muted rounded-full">{category}</span>
+            )}
+          </div>
+          {useCase && (
+            <p class="text-muted text-sm font-body mt-1">{useCase}</p>
+          )}
         </div>
-        <span class="label-text text-on-surface-variant">{rating}/5</span>
-        {price && <span class="label-text text-on-surface font-bold ml-auto">{price}</span>}
+
+        <!-- Overall Score Ring -->
+        <div class="flex-shrink-0 flex flex-col items-center">
+          <div class:list={['score-ring', scoreClass]}>
+            <span class="text-lg font-headline font-bold">{overallScore.toFixed(1)}</span>
+          </div>
+          <span class="text-[10px] text-muted-dim mt-1 uppercase tracking-wider font-label">Overall</span>
+        </div>
       </div>
+
+      <!-- Score Dimensions -->
+      <div class="grid grid-cols-3 gap-3 mb-5">
+        {scoreDimensions.map(({ label, value }) => (
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-muted font-label">{label}</span>
+              <span class="text-xs font-bold text-text font-headline">{value}/10</span>
+            </div>
+            <div class="h-1.5 bg-surface-alt rounded-full overflow-hidden">
+              <div
+                class="score-bar h-full rounded-full transition-all duration-500"
+                style={`width: ${barPercent(value)}`}
+              ></div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Pricing & Free Tier -->
+      {(pricing || freeTier) && (
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          {pricing && (
+            <span class="text-sm text-accent font-bold font-headline">{pricing}</span>
+          )}
+          {freeTier && (
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-label font-medium text-success bg-success/10 rounded-full border border-success/20">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+              Free tier
+            </span>
+          )}
+          {freeTierNote && (
+            <span class="text-xs text-muted-dim font-body">{freeTierNote}</span>
+          )}
+        </div>
+      )}
 
       <!-- Pros & Cons -->
       {(pros.length > 0 || cons.length > 0) && (
@@ -76,8 +164,8 @@ const hasHalfStar = rating % 1 >= 0.5;
             <ul class="space-y-1.5">
               {pros.slice(0, 3).map((pro) => (
                 <li class="flex items-start gap-2 text-sm font-body">
-                  <span class="material-symbols-outlined text-secondary text-sm mt-0.5">check</span>
-                  <span class="text-on-surface-variant">{pro}</span>
+                  <span class="text-success text-xs mt-0.5 flex-shrink-0">✓</span>
+                  <span class="text-muted">{pro}</span>
                 </li>
               ))}
             </ul>
@@ -86,8 +174,8 @@ const hasHalfStar = rating % 1 >= 0.5;
             <ul class="space-y-1.5">
               {cons.map((con) => (
                 <li class="flex items-start gap-2 text-sm font-body">
-                  <span class="material-symbols-outlined text-on-tertiary-container text-sm mt-0.5">close</span>
-                  <span class="text-on-surface-variant">{con}</span>
+                  <span class="text-error text-xs mt-0.5 flex-shrink-0">✗</span>
+                  <span class="text-muted">{con}</span>
                 </li>
               ))}
             </ul>
@@ -96,26 +184,76 @@ const hasHalfStar = rating % 1 >= 0.5;
       )}
 
       {verdict && (
-        <p class="text-on-surface-variant text-sm font-body italic mb-5">{verdict}</p>
+        <p class="text-muted text-sm font-body italic mb-5 border-l-2 border-primary/30 pl-3">{verdict}</p>
       )}
 
       <!-- CTAs -->
       <div class="flex flex-wrap items-center gap-4">
         <a
           href={url(`/go/${affiliateSlug}/`)}
-          class="btn-primary text-xs no-underline inline-flex items-center gap-3"
+          class="cta-primary inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary-hover text-on-primary text-xs font-label font-semibold uppercase tracking-wide rounded transition-all duration-200 no-underline hover:shadow-[0_0_20px_rgba(0,207,255,0.3)]"
           target="_blank"
           rel="nofollow sponsored noopener"
         >
-          Check Price on Amazon
-          <span class="material-symbols-outlined text-sm">open_in_new</span>
+          Try It Free
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
         </a>
         {slug && (
-          <a href={url(`/reviews/${slug}/`)} class="text-secondary label-text font-bold no-underline hover:underline underline-offset-4">
-            Read Full Review
+          <a href={url(`/reviews/${slug}/`)} class="text-primary text-xs font-label font-bold no-underline hover:text-primary-hover hover:underline underline-offset-4 transition-colors">
+            Read Full Review →
           </a>
         )}
       </div>
     </div>
   </div>
-</div>
+</article>
+
+<style>
+  .product-card {
+    border-color: rgba(0, 207, 255, 0.08);
+    transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
+  }
+  .product-card:hover {
+    border-color: rgba(0, 207, 255, 0.35);
+    box-shadow:
+      0 0 24px rgba(0, 207, 255, 0.12),
+      0 0 56px rgba(0, 207, 255, 0.06),
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(0, 207, 255, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .score-ring {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 9999px;
+    border-width: 2px;
+    border-style: solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: box-shadow 0.3s ease;
+  }
+  .score-ring.score-high {
+    color: #22C55E;
+    border-color: #22C55E;
+  }
+  .score-ring.score-mid {
+    color: #FFB347;
+    border-color: #FFB347;
+  }
+  .score-ring.score-low {
+    color: #A7AFBF;
+    border-color: #A7AFBF;
+  }
+  .product-card:hover .score-ring.score-high {
+    box-shadow: 0 0 16px rgba(34, 197, 94, 0.25);
+  }
+  .product-card:hover .score-ring.score-mid {
+    box-shadow: 0 0 16px rgba(255, 179, 71, 0.25);
+  }
+
+  .score-bar {
+    background: linear-gradient(to right, #00CFFF, #FFB347);
+  }
+</style>

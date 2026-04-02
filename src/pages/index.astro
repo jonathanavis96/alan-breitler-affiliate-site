@@ -1,7 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
+import CategoryCard from '../components/CategoryCard.astro';
+import GradientOrbs from '../components/GradientOrbs.astro';
 import siteData from '../../data/site.json';
+import categoriesData from '../../data/categories.json';
+import productsData from '../../data/products.json';
 import { url } from '../lib/base';
 
 const schema = {
@@ -11,162 +15,296 @@ const schema = {
   url: siteData.url,
   description: siteData.description,
 };
+
+const categories = categoriesData.categories;
+const topProduct = productsData.products
+  .slice()
+  .sort((a, b) => b.overallScore - a.overallScore)[0];
+
+/* Count products per category for the category cards (products can belong to multiple categories) */
+const categoryCounts: Record<string, number> = {};
+for (const p of productsData.products) {
+  for (const cat of p.categories) {
+    categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+  }
+}
 ---
 
 <BaseLayout title="Home" schema={schema}>
-  <!-- Hero: Anti-Grid Layout -->
+  <!-- Hero: Typographic Hero with Typewriter -->
   <Hero
-    eyebrow="2026 Editorial Outlook"
-    title="The Search for the Best Ends Here."
-    highlightWords={["the Best", "Perfect", "Quality", "Greater"]}
-    subtitle="We dismantle market hype with rigorous testing and obsessive manual reviews. Discover the definitive list of products that deliver on their promises."
-    ctaText="Discover Our 2026 Best Picks"
-    ctaHref={url('/best/')}
-    secondaryCtaText="View Editorial Standards"
-    secondaryCtaHref={url('/about/')}
-    heroImage="https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=800&q=80&auto=format"
-    heroImageAlt="Overhead view of a curated home office desk setup with keyboard, monitor, and desk accessories"
-    overlayLabel="Currently Testing"
-    overlayTitle="2026 Standing Desk Showdown: 8 Models, 300 Hours"
+    eyebrow="Academic AI Intelligence"
+    title="Find the Right AI Tools for"
+    rotatingWords={["Research", "Writing", "Analysis", "Discovery"]}
+    subtitle="We rigorously evaluate AI tools so academics don't have to. Unbiased reviews, head-to-head comparisons, and scoring built for scholarly workflows."
+    ctaText="Explore Top Tools"
+    ctaHref={url('/top-tools/')}
+    secondaryCtaText="Join the Newsletter"
+    secondaryCtaHref="#newsletter"
   />
 
   <!-- Bento Box Grid: Content Discovery -->
-  <section class="container-wide mt-40">
-    <div class="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8">
+  <section class="container-wide mt-24 md:mt-40">
+    <div class="mb-12 md:mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8">
       <div class="max-w-xl">
-        <h2 class="font-headline italic text-4xl mb-4">Navigating the Noise</h2>
-        <p class="text-on-surface-variant font-body">Our hierarchy of insight, designed for the conscious consumer who values precision over volume.</p>
+        <div class="flex items-center gap-3 mb-4">
+          <span class="inline-block w-8 h-[2px] bg-accent"></span>
+          <span class="label-text text-accent font-semibold">Explore by Focus</span>
+        </div>
+        <h2 class="font-headline font-bold text-3xl md:text-4xl mb-3">Your Academic AI Toolkit</h2>
+        <p class="text-muted font-body">Curated categories and expert picks — designed for researchers, students, and educators.</p>
       </div>
-      <div class="h-[1px] flex-grow bg-surface-container-highest mx-8 hidden md:block"></div>
-      <span class="label-text opacity-50">Exploration Core</span>
+      <div class="h-[1px] flex-grow bg-outline mx-8 hidden md:block"></div>
+      <span class="label-text text-muted-dim">Discovery Hub</span>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-auto md:h-[600px]">
-      <!-- Big Feature: Best Picks -->
-      <a href={url('/best/')} class="md:col-span-2 md:row-span-2 bg-surface-container-low p-10 flex flex-col justify-between relative overflow-hidden group no-underline text-on-surface scroll-reveal">
-        <div class="z-20">
-          <span class="badge-editorial mb-6">Editor's Choice</span>
-          <h3 class="font-headline italic text-4xl leading-tight">Best Picks 2026</h3>
-          <p class="mt-4 text-on-surface-variant max-w-xs font-body">The top 1% of products that survived our stress tests this year.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:grid-rows-2 lg:auto-rows-[220px]">
+      <!-- LARGE TILE: 50+ AI Tools Tested (spans 2 cols, 2 rows) -->
+      <a href={url('/top-tools/')} class="lg:col-span-2 lg:row-span-2 glass-panel rounded-xl p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group no-underline text-text scroll-reveal min-h-[340px]">
+        <div class="z-20 relative">
+          <span class="badge-editorial mb-4 inline-block">Rigorously Evaluated</span>
+          <div class="flex items-baseline gap-3 mb-2">
+            <span class="font-headline font-bold text-6xl md:text-7xl lg:text-8xl text-primary leading-none">50+</span>
+          </div>
+          <h3 class="font-headline font-bold text-2xl md:text-3xl leading-tight">AI Tools Tested</h3>
+          <p class="mt-4 text-muted max-w-sm font-body text-sm leading-relaxed">Rigorously scored across ease of use, academic value, and price-to-value — so you can pick with confidence.</p>
         </div>
-        <div class="flex justify-between items-end z-20">
-          <span class="text-secondary font-label uppercase text-xs tracking-widest font-bold border-b-2 border-secondary pb-1 group-hover:pr-4 transition-all">Explore the list</span>
+        <div class="flex justify-between items-end z-20 relative mt-6">
+          <span class="btn-outline text-primary">
+            Explore the list
+            <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+          </span>
+          <div class="text-right hidden md:block">
+            <div class="text-4xl font-headline font-bold text-primary">{topProduct.overallScore}</div>
+            <span class="label-text text-muted-dim">Top Score</span>
+          </div>
         </div>
-        <!-- Background image -->
-        <div class="absolute right-[-5%] bottom-[-5%] w-2/3 h-2/3 opacity-20 group-hover:opacity-30 group-hover:scale-105 transition-all duration-700">
-          <img
-            class="w-full h-full object-cover"
-            src="https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=600&q=80&auto=format"
-            alt=""
-            loading="lazy"
-          />
+        <!-- Decorative gradient background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/5 opacity-60 group-hover:opacity-80 transition-opacity duration-700 pointer-events-none"></div>
+        <!-- Grid pattern decoration -->
+        <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: linear-gradient(rgba(0,207,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(0,207,255,0.4) 1px, transparent 1px); background-size: 40px 40px;"></div>
+      </a>
+
+      <!-- SMALL TILE 1: In-Depth Reviews -->
+      <a href={url('/reviews/')} class="bg-primary rounded-xl p-6 md:p-8 flex flex-col justify-between grain-overlay no-underline group scroll-reveal scroll-delay-100 min-h-[180px]">
+        <div class="relative z-20">
+          <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+          </div>
+          <h3 class="font-headline font-bold text-xl text-white">In-Depth Reviews</h3>
+          <p class="text-white/70 text-sm mt-2 font-body leading-relaxed">Multi-dimensional scoring and honest verdicts for every tool.</p>
+        </div>
+        <div class="flex justify-between items-center z-20 relative mt-3">
+          <span class="label-text text-white/60 group-hover:text-white transition-colors">Read our latest</span>
+          <svg class="w-5 h-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
         </div>
       </a>
 
-      <!-- Medium Feature: In-Depth Reviews -->
-      <a href={url('/reviews/')} class="md:col-span-2 bg-primary text-on-primary p-8 flex flex-col justify-between grain-overlay no-underline scroll-reveal scroll-delay-100">
+      <!-- SMALL TILE 2: 4 Academic Categories -->
+      <a href={url('/top-tools/')} class="bg-surface border border-outline rounded-xl p-6 md:p-8 flex flex-col justify-between no-underline group scroll-reveal scroll-delay-200 min-h-[180px] hover:border-accent/40 hover:shadow-lg hover:shadow-accent/5 transition-all duration-300">
         <div>
-          <h3 class="font-headline italic text-3xl text-on-primary">In-Depth Reviews</h3>
-          <p class="text-primary-fixed-dim text-sm mt-2 font-body">Comprehensive technical analysis for every product we cover.</p>
+          <div class="w-10 h-10 rounded-lg bg-accent-muted flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+          </div>
+          <div class="flex items-baseline gap-2 mb-1">
+            <span class="font-headline font-bold text-3xl text-accent leading-none">{categories.length}</span>
+            <span class="font-headline font-bold text-lg text-text">Categories</span>
+          </div>
+          <p class="text-muted text-sm font-body leading-relaxed">Writing, Research, Image Gen &amp; Coding — curated for academia.</p>
         </div>
-        <div class="flex justify-between items-center z-20">
-          <span class="label-text text-primary-fixed-dim">Read our latest</span>
-          <span class="material-symbols-outlined text-on-primary">menu_book</span>
-        </div>
-      </a>
-
-      <!-- Small Feature: Buying Guides -->
-      <a href={url('/guides/')} class="md:col-span-1 bg-secondary text-on-secondary p-8 flex flex-col justify-between no-underline scroll-reveal scroll-delay-200">
-        <span class="material-symbols-outlined text-3xl text-on-secondary">auto_stories</span>
-        <div>
-          <h3 class="font-label uppercase font-bold text-xs tracking-widest text-on-secondary not-italic">Buying Guides</h3>
-          <p class="text-xs opacity-80 mt-1 font-body">Smart checklists for the final decision.</p>
+        <div class="flex justify-between items-center mt-3">
+          <span class="label-text text-muted-dim group-hover:text-accent transition-colors">Browse all</span>
+          <svg class="w-5 h-5 text-muted-dim group-hover:text-accent group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
         </div>
       </a>
 
-      <!-- Small Feature: How We Test -->
-      <a href={url('/about/')} class="md:col-span-1 bg-surface-container-highest p-8 flex flex-col justify-between border-l-4 border-on-tertiary-container no-underline text-on-surface scroll-reveal scroll-delay-300">
-        <span class="material-symbols-outlined text-3xl text-on-tertiary-container">biotech</span>
+      <!-- SMALL TILE 3: 3-Dimension Scoring -->
+      <a href={url('/about/')} class="bg-surface-alt border border-outline rounded-xl p-6 md:p-8 flex flex-col justify-between no-underline group scroll-reveal scroll-delay-300 min-h-[180px] hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 md:col-span-2 lg:col-span-1">
         <div>
-          <h3 class="font-label uppercase font-bold text-xs tracking-widest text-on-surface not-italic">How We Test</h3>
-          <p class="text-xs text-on-surface-variant mt-1 font-body">The science of objectivity.</p>
+          <div class="w-10 h-10 rounded-lg bg-primary-muted flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+          </div>
+          <h3 class="font-headline font-bold text-lg text-text mb-1">3-D Scoring</h3>
+          <p class="text-muted text-sm font-body leading-relaxed">Ease of Use · Academic Value · Price-to-Value — transparent, unbiased ratings.</p>
+        </div>
+        <div class="flex justify-between items-center mt-3">
+          <span class="label-text text-muted-dim group-hover:text-primary transition-colors">Our methodology</span>
+          <svg class="w-5 h-5 text-muted-dim group-hover:text-primary group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
         </div>
       </a>
     </div>
   </section>
 
-  <!-- Trust Section: How We Test -->
-  <section class="mt-40 bg-surface-container-low grain-overlay relative">
-    <div class="container-wide py-12 md:py-24">
-      <div class="max-w-4xl mx-auto text-center mb-20 scroll-reveal">
-        <span class="label-text text-secondary font-bold mb-4 block">Our Methodology</span>
-        <h2 class="font-headline italic text-5xl md:text-6xl mb-6">Built on Radical Transparency.</h2>
-        <p class="text-on-surface-variant text-lg leading-relaxed font-body">Most sites read the box. We break the product. Every recommendation is backed by practical stress-testing and empirical measurement.</p>
+  <!-- Category Browser: 4-Card Grid -->
+  <section class="container-wide mt-24 md:mt-40">
+    <div class="mb-12 md:mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8">
+      <div class="max-w-xl">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="inline-block w-8 h-[2px] bg-primary"></span>
+          <span class="label-text text-primary font-semibold">Browse Categories</span>
+        </div>
+        <h2 class="font-headline font-bold text-3xl md:text-4xl mb-3">AI Tools by Discipline</h2>
+        <p class="text-muted font-body">Four curated categories, each scored and reviewed for academic workflows. Find the tools that fit your research.</p>
+      </div>
+      <div class="h-[1px] flex-grow bg-outline mx-8 hidden md:block"></div>
+      <span class="label-text text-muted-dim">{productsData.products.length} tools reviewed</span>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {categories.map((cat, i) => (
+        <CategoryCard
+          title={cat.name}
+          description={cat.description}
+          href={url(`/top-tools/#${cat.slug}`)}
+          icon={cat.icon}
+          toolCount={categoryCounts[cat.slug] || 0}
+          index={i}
+        />
+      ))}
+    </div>
+  </section>
+
+  <!-- Methodology Steps: How We Evaluate -->
+  <section class="mt-24 md:mt-40 bg-surface grain-overlay relative overflow-hidden">
+    <!-- Decorative gradient blur orbs -->
+    <GradientOrbs variant="section" />
+    <div class="container-wide py-16 md:py-28 relative z-10">
+      <div class="max-w-4xl mx-auto text-center mb-16 md:mb-20 scroll-reveal">
+        <span class="label-text text-primary font-bold mb-4 block">Our Methodology</span>
+        <h2 class="font-headline font-bold text-4xl md:text-5xl mb-6">Built on Academic Rigour.</h2>
+        <p class="text-muted text-lg leading-relaxed font-body max-w-2xl mx-auto">We don't skim feature lists. Every AI tool is evaluated through a structured, four-step process designed for scholarly workflows.</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-16 relative z-10">
-        <div class="flex flex-col items-center text-center">
-          <div class="w-16 h-16 bg-surface flex items-center justify-center mb-6 shadow-sm">
-            <i data-lucide="flask-conical" class="w-7 h-7 text-secondary"></i>
+      <!-- Numbered Steps -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-6 relative z-10">
+        <!-- Connecting line (desktop only) -->
+        <div class="hidden lg:block absolute top-[52px] left-[12.5%] right-[12.5%] h-[2px] bg-gradient-to-r from-primary/40 via-accent/40 to-primary/40 z-0"></div>
+
+        <!-- Step 1: Feature Analysis -->
+        <div class="flex flex-col items-center text-center scroll-reveal relative">
+          <div class="w-[104px] h-[104px] rounded-2xl bg-surface-alt border border-outline flex flex-col items-center justify-center mb-6 relative z-10">
+            <span class="font-headline font-bold text-3xl text-primary leading-none">01</span>
+            <span class="label-text text-muted-dim mt-1">Step</span>
           </div>
-          <h4 class="font-headline italic text-2xl mb-3">Rigorous Benchmarking</h4>
-          <p class="text-sm text-on-surface-variant leading-relaxed font-body">We use precision instruments and standardized tests to measure real performance, not marketing claims.</p>
+          <div class="w-10 h-10 rounded-full bg-primary-muted flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+          </div>
+          <h4 class="font-headline font-bold text-xl mb-3">Feature Analysis</h4>
+          <p class="text-sm text-muted leading-relaxed font-body max-w-[280px]">We map every capability, integration, and limitation — breaking down feature sets so academics know exactly what each tool offers before committing.</p>
         </div>
-        <div class="flex flex-col items-center text-center">
-          <div class="w-16 h-16 bg-surface flex items-center justify-center mb-6 shadow-sm">
-            <i data-lucide="users" class="w-7 h-7 text-secondary"></i>
+
+        <!-- Step 2: Workflow Integration Testing -->
+        <div class="flex flex-col items-center text-center scroll-reveal scroll-delay-100 relative">
+          <div class="w-[104px] h-[104px] rounded-2xl bg-surface-alt border border-outline flex flex-col items-center justify-center mb-6 relative z-10">
+            <span class="font-headline font-bold text-3xl text-accent leading-none">02</span>
+            <span class="label-text text-muted-dim mt-1">Step</span>
           </div>
-          <h4 class="font-headline italic text-2xl mb-3">Expert Blind Tests</h4>
-          <p class="text-sm text-on-surface-variant leading-relaxed font-body">Multi-user blind panels eliminate brand bias to find what actually performs in everyday use.</p>
+          <div class="w-10 h-10 rounded-full bg-accent-muted flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+          </div>
+          <h4 class="font-headline font-bold text-xl mb-3">Workflow Integration Testing</h4>
+          <p class="text-sm text-muted leading-relaxed font-body max-w-[280px]">We run real academic workflows — literature reviews, data analysis, paper drafting — not synthetic benchmarks. Each tool is tested against tasks researchers actually perform.</p>
         </div>
-        <div class="flex flex-col items-center text-center">
-          <div class="w-16 h-16 bg-surface flex items-center justify-center mb-6 shadow-sm">
-            <i data-lucide="file-text" class="w-7 h-7 text-secondary"></i>
+
+        <!-- Step 3: Academic Use Case Scoring -->
+        <div class="flex flex-col items-center text-center scroll-reveal scroll-delay-200 relative">
+          <div class="w-[104px] h-[104px] rounded-2xl bg-surface-alt border border-outline flex flex-col items-center justify-center mb-6 relative z-10">
+            <span class="font-headline font-bold text-3xl text-primary leading-none">03</span>
+            <span class="label-text text-muted-dim mt-1">Step</span>
           </div>
-          <h4 class="font-headline italic text-2xl mb-3">The Unfiltered Report</h4>
-          <p class="text-sm text-on-surface-variant leading-relaxed font-body">We publish the full picture — pros, cons, and failures. No manufacturer editing allowed.</p>
+          <div class="w-10 h-10 rounded-full bg-primary-muted flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+          </div>
+          <h4 class="font-headline font-bold text-xl mb-3">Academic Use Case Scoring</h4>
+          <p class="text-sm text-muted leading-relaxed font-body max-w-[280px]">Multi-dimensional scoring across ease of use, academic value, and price-to-value — calibrated for researchers, students, and educators rather than general consumers.</p>
+        </div>
+
+        <!-- Step 4: Value Assessment -->
+        <div class="flex flex-col items-center text-center scroll-reveal scroll-delay-300 relative">
+          <div class="w-[104px] h-[104px] rounded-2xl bg-surface-alt border border-outline flex flex-col items-center justify-center mb-6 relative z-10">
+            <span class="font-headline font-bold text-3xl text-accent leading-none">04</span>
+            <span class="label-text text-muted-dim mt-1">Step</span>
+          </div>
+          <div class="w-10 h-10 rounded-full bg-accent-muted flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          </div>
+          <h4 class="font-headline font-bold text-xl mb-3">Value Assessment</h4>
+          <p class="text-sm text-muted leading-relaxed font-body max-w-[280px]">We weigh pricing against academic budgets, compare free tiers to paid plans, and publish transparent verdicts — no vendor editing, no pay-for-ranking.</p>
         </div>
       </div>
 
-      <div class="mt-20 flex justify-center">
-        <div class="px-6 py-4 glass-panel inline-flex items-center gap-4">
+      <!-- Trust badge -->
+      <div class="mt-16 md:mt-20 flex justify-center scroll-reveal scroll-delay-400">
+        <div class="px-6 py-4 glass-panel rounded-lg inline-flex items-center gap-4">
           <div class="flex gap-1">
-            <div class="w-2 h-2 bg-secondary animate-pulse"></div>
-            <div class="w-2 h-2 bg-secondary opacity-50"></div>
-            <div class="w-2 h-2 bg-secondary opacity-25"></div>
+            <div class="w-2 h-2 rounded-full bg-success animate-pulse"></div>
+            <div class="w-2 h-2 rounded-full bg-success opacity-50"></div>
+            <div class="w-2 h-2 rounded-full bg-success opacity-25"></div>
           </div>
-          <p class="label-text font-bold">Live Lab Status: Testing New Products Weekly</p>
+          <p class="label-text font-bold text-text">New Reviews Published Weekly</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Final CTA -->
-  <section class="container-wide mt-40 mb-20">
-    <div class="bg-primary text-on-primary p-12 md:p-20 relative overflow-hidden grain-overlay">
-      <div class="relative z-20 max-w-2xl">
-        <h2 class="font-headline italic text-5xl mb-8 text-on-primary">Ready to end the search?</h2>
-        <p class="text-primary-fixed-dim mb-12 text-lg font-body">Browse by category or dive into our latest reviews. We've done the heavy lifting so you don't have to.</p>
-        <div class="flex flex-wrap gap-4">
-          <a href={url('/best/')} class="inline-flex items-center gap-3 bg-secondary text-on-secondary px-10 py-5 font-label uppercase text-xs tracking-widest font-bold hover:bg-secondary-container transition-colors duration-300 no-underline">
-            Browse Best Picks
-            <span class="material-symbols-outlined text-sm">arrow_forward</span>
-          </a>
-          <a href={url('/reviews/')} class="inline-flex items-center gap-3 bg-on-primary/10 text-on-primary px-10 py-5 font-label uppercase text-xs tracking-widest font-bold hover:bg-on-primary/20 transition-colors no-underline">
-            Latest Reviews
-          </a>
+  <!-- Split CTA: Top Tools + Newsletter -->
+  <section id="newsletter" class="container-wide mt-24 md:mt-40 mb-20">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <!-- Left: Explore Top Tools CTA -->
+      <div class="bg-primary rounded-xl p-10 md:p-14 relative overflow-hidden grain-overlay flex flex-col justify-between min-h-[360px]">
+        <div class="relative z-20">
+          <span class="label-text text-white/60 mb-4 block">Curated Rankings</span>
+          <h2 class="font-headline font-bold text-3xl md:text-4xl text-white mb-4">Explore Top AI Tools</h2>
+          <p class="text-white/70 font-body leading-relaxed max-w-md">Browse our rigorously scored rankings. Every tool evaluated across ease of use, academic value, and price-to-value.</p>
         </div>
-        <!-- TODO M2: link to actual category pages -->
-        <div class="mt-12 flex flex-wrap gap-4">
-          <span class="label-text opacity-40">Trending:</span>
-          <a class="label-text hover:text-secondary underline decoration-secondary underline-offset-4 text-primary-fixed-dim" href={url('/best/')}>Mechanical Keyboards</a>
-          <a class="label-text hover:text-secondary underline decoration-secondary underline-offset-4 text-primary-fixed-dim" href={url('/best/')}>Espresso Machines</a>
-          <a class="label-text hover:text-secondary underline decoration-secondary underline-offset-4 text-primary-fixed-dim" href={url('/best/')}>Studio Monitors</a>
+        <div class="relative z-20 mt-8">
+          <a href={url('/top-tools/')} class="btn-accent no-underline">
+            Browse Top Tools
+            <svg class="w-4 h-4 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+          </a>
+          <div class="mt-6 flex flex-wrap gap-3">
+            {categories.map(cat => (
+              <a class="label-text hover:text-accent no-underline text-white/50 transition-colors" href={url(`/top-tools/#${cat.slug}`)}>{cat.name}</a>
+            ))}
+          </div>
         </div>
+        <!-- Decorative gradient -->
+        <div class="absolute right-0 top-0 h-full w-1/2 opacity-30 pointer-events-none">
+          <div class="w-full h-full bg-gradient-to-br from-accent/30 via-transparent to-primary/20"></div>
+        </div>
+        <!-- Grid pattern decoration -->
+        <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px); background-size: 40px 40px;"></div>
       </div>
-      <!-- Abstract gradient BG -->
-      <div class="absolute right-0 top-0 h-full w-1/2 opacity-30 pointer-events-none">
-        <div class="w-full h-full bg-gradient-to-br from-secondary/50 to-transparent"></div>
+
+      <!-- Right: Newsletter Signup CTA -->
+      <div class="glass-panel rounded-xl p-10 md:p-14 flex flex-col justify-between min-h-[360px] relative overflow-hidden">
+        <div class="relative z-20">
+          <span class="label-text text-accent font-semibold mb-4 block">Stay Sharp</span>
+          <h2 class="font-headline font-bold text-3xl md:text-4xl text-text mb-4">Join the Newsletter</h2>
+          <p class="text-muted font-body leading-relaxed max-w-md">Weekly insights on AI tools for academics — new reviews, scoring updates, and curated picks delivered to your inbox.</p>
+        </div>
+        <div class="relative z-20 mt-8">
+          <!-- Visual placeholder form — no submission backend -->
+          <form class="flex flex-col sm:flex-row gap-3" onsubmit="return false;">
+            <input
+              type="email"
+              placeholder="your@university.edu"
+              class="flex-grow px-5 py-4 bg-surface-alt border border-outline rounded-lg text-text font-body text-sm placeholder:text-muted-dim focus:outline-none focus:border-primary/60 focus:ring-1 focus:ring-primary/30 transition-colors"
+              aria-label="Email address"
+            />
+            <button
+              type="button"
+              class="btn-accent whitespace-nowrap"
+            >
+              Subscribe
+              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+            </button>
+          </form>
+          <p class="text-xs text-muted-dim mt-4 font-body">No spam, ever. Unsubscribe anytime. We respect your inbox.</p>
+        </div>
+        <!-- Decorative accent glow -->
+        <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-accent/5 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -top-10 -left-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
       </div>
     </div>
   </section>

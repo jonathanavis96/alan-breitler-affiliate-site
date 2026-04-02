@@ -1,146 +1,220 @@
 {
+  "_comment": "AI tool product data for AIfocus. Products support multi-category assignment via the 'categories' array. Scores use 3 dimensions (each 1-10): ease_of_use, academic_value, price_to_value. Overall is their simple average. affiliateSlug references data/affiliates.json entries.",
+  "scoreDimensions": {
+    "ease_of_use": "Ease of Use",
+    "academic_value": "Academic Value",
+    "price_to_value": "Price-to-Value"
+  },
   "products": [
     {
-      "slug": "ergotron-lx-monitor-arm",
-      "name": "Ergotron LX Desk Monitor Arm",
-      "brand": "Ergotron",
-      "category": "monitor-arms",
-      "image": "https://m.media-amazon.com/images/I/61TtgnEUM0L._AC_SL1500_.jpg",
-      "rating": 4.8,
-      "affiliateSlug": "ergotron-lx",
-      "price": "$179",
+      "slug": "chatgpt-plus",
+      "name": "ChatGPT Plus",
+      "brand": "OpenAI",
+      "categories": ["writing-tools", "research-assistants"],
+      "image": "/images/products/chatgpt-plus.png",
+      "affiliateSlug": "chatgpt-plus",
+      "pricing": "$20/mo",
+      "freeTier": true,
+      "freeTierNote": "Free plan with GPT-3.5; Plus unlocks GPT-4",
       "badge": "Editor's Choice",
+      "scores": {
+        "ease_of_use": 9,
+        "academic_value": 8,
+        "price_to_value": 7
+      },
+      "overallScore": 8.0,
+      "useCase": "Drafting, brainstorming, summarisation",
       "pros": [
-        "Exceptional build quality — fully aluminium construction",
-        "Effortless single-hand adjustment",
-        "Supports monitors up to 34 inches / 11.3 kg",
-        "Integrated cable management"
+        "Exceptional natural-language fluency across disciplines",
+        "Supports long-form academic drafts and outlines",
+        "Plugin ecosystem for citations and data analysis",
+        "Frequent model upgrades at no extra cost"
       ],
       "cons": [
-        "Premium price point",
-        "Desk clamp requires 60mm clearance"
+        "Can hallucinate references if not fact-checked",
+        "Limited real-time web access on free tier"
       ],
-      "verdict": "The benchmark for monitor arms. Worth the investment for anyone spending 4+ hours at a desk daily.",
-      "specs": {
-        "weight_capacity": "11.3 kg",
-        "vesa": "75x75 / 100x100",
-        "reach": "64 cm",
-        "height_range": "33 cm",
-        "warranty": "10 years"
-      }
+      "verdict": "The most versatile AI writing assistant for academics. GPT-4 quality justifies the subscription for researchers producing regular written output."
     },
     {
-      "slug": "keychron-q1-max",
-      "name": "Keychron Q1 Max",
-      "brand": "Keychron",
-      "category": "mechanical-keyboards",
-      "image": "https://m.media-amazon.com/images/I/611dl4CogYL._AC_SL1500_.jpg",
-      "rating": 4.6,
-      "affiliateSlug": "keychron-q1-max",
-      "price": "$219",
+      "slug": "consensus-ai",
+      "name": "Consensus",
+      "brand": "Consensus NLP",
+      "categories": ["research-assistants"],
+      "image": "/images/products/consensus-ai.png",
+      "affiliateSlug": "consensus-ai",
+      "pricing": "$9.99/mo",
+      "freeTier": true,
+      "freeTierNote": "Free plan with 20 searches per month",
+      "badge": "Best for Research",
+      "scores": {
+        "ease_of_use": 8,
+        "academic_value": 10,
+        "price_to_value": 8
+      },
+      "overallScore": 8.7,
+      "useCase": "Literature review, evidence synthesis",
+      "pros": [
+        "Searches across 200M+ peer-reviewed papers",
+        "AI-powered yes/no consensus indicators on research questions",
+        "Extracts key findings without reading full papers",
+        "Citation-ready output with DOI links"
+      ],
+      "cons": [
+        "Limited to English-language papers",
+        "No full-text PDF access — links to publisher"
+      ],
+      "verdict": "A game-changer for literature reviews. Consensus turns hours of database searching into minutes of evidence-based answers."
+    },
+    {
+      "slug": "midjourney",
+      "name": "Midjourney",
+      "brand": "Midjourney Inc.",
+      "categories": ["image-generation"],
+      "image": "/images/products/midjourney.png",
+      "affiliateSlug": "midjourney",
+      "pricing": "$10/mo",
+      "freeTier": false,
+      "freeTierNote": null,
+      "badge": "Best Quality",
+      "scores": {
+        "ease_of_use": 6,
+        "academic_value": 7,
+        "price_to_value": 7
+      },
+      "overallScore": 6.7,
+      "useCase": "Figures, diagrams, presentation visuals",
+      "pros": [
+        "Industry-leading image quality and coherence",
+        "Strong at scientific and technical illustration styles",
+        "Active community sharing prompts and techniques",
+        "Rapid iteration with variation and upscale tools"
+      ],
+      "cons": [
+        "Discord-only interface has a learning curve",
+        "Limited control over precise diagram layouts"
+      ],
+      "verdict": "The gold standard for AI image generation. Academics will find it invaluable for conference posters, presentation visuals, and conceptual illustrations."
+    },
+    {
+      "slug": "github-copilot",
+      "name": "GitHub Copilot",
+      "brand": "GitHub / Microsoft",
+      "categories": ["coding-assistants"],
+      "image": "/images/products/github-copilot.png",
+      "affiliateSlug": "github-copilot",
+      "pricing": "$10/mo",
+      "freeTier": true,
+      "freeTierNote": "Free for verified students and educators",
+      "badge": "Best for Code",
+      "scores": {
+        "ease_of_use": 9,
+        "academic_value": 8,
+        "price_to_value": 9
+      },
+      "overallScore": 8.7,
+      "useCase": "Code completion, data scripts, analysis pipelines",
+      "pros": [
+        "Inline code suggestions in VS Code, JetBrains, and Neovim",
+        "Excels at Python, R, and MATLAB — key academic languages",
+        "Free tier for students and educators via GitHub Education",
+        "Chat mode explains complex code and suggests refactors"
+      ],
+      "cons": [
+        "Suggestions occasionally introduce subtle bugs",
+        "Requires active internet connection"
+      ],
+      "verdict": "Essential for academics who write code. The free student tier and deep editor integration make it the easiest productivity win in research computing."
+    },
+    {
+      "slug": "elicit-ai",
+      "name": "Elicit",
+      "brand": "Ought",
+      "categories": ["research-assistants", "writing-tools"],
+      "image": "/images/products/elicit-ai.png",
+      "affiliateSlug": "elicit-ai",
+      "pricing": "$10/mo",
+      "freeTier": true,
+      "freeTierNote": "Free plan with 5,000 credits per month",
       "badge": "Best Value",
+      "scores": {
+        "ease_of_use": 9,
+        "academic_value": 9,
+        "price_to_value": 9
+      },
+      "overallScore": 9.0,
+      "useCase": "Systematic reviews, paper discovery, data extraction",
       "pros": [
-        "Tri-mode connectivity (USB-C, Bluetooth, 2.4GHz)",
-        "Hot-swappable switches",
-        "CNC aluminium body feels premium",
-        "QMK/VIA programmable"
+        "Purpose-built for academic research workflows",
+        "Extracts structured data from papers automatically",
+        "Identifies methodological details across studies",
+        "Generous free tier for individual researchers"
       ],
       "cons": [
-        "Heavier than plastic alternatives at 1.7 kg",
-        "Stock keycaps are average"
+        "Smaller paper index than Google Scholar",
+        "Export options limited on free plan"
       ],
-      "verdict": "The best all-round mechanical keyboard under $250. Tri-mode connectivity and hot-swap make it future-proof.",
-      "specs": {
-        "layout": "75%",
-        "switches": "Gateron Jupiter (hot-swap)",
-        "connectivity": "USB-C / Bluetooth 5.1 / 2.4GHz",
-        "battery": "4000 mAh",
-        "weight": "1.7 kg"
-      }
+      "verdict": "The most research-aware AI tool available. Elicit understands academic papers at a structural level that general-purpose chatbots cannot match."
     },
     {
-      "slug": "autonomous-smartdesk-pro",
-      "name": "Autonomous SmartDesk Pro",
-      "brand": "Autonomous",
-      "category": "standing-desks",
-      "image": "https://m.media-amazon.com/images/I/611+I4ATW8L._AC_SL1500_.jpg",
-      "rating": 4.4,
-      "affiliateSlug": "autonomous-smartdesk-pro",
-      "price": "$529",
+      "slug": "grammarly-ai",
+      "name": "Grammarly with AI",
+      "brand": "Grammarly",
+      "categories": ["writing-tools"],
+      "image": "/images/products/grammarly-ai.png",
+      "affiliateSlug": "grammarly-ai",
+      "pricing": "$12/mo",
+      "freeTier": true,
+      "freeTierNote": "Free plan with basic grammar and spelling checks",
+      "badge": "Most Polished",
+      "scores": {
+        "ease_of_use": 10,
+        "academic_value": 7,
+        "price_to_value": 7
+      },
+      "overallScore": 8.0,
+      "useCase": "Proofreading, tone adjustment, clarity edits",
       "pros": [
-        "Quiet dual-motor system (under 45 dB)",
-        "Height range 63–130 cm suits most users",
-        "4 programmable memory presets",
-        "Anti-collision detection"
+        "Works inline across browsers, Word, and Google Docs",
+        "Academic tone detector helps match journal conventions",
+        "AI rewrite suggestions preserve original meaning",
+        "Plagiarism checker included in premium plan"
       ],
       "cons": [
-        "Desktop surface scratches easily",
-        "Assembly takes 45–60 minutes"
+        "AI generative features require Premium subscription",
+        "Occasionally over-corrects discipline-specific terminology"
       ],
-      "verdict": "A strong mid-range standing desk with reliable motors and smooth height transitions. The price-to-quality ratio is excellent.",
-      "specs": {
-        "height_range": "63–130 cm",
-        "weight_capacity": "136 kg",
-        "motor": "Dual motor",
-        "speed": "4 cm/s",
-        "noise": "< 45 dB"
-      }
+      "verdict": "The most seamless writing enhancement tool. Its browser integration means every email, paper draft, and peer review gets automatic polish."
     },
     {
-      "slug": "benq-screenbar-halo",
-      "name": "BenQ ScreenBar Halo",
-      "brand": "BenQ",
-      "category": "desk-lamps",
-      "image": "https://m.media-amazon.com/images/I/51TVzOs05eL._AC_SL1500_.jpg",
-      "rating": 4.7,
-      "affiliateSlug": "benq-screenbar-halo",
-      "price": "$179",
+      "slug": "claude-pro",
+      "name": "Claude Pro",
+      "brand": "Anthropic",
+      "categories": ["writing-tools", "research-assistants", "coding-assistants"],
+      "image": "/images/products/claude-pro.png",
+      "affiliateSlug": "claude-pro",
+      "pricing": "$20/mo",
+      "freeTier": true,
+      "freeTierNote": "Free plan with limited daily messages; Pro unlocks extended usage and priority access",
+      "badge": "Top Pick",
+      "scores": {
+        "ease_of_use": 9,
+        "academic_value": 9,
+        "price_to_value": 8
+      },
+      "overallScore": 8.7,
+      "useCase": "Research writing, analysis, and code",
       "pros": [
-        "Zero screen glare — asymmetric optics",
-        "Wireless dial controller is intuitive",
-        "Back-light reduces eye strain in dark rooms",
-        "Auto-dimming ambient sensor"
+        "Exceptional at nuanced academic writing with minimal hallucination",
+        "200K token context window handles entire papers and datasets",
+        "Strong reasoning for complex research questions and data analysis",
+        "Projects feature organises research context across conversations"
       ],
       "cons": [
-        "Expensive for a desk lamp",
-        "Back-light colour is cool white only"
+        "No native web browsing or real-time information access",
+        "Usage caps on Pro tier during peak demand periods"
       ],
-      "verdict": "The best monitor light bar available. The wireless controller and back-light justify the price for heavy screen users.",
-      "specs": {
-        "colour_temp": "2700–6500K",
-        "brightness": "500 lux at 45cm",
-        "power": "USB (5V/1.3A)",
-        "width": "50 cm",
-        "controller": "Wireless dial"
-      }
-    },
-    {
-      "slug": "logitech-mx-master-3s",
-      "name": "Logitech MX Master 3S",
-      "brand": "Logitech",
-      "category": "mice",
-      "image": "https://m.media-amazon.com/images/I/61+OT7FPABL._AC_SL1500_.jpg",
-      "rating": 4.5,
-      "affiliateSlug": "logitech-mx-master-3s",
-      "price": "$99",
-      "pros": [
-        "Ergonomic sculpted shape reduces wrist strain",
-        "MagSpeed scroll wheel is incredibly fast",
-        "Connects to 3 devices simultaneously",
-        "Works on any surface including glass"
-      ],
-      "cons": [
-        "Not ideal for gaming (high latency)",
-        "Thumb buttons are stiff out of the box"
-      ],
-      "verdict": "The gold standard for productivity mice. Multi-device workflow and MagSpeed scroll are genuinely transformative.",
-      "specs": {
-        "sensor": "8000 DPI Darkfield",
-        "battery": "70 days (USB-C rechargeable)",
-        "connectivity": "Bluetooth / USB receiver",
-        "weight": "141 g",
-        "os_support": "Windows, macOS, Linux, iPadOS"
-      }
+      "verdict": "The most thoughtful AI assistant for academic work. Claude's combination of long context, careful reasoning, and low hallucination rate makes it the top choice for researchers who need reliability over flash."
     }
   ]
 }

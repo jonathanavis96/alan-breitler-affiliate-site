@@ -1,0 +1,161 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import ComparisonTable from '../../components/ComparisonTable.astro';
+import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
+import siteData from '../../../data/site.json';
+import categoriesData from '../../../data/categories.json';
+import { url } from '../../lib/base';
+
+interface Scores {
+  ease_of_use: number;
+  academic_value: number;
+  price_to_value: number;
+}
+
+interface Product {
+  slug: string;
+  name: string;
+  brand: string;
+  categories: string[];
+  image: string;
+  affiliateSlug: string;
+  pricing: string;
+  freeTier: boolean;
+  freeTierNote: string | null;
+  badge: string;
+  scores: Scores;
+  overallScore: number;
+  useCase: string;
+  pros: string[];
+  cons: string[];
+  verdict: string;
+}
+
+let products: Product[] = [];
+try {
+  const productData = await import('../../../data/products.json');
+  products = productData.default?.products ?? productData.products ?? [];
+} catch {
+  products = [];
+}
+
+const categories = categoriesData.categories;
+
+/* Group products by category, sorted by overallScore within each group */
+const productsByCategory = categories.map((cat) => ({
+  ...cat,
+  products: products
+    .filter((p) => p.categories.includes(cat.slug))
+    .sort((a, b) => b.overallScore - a.overallScore),
+})).filter((group) => group.products.length > 0);
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: `Top AI Tools - ${siteData.name}`,
+  description: 'Curated rankings of the best AI tools for academics — researched, scored, and compared.',
+};
+---
+
+<BaseLayout
+  title="Top AI Tools"
+  description="Curated rankings of the best AI tools for academics — researched, scored, and compared by our editorial team."
+  schema={schema}
+>
+  <!-- Header -->
+  <section class="container-wide py-20 md:py-32">
+    <span class="label-text text-primary font-bold mb-6 block">Editor's Choice</span>
+    <h1 class="font-headline text-5xl md:text-6xl leading-[0.9] tracking-tighter max-w-3xl mb-8 text-text">
+      Top AI Tools <span class="text-primary">2026</span>
+    </h1>
+    <p class="text-muted text-lg max-w-xl leading-relaxed font-body mb-6">
+      We evaluated dozens of AI tools across every major category relevant to academic work. These are the top performers — the tools that deliver real value for researchers, students, and educators.
+    </p>
+    <p class="label-text text-muted-dim">Last updated: March 2026 · {products.length} tools reviewed</p>
+  </section>
+
+  <!-- Category navigation pills -->
+  <section class="container-wide pb-8">
+    <div class="flex flex-wrap gap-3">
+      {productsByCategory.map((group) => (
+        <a
+          href={`#${group.slug}`}
+          class="inline-flex items-center gap-2 px-4 py-2 glass-panel text-sm font-label font-medium text-muted hover:text-primary hover:border-primary/30 transition-all duration-200 no-underline rounded-full"
+        >
+          <span class="material-symbols-outlined text-sm">{group.icon}</span>
+          <span>{group.name}</span>
+          <span class="text-xs text-muted-dim">({group.products.length})</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Disclosure -->
+  <section class="container-wide pb-8">
+    <AffiliateDisclosure compact />
+  </section>
+
+  <!-- Category Sections with ProductCards -->
+  {productsByCategory.map((group, groupIndex) => (
+    <section id={group.slug} class={`py-16 md:py-24 ${groupIndex % 2 === 0 ? 'bg-surface' : 'bg-base'}`}>
+      <div class="container-wide">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="material-symbols-outlined text-3xl text-primary">{group.icon}</span>
+          <h2 class="font-headline font-bold text-3xl md:text-4xl tracking-tight text-text">
+            {group.name}
+          </h2>
+        </div>
+        <p class="text-muted text-lg mb-10 max-w-2xl font-body">
+          {group.description}
+        </p>
+
+        <div class="space-y-6">
+          {group.products.map((product) => (
+            <ProductCard
+              name={product.name}
+              slug={product.slug}
+              brand={product.brand}
+              category={product.categories?.[0]}
+              image={product.image}
+              scores={product.scores}
+              overallScore={product.overallScore}
+              pricing={product.pricing}
+              freeTier={product.freeTier}
+              freeTierNote={product.freeTierNote}
+              pros={product.pros}
+              cons={product.cons}
+              verdict={product.verdict}
+              affiliateSlug={product.affiliateSlug}
+              badge={product.badge}
+              useCase={product.useCase}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- Comparison Table -->
+  <section class="container-wide py-16 md:py-24">
+    <h2 class="font-headline font-bold text-3xl md:text-4xl tracking-tight text-text mb-3">
+      Side-by-Side <span class="text-primary">Comparison</span>
+    </h2>
+    <p class="text-muted text-lg mb-10 max-w-2xl">
+      All tools ranked by overall score. Compare pricing, use cases, and our three scoring dimensions at a glance.
+    </p>
+    <div class="card p-0 overflow-hidden">
+      <ComparisonTable products={products} />
+    </div>
+  </section>
+
+  <!-- Methodology note -->
+  <section class="container-narrow py-16 md:py-24 text-center">
+    <div class="text-primary mb-6"><span class="material-symbols-outlined text-4xl">science</span></div>
+    <h2 class="font-headline text-2xl mb-4 text-text">How We Score</h2>
+    <p class="text-muted font-body leading-relaxed max-w-lg mx-auto mb-6">
+      Every tool on this list went through our multi-dimensional evaluation process. We assess ease of use, academic value, and price-to-value ratio to give you scores you can trust.
+    </p>
+    <a href={url('/about/')} class="btn-outline no-underline">Read Our Methodology</a>
+  </section>
+</BaseLayout>
