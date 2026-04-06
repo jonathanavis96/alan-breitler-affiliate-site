@@ -1,0 +1,163 @@
+{
+  "_comment": "AI Library — curated books and articles for academics. Affiliate links point to Amazon (books) or publisher/open-access (articles). Replace placeholder refs with real affiliate tags when accounts are set up.",
+  "books": [
+    {
+      "slug": "life-3-0",
+      "title": "Life 3.0: Being Human in the Age of Artificial Intelligence",
+      "author": "Max Tegmark",
+      "category": "Foundational AI",
+      "description": "A sweeping exploration of how AI will transform every aspect of society — from jobs and law to war and consciousness. Essential reading for anyone entering the AI field.",
+      "image": "/images/library/life-3-0.jpg",
+      "year": 2017,
+      "link": "https://www.amazon.com/dp/1101946598?tag=aifocus-20",
+      "badge": "Essential Read"
+    },
+    {
+      "slug": "artificial-intelligence-modern-approach",
+      "title": "Artificial Intelligence: A Modern Approach",
+      "author": "Stuart Russell & Peter Norvig",
+      "category": "Foundational AI",
+      "description": "The definitive AI textbook used in over 1,500 universities. Covers search, knowledge, planning, learning, perception, and robotics with rigorous depth.",
+      "image": "/images/library/ai-modern-approach.jpg",
+      "year": 2020,
+      "link": "https://www.amazon.com/dp/0134610997?tag=aifocus-20",
+      "badge": "Textbook Standard"
+    },
+    {
+      "slug": "deep-learning",
+      "title": "Deep Learning",
+      "author": "Ian Goodfellow, Yoshua Bengio & Aaron Courville",
+      "category": "Machine Learning",
+      "description": "The authoritative textbook on deep learning covering linear algebra, probability, numerical computation, and modern deep network architectures.",
+      "image": "/images/library/deep-learning.jpg",
+      "year": 2016,
+      "link": "https://www.amazon.com/dp/0262035618?tag=aifocus-20",
+      "badge": null
+    },
+    {
+      "slug": "hands-on-machine-learning",
+      "title": "Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow",
+      "author": "Aurelien Geron",
+      "category": "Practical Guides",
+      "description": "The most practical ML book available. Takes you from zero to building production-ready models with Python, with clear code examples throughout.",
+      "image": "/images/library/hands-on-ml.jpg",
+      "year": 2022,
+      "link": "https://www.amazon.com/dp/1098125975?tag=aifocus-20",
+      "badge": "Best for Beginners"
+    },
+    {
+      "slug": "atlas-of-ai",
+      "title": "Atlas of AI: Power, Politics, and the Planetary Costs of Artificial Intelligence",
+      "author": "Kate Crawford",
+      "category": "AI Ethics",
+      "description": "A revelatory investigation into the material and political costs of AI — from lithium mines to data labourers. Critical for understanding AI's societal impact.",
+      "image": "/images/library/atlas-of-ai.jpg",
+      "year": 2021,
+      "link": "https://www.amazon.com/dp/0300264631?tag=aifocus-20",
+      "badge": null
+    },
+    {
+      "slug": "human-compatible",
+      "title": "Human Compatible: Artificial Intelligence and the Problem of Control",
+      "author": "Stuart Russell",
+      "category": "AI Ethics",
+      "description": "A leading AI researcher makes the case that we need to fundamentally rethink how we build AI systems to ensure they remain beneficial to humanity.",
+      "image": "/images/library/human-compatible.jpg",
+      "year": 2019,
+      "link": "https://www.amazon.com/dp/0525558632?tag=aifocus-20",
+      "badge": null
+    },
+    {
+      "slug": "prompt-engineering-guide",
+      "title": "The Prompt Engineering Guide",
+      "author": "DAIR.AI",
+      "category": "Practical Guides",
+      "description": "A comprehensive, regularly updated guide to prompt engineering techniques for LLMs. Covers zero-shot, few-shot, chain-of-thought, and advanced prompting strategies.",
+      "image": "/images/library/prompt-engineering.jpg",
+      "year": 2024,
+      "link": "https://www.promptingguide.ai/",
+      "badge": "Free Resource"
+    },
+    {
+      "slug": "ace-the-data-science-interview",
+      "title": "Ace the Data Science Interview",
+      "author": "Nick Singh & Kevin Huo",
+      "category": "Practical Guides",
+      "description": "201 real interview questions from top tech companies. Covers statistics, ML, SQL, product sense, and case studies — ideal for academics transitioning to industry.",
+      "image": "/images/library/ace-ds-interview.jpg",
+      "year": 2021,
+      "link": "https://www.amazon.com/dp/0578973839?tag=aifocus-20",
+      "badge": null
+    }
+  ],
+  "articles": [
+    {
+      "slug": "attention-is-all-you-need",
+      "title": "Attention Is All You Need",
+      "authors": "Vaswani et al.",
+      "journal": "NeurIPS 2017",
+      "category": "Landmark Papers",
+      "description": "The paper that introduced the Transformer architecture — the foundation of GPT, BERT, and virtually every modern language model.",
+      "link": "https://arxiv.org/abs/1706.03762",
+      "year": 2017,
+      "badge": "Landmark"
+    },
+    {
+      "slug": "bert-pre-training",
+      "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+      "authors": "Devlin et al.",
+      "journal": "NAACL 2019",
+      "category": "Landmark Papers",
+      "description": "Introduced bidirectional pre-training for language models, revolutionising NLP benchmarks and spawning an entire family of models.",
+      "link": "https://arxiv.org/abs/1810.04805",
+      "year": 2018,
+      "badge": null
+    },
+    {
+      "slug": "gpt-4-technical-report",
+      "title": "GPT-4 Technical Report",
+      "authors": "OpenAI",
+      "journal": "arXiv",
+      "category": "Industry Research",
+      "description": "OpenAI's technical report on GPT-4 — a large multimodal model that exhibits human-level performance on various professional and academic benchmarks.",
+      "link": "https://arxiv.org/abs/2303.08774",
+      "year": 2023,
+      "badge": null
+    },
+    {
+      "slug": "constitutional-ai",
+      "title": "Constitutional AI: Harmlessness from AI Feedback",
+      "authors": "Bai et al. (Anthropic)",
+      "journal": "arXiv",
+      "category": "AI Safety",
+      "description": "Anthropic's approach to training AI systems using a set of principles (a 'constitution') rather than purely human feedback — a key paper in AI alignment.",
+      "link": "https://arxiv.org/abs/2212.08073",
+      "year": 2022,
+      "badge": null
+    },
+    {
+      "slug": "sparks-of-agi",
+      "title": "Sparks of Artificial General Intelligence: Early experiments with GPT-4",
+      "authors": "Bubeck et al. (Microsoft Research)",
+      "journal": "arXiv",
+      "category": "Industry Research",
+      "description": "Microsoft Research's extensive evaluation of GPT-4's capabilities across mathematics, coding, vision, and reasoning — arguing it shows 'sparks' of AGI.",
+      "link": "https://arxiv.org/abs/2303.12712",
+      "year": 2023,
+      "badge": null
+    },
+    {
+      "slug": "stochastic-parrots",
+      "title": "On the Dangers of Stochastic Parrots: Can Language Models Be Too Big?",
+      "authors": "Bender et al.",
+      "journal": "FAccT 2021",
+      "category": "AI Ethics",
+      "description": "A critical examination of the risks of large language models — including environmental costs, bias, and the illusion of understanding. Essential counterpoint reading.",
+      "link": "https://dl.acm.org/doi/10.1145/3442188.3445922",
+      "year": 2021,
+      "badge": "Must Read"
+    }
+  ],
+  "bookCategories": ["Foundational AI", "Machine Learning", "AI Ethics", "Practical Guides"],
+  "articleCategories": ["Landmark Papers", "Industry Research", "AI Safety", "AI Ethics"]
+}

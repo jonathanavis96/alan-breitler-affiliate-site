@@ -1,0 +1,190 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
+import GradientOrbs from '../../components/GradientOrbs.astro';
+import siteData from '../../../data/site.json';
+import libraryData from '../../../data/library.json';
+import { url } from '../../lib/base';
+
+const books = libraryData.books;
+const articles = libraryData.articles;
+const bookCategories = libraryData.bookCategories;
+const articleCategories = libraryData.articleCategories;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: `AI Library - ${siteData.name}`,
+  description: 'Curated AI books and landmark research articles for academics — from foundational texts to cutting-edge papers.',
+};
+---
+
+<BaseLayout
+  title="AI Library"
+  description="Curated AI books and landmark research articles for academics — from foundational texts to cutting-edge papers."
+  schema={schema}
+>
+  <!-- Header -->
+  <section class="container-wide py-20 md:py-32 relative overflow-hidden">
+    <GradientOrbs variant="section" />
+    <div class="relative z-10">
+      <span class="label-text text-primary font-bold mb-6 block">Curated Collection</span>
+      <h1 class="font-headline text-5xl md:text-6xl leading-[0.9] tracking-tighter max-w-3xl mb-8 text-text">
+        AI <span class="text-primary">Library</span>
+      </h1>
+      <p class="text-muted text-lg max-w-xl leading-relaxed font-body mb-6">
+        The essential reading list for academics working with AI. We've curated the books that shaped the field and the papers that define its frontier.
+      </p>
+      <p class="label-text text-muted-dim">{books.length} books · {articles.length} articles</p>
+    </div>
+  </section>
+
+  <!-- Tab-style navigation -->
+  <section class="container-wide pb-8">
+    <div class="flex flex-wrap gap-3">
+      <a href="#books" class="inline-flex items-center gap-2 px-4 py-2 glass-panel text-sm font-label font-medium text-muted hover:text-primary hover:border-primary/30 transition-all duration-200 no-underline rounded-full">
+        <span class="material-symbols-outlined text-sm">menu_book</span>
+        <span>Books</span>
+        <span class="text-xs text-muted-dim">({books.length})</span>
+      </a>
+      <a href="#articles" class="inline-flex items-center gap-2 px-4 py-2 glass-panel text-sm font-label font-medium text-muted hover:text-primary hover:border-primary/30 transition-all duration-200 no-underline rounded-full">
+        <span class="material-symbols-outlined text-sm">article</span>
+        <span>Articles & Papers</span>
+        <span class="text-xs text-muted-dim">({articles.length})</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Disclosure -->
+  <section class="container-wide pb-8">
+    <AffiliateDisclosure compact />
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       BOOKS SECTION
+       ═══════════════════════════════════════ -->
+  <section id="books" class="py-16 md:py-24 bg-surface">
+    <div class="container-wide">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="material-symbols-outlined text-3xl text-primary">menu_book</span>
+        <h2 class="font-headline font-bold text-3xl md:text-4xl tracking-tight text-text">
+          Books
+        </h2>
+      </div>
+      <p class="text-muted text-lg mb-10 max-w-2xl font-body">
+        Foundational texts, practical guides, and critical perspectives on artificial intelligence — curated for researchers, students, and educators.
+      </p>
+
+      {bookCategories.map((category) => {
+        const categoryBooks = books.filter(b => b.category === category);
+        if (categoryBooks.length === 0) return null;
+        return (
+          <div class="mb-12">
+            <h3 class="label-text text-primary font-bold mb-6">{category}</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {categoryBooks.map((book) => (
+                <a
+                  href={book.link}
+                  target="_blank"
+                  rel="nofollow sponsored noopener"
+                  class="glass-panel rounded-xl p-6 flex gap-5 group no-underline hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300"
+                >
+                  <!-- Book cover placeholder -->
+                  <div class="w-20 h-28 flex-shrink-0 bg-surface-alt rounded-lg flex items-center justify-center overflow-hidden">
+                    <span class="material-symbols-outlined text-3xl text-muted-dim group-hover:text-primary transition-colors">menu_book</span>
+                  </div>
+                  <!-- Details -->
+                  <div class="flex-1 min-w-0">
+                    <div class="flex items-start justify-between gap-2 mb-1">
+                      <h4 class="font-headline font-bold text-text text-sm leading-snug group-hover:text-primary transition-colors line-clamp-2">{book.title}</h4>
+                      {book.badge && (
+                        <span class="badge-editorial text-[10px] shrink-0">{book.badge}</span>
+                      )}
+                    </div>
+                    <p class="text-xs text-muted-dim mb-2">{book.author} · {book.year}</p>
+                    <p class="text-sm text-muted leading-relaxed line-clamp-2">{book.description}</p>
+                    <div class="flex items-center gap-1 mt-3 text-xs font-label font-bold uppercase tracking-widest text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      View on Amazon
+                      <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       ARTICLES & PAPERS SECTION
+       ═══════════════════════════════════════ -->
+  <section id="articles" class="py-16 md:py-24">
+    <div class="container-wide">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="material-symbols-outlined text-3xl text-accent">article</span>
+        <h2 class="font-headline font-bold text-3xl md:text-4xl tracking-tight text-text">
+          Articles & Papers
+        </h2>
+      </div>
+      <p class="text-muted text-lg mb-10 max-w-2xl font-body">
+        Landmark research papers and critical analyses that every AI researcher should know — from the Transformer paper to AI safety and ethics.
+      </p>
+
+      {articleCategories.map((category) => {
+        const categoryArticles = articles.filter(a => a.category === category);
+        if (categoryArticles.length === 0) return null;
+        return (
+          <div class="mb-12">
+            <h3 class="label-text text-accent font-bold mb-6">{category}</h3>
+            <div class="space-y-4">
+              {categoryArticles.map((article, i) => (
+                <a
+                  href={article.link}
+                  target="_blank"
+                  rel="noopener"
+                  class:list={[
+                    'block glass-panel rounded-xl p-6 group no-underline transition-all duration-300',
+                    'hover:border-accent/30 hover:shadow-lg hover:shadow-accent/5',
+                    `scroll-reveal scroll-delay-${i * 100}`,
+                  ]}
+                >
+                  <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-start gap-3 mb-2">
+                        <h4 class="font-headline font-bold text-text text-base leading-snug group-hover:text-accent transition-colors">{article.title}</h4>
+                        {article.badge && (
+                          <span class="badge-outlook text-[10px] shrink-0">{article.badge}</span>
+                        )}
+                      </div>
+                      <p class="text-xs text-muted-dim mb-2">{article.authors} · {article.journal} · {article.year}</p>
+                      <p class="text-sm text-muted leading-relaxed">{article.description}</p>
+                    </div>
+                    <div class="flex items-center gap-1 text-xs font-label font-bold uppercase tracking-widest text-accent shrink-0 sm:mt-1 opacity-70 group-hover:opacity-100 transition-opacity duration-300">
+                      Read paper
+                      <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 md:py-24 bg-surface grain-overlay relative overflow-hidden">
+    <GradientOrbs variant="section" />
+    <div class="container-narrow text-center relative z-10">
+      <h2 class="font-headline text-3xl md:text-4xl mb-4 text-text">Know a book or paper we should add?</h2>
+      <p class="text-muted font-body mb-8 max-w-lg mx-auto">We're always expanding this collection. If there's a title that shaped your understanding of AI, we'd love to hear about it.</p>
+      <a href={url('/contact/')} class="btn-primary no-underline inline-flex items-center gap-3">
+        Suggest a Title
+        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+      </a>
+    </div>
+  </section>
+</BaseLayout>

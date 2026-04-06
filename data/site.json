@@ -27,6 +27,7 @@
     { "label": "Top Tools", "href": "/top-tools/" },
     { "label": "Reviews", "href": "/reviews/" },
     { "label": "Resources", "href": "/resources/" },
+    { "label": "Library", "href": "/library/" },
     { "label": "About", "href": "/about/" },
     { "label": "Contact", "href": "/contact/" }
   ],
