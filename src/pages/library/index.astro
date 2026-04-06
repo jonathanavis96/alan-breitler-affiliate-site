@@ -89,9 +89,14 @@ const schema = {
                   rel="nofollow sponsored noopener"
                   class="glass-panel rounded-xl p-6 flex gap-5 group no-underline hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300"
                 >
-                  <!-- Book cover placeholder -->
-                  <div class="w-20 h-28 flex-shrink-0 bg-surface-alt rounded-lg flex items-center justify-center overflow-hidden">
-                    <span class="material-symbols-outlined text-3xl text-muted-dim group-hover:text-primary transition-colors">menu_book</span>
+                  <!-- Book cover -->
+                  <div class="w-20 h-28 flex-shrink-0 bg-surface-alt rounded-lg overflow-hidden">
+                    <img
+                      src={url(book.image)}
+                      alt={book.title}
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
                   </div>
                   <!-- Details -->
                   <div class="flex-1 min-w-0">
