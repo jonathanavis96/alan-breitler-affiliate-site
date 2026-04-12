@@ -14,23 +14,33 @@ interface Product {
   scores: Scores;
   overallScore: number;
   pricing?: string;
+  freeTier?: boolean;
   useCase?: string;
   badge?: string;
 }
 
 interface Props {
   products: Product[];
+  /** Limit the number of products shown (default: all) */
+  limit?: number;
+  /** Show the "View Full Review" links (default: true) */
+  showReviewLinks?: boolean;
 }
 
-const { products: rawProducts } = Astro.props;
+const {
+  products: rawProducts,
+  limit,
+  showReviewLinks = true,
+} = Astro.props;
 
-// Sort products by overall score descending (fixed sort order — no client-side interactivity)
-const products = [...rawProducts].sort((a, b) => b.overallScore - a.overallScore);
+// Sort products by overall score descending
+const sorted = [...rawProducts].sort((a, b) => b.overallScore - a.overallScore);
+const products = limit ? sorted.slice(0, limit) : sorted;
 
-const scoreDimensions: { key: keyof Scores; label: string }[] = [
-  { key: 'ease_of_use', label: 'Ease of Use' },
-  { key: 'academic_value', label: 'Academic Value' },
-  { key: 'price_to_value', label: 'Price-to-Value' },
+const scoreDimensions: { key: keyof Scores; label: string; icon: string }[] = [
+  { key: 'ease_of_use', label: 'Ease of Use', icon: 'touch_app' },
+  { key: 'academic_value', label: 'Academic Value', icon: 'school' },
+  { key: 'price_to_value', label: 'Price-to-Value', icon: 'payments' },
 ];
 
 function scoreColor(score: number): string {
@@ -44,97 +54,409 @@ function overallColor(score: number): string {
   if (score >= 7) return 'text-accent';
   return 'text-muted';
 }
+
+function barColorClass(score: number): string {
+  if (score >= 9) return 'bar-high';
+  if (score >= 7) return 'bar-mid';
+  return 'bar-low';
+}
+
+/** Find the highest score in a dimension across all shown products */
+function isRowWinner(score: number, key: keyof Scores): boolean {
+  const max = Math.max(...products.map((p) => p.scores[key]));
+  return score === max && score > 0;
+}
+
+/** Rank medal for top 3 */
+function rankMedal(index: number): { emoji: string; label: string } | null {
+  if (index === 0) return { emoji: '🥇', label: '1st' };
+  if (index === 1) return { emoji: '🥈', label: '2nd' };
+  if (index === 2) return { emoji: '🥉', label: '3rd' };
+  return null;
+}
 ---
 
-<div class="overflow-x-auto">
-  <table class="w-full border-collapse text-sm">
-    <thead>
-      <tr class="border-b border-outline">
-        <th class="text-left py-3 px-4 font-headline font-semibold text-muted text-xs uppercase tracking-wide">Feature</th>
-        {products.map((product) => (
-          <th class="text-center py-3 px-4 relative">
-            {product.badge && (
-              <span class="inline-block px-2 py-0.5 text-[10px] font-label font-semibold uppercase tracking-wide bg-primary/15 text-primary rounded-full mb-1">
-                {product.badge}
+<!-- Mobile card layout (visible below md breakpoint) -->
+<div class="comparison-mobile block md:hidden">
+  {products.map((product, idx) => {
+    const medal = rankMedal(idx);
+    return (
+      <div class="comparison-card glass-panel rounded-xl mb-4 overflow-hidden">
+        {/* Card header */}
+        <div class="flex items-center justify-between p-4 pb-3 border-b border-outline/40">
+          <div class="flex items-center gap-3">
+            {medal && (
+              <span class="text-lg" aria-label={medal.label}>{medal.emoji}</span>
+            )}
+            <div>
+              <h3 class="font-headline font-bold text-text text-base leading-tight">{product.name}</h3>
+              {product.badge && (
+                <span class="inline-block px-2 py-0.5 text-[9px] font-label font-semibold uppercase tracking-wide bg-primary/15 text-primary rounded-full mt-1">
+                  {product.badge}
+                </span>
+              )}
+            </div>
+          </div>
+          <div class="flex flex-col items-center flex-shrink-0">
+            <div class:list={[
+              'comparison-score-ring',
+              product.overallScore >= 8.5 ? 'ring-high' : product.overallScore >= 7 ? 'ring-mid' : 'ring-low',
+            ]}>
+              <span class="text-sm font-headline font-bold">{product.overallScore.toFixed(1)}</span>
+            </div>
+            <span class="text-[9px] text-muted-dim mt-0.5 uppercase tracking-wider font-label">Overall</span>
+          </div>
+        </div>
+
+        {/* Score dimensions */}
+        <div class="p-4 pb-3 space-y-3">
+          {scoreDimensions.map(({ key, label }) => (
+            <div class="space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="text-xs text-muted font-label">{label}</span>
+                <span class={`text-xs font-bold font-headline ${scoreColor(product.scores[key])}`}>
+                  {product.scores[key]}/10
+                </span>
+              </div>
+              <div class="h-1.5 bg-surface-alt rounded-full overflow-hidden">
+                <div
+                  class:list={['comparison-bar h-full rounded-full', barColorClass(product.scores[key])]}
+                  style={`width: ${product.scores[key] * 10}%`}
+                ></div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Footer: pricing, free tier, CTAs */}
+        <div class="px-4 pb-4 pt-1 flex flex-col min-[400px]:flex-row items-start min-[400px]:items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <span class="text-sm text-accent font-bold font-headline">{product.pricing || '—'}</span>
+            {product.freeTier && (
+              <span class="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-label font-medium text-success bg-success/10 rounded-full border border-success/20">
+                <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg>
+                Free tier
               </span>
             )}
-            <div class="font-headline font-bold text-text">{product.name}</div>
-          </th>
-        ))}
+          </div>
+          <div class="flex items-center gap-3">
+            {showReviewLinks && product.slug && (
+              <a
+                href={url(`/reviews/${product.slug}/`)}
+                class="inline-flex items-center min-h-[44px] text-primary text-[11px] font-label font-bold no-underline hover:text-primary-hover hover:underline underline-offset-4 transition-colors px-2"
+                aria-label={`Review of ${product.name}`}
+              >
+                Review →
+              </a>
+            )}
+            <a
+              href={url(`/go/${product.affiliateSlug}/`)}
+              class="inline-flex items-center justify-center min-h-[44px] px-4 py-2.5 bg-primary hover:bg-primary-hover text-on-primary text-[10px] font-label font-semibold uppercase tracking-wide rounded transition-colors duration-200 no-underline"
+              target="_blank"
+              rel="nofollow sponsored noopener"
+              aria-label={`Try ${product.name} free (opens in new tab)`}
+            >
+              Try Free
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  })}
+</div>
+
+<!-- Desktop table layout (visible at md breakpoint and above) -->
+<div class="comparison-desktop hidden md:block overflow-x-auto">
+  <table class="w-full border-collapse text-sm comparison-table" aria-label="AI tools comparison table">
+    <thead>
+      <tr class="border-b border-outline">
+        <th class="comparison-label-cell text-left py-4 px-5 font-headline font-semibold text-muted text-xs uppercase tracking-wide sticky left-0 z-10 bg-surface">
+          Feature
+        </th>
+        {products.map((product, idx) => {
+          const medal = rankMedal(idx);
+          return (
+            <th class:list={[
+              'text-center py-4 px-4 relative comparison-product-col',
+              idx === 0 ? 'comparison-top-pick' : '',
+            ]}>
+              {medal && (
+                <span class="inline-block text-base mb-0.5" aria-label={medal.label}>{medal.emoji}</span>
+              )}
+              {product.badge && (
+                <span class="block px-2 py-0.5 text-[9px] font-label font-semibold uppercase tracking-wide bg-primary/15 text-primary rounded-full mb-1 mx-auto w-fit">
+                  {product.badge}
+                </span>
+              )}
+              <div class="font-headline font-bold text-text text-sm">{product.name}</div>
+            </th>
+          );
+        })}
       </tr>
     </thead>
     <tbody>
-      <!-- Overall Score Row -->
-      <tr class="border-b border-outline bg-surface-alt/50">
-        <td class="py-3 px-4 font-label font-semibold text-text text-xs uppercase tracking-wide">Overall Score</td>
-        {products.map((product) => (
-          <td class="py-3 px-4 text-center">
-            <span class={`text-lg font-headline font-bold ${overallColor(product.overallScore)}`}>
-              {product.overallScore.toFixed(1)}
-            </span>
-            <span class="text-muted-dim text-xs">/10</span>
+      {/* Overall Score Row */}
+      <tr class="border-b border-outline comparison-row-highlight">
+        <td class="py-4 px-5 font-label font-semibold text-text text-xs uppercase tracking-wide sticky left-0 z-10 bg-surface">
+          <span class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-base">star</span>
+            Overall Score
+          </span>
+        </td>
+        {products.map((product, idx) => (
+          <td class:list={['py-4 px-4 text-center', idx === 0 ? 'comparison-top-pick' : '']}>
+            <div class="flex flex-col items-center">
+              <span class={`text-2xl font-headline font-bold ${overallColor(product.overallScore)}`}>
+                {product.overallScore.toFixed(1)}
+              </span>
+              <span class="text-muted-dim text-[10px] font-label">/10</span>
+            </div>
           </td>
         ))}
       </tr>
 
-      <!-- Score Dimension Rows -->
-      {scoreDimensions.map(({ key, label }, index) => (
-        <tr class:list={['border-b border-outline/50', index % 2 === 0 ? 'bg-surface-alt/25' : '']}>
-          <td class="py-3 px-4 font-label text-muted">{label}</td>
-          {products.map((product) => (
-            <td class="py-3 px-4 text-center">
-              <div class="flex items-center justify-center gap-2">
-                <div class="w-16 h-1.5 bg-surface-alt rounded-full overflow-hidden hidden sm:block">
-                  <div
-                    class="h-full rounded-full bg-gradient-to-r from-primary to-accent"
-                    style={`width: ${product.scores[key] * 10}%`}
-                  ></div>
+      {/* Score Dimension Rows */}
+      {scoreDimensions.map(({ key, label, icon }, dimIndex) => (
+        <tr class:list={[
+          'border-b border-outline/50',
+          dimIndex % 2 === 0 ? 'bg-surface-alt/20' : '',
+        ]}>
+          <td class="py-3 px-5 font-label text-muted text-xs sticky left-0 z-10 bg-surface">
+            <span class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-muted-dim text-sm">{icon}</span>
+              {label}
+            </span>
+          </td>
+          {products.map((product, idx) => {
+            const score = product.scores[key];
+            const winner = isRowWinner(score, key);
+            return (
+              <td class:list={['py-3 px-4 text-center', idx === 0 ? 'comparison-top-pick' : '']}>
+                <div class="flex items-center justify-center gap-2">
+                  <div class="w-20 h-2 bg-surface-alt rounded-full overflow-hidden">
+                    <div
+                      class:list={['comparison-bar h-full rounded-full', barColorClass(score)]}
+                      style={`width: ${score * 10}%`}
+                    ></div>
+                  </div>
+                  <span class:list={[
+                    'font-headline font-bold text-sm',
+                    winner ? 'comparison-winner' : scoreColor(score),
+                  ]}>
+                    {score}
+                  </span>
+                  {winner && (
+                    <span class="text-[10px] text-success" aria-label="Best in category">✦</span>
+                  )}
                 </div>
-                <span class={`font-headline font-bold ${scoreColor(product.scores[key])}`}>
-                  {product.scores[key]}
-                </span>
-              </div>
-            </td>
-          ))}
+              </td>
+            );
+          })}
         </tr>
       ))}
 
-      <!-- Pricing Row -->
-      <tr class="border-b border-outline bg-surface-alt/25">
-        <td class="py-3 px-4 font-label text-muted">Pricing</td>
-        {products.map((product) => (
-          <td class="py-3 px-4 text-center font-headline font-semibold text-accent">
-            {product.pricing || '—'}
+      {/* Pricing Row */}
+      <tr class="border-b border-outline bg-surface-alt/20">
+        <td class="py-3 px-5 font-label text-muted text-xs sticky left-0 z-10 bg-surface">
+          <span class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-muted-dim text-sm">sell</span>
+            Pricing
+          </span>
+        </td>
+        {products.map((product, idx) => (
+          <td class:list={['py-3 px-4 text-center', idx === 0 ? 'comparison-top-pick' : '']}>
+            <span class="font-headline font-semibold text-accent text-sm">{product.pricing || '—'}</span>
           </td>
         ))}
       </tr>
 
-      <!-- Use Case Row -->
-      <tr class="border-b border-outline">
-        <td class="py-3 px-4 font-label text-muted">Best For</td>
-        {products.map((product) => (
-          <td class="py-3 px-4 text-center text-muted text-xs">
+      {/* Free Tier Row */}
+      <tr class="border-b border-outline/50">
+        <td class="py-3 px-5 font-label text-muted text-xs sticky left-0 z-10 bg-surface">
+          <span class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-muted-dim text-sm">redeem</span>
+            Free Tier
+          </span>
+        </td>
+        {products.map((product, idx) => (
+          <td class:list={['py-3 px-4 text-center', idx === 0 ? 'comparison-top-pick' : '']}>
+            {product.freeTier ? (
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-label font-semibold text-success bg-success/10 rounded-full border border-success/20">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg>
+                Available
+              </span>
+            ) : (
+              <span class="text-muted-dim text-xs">—</span>
+            )}
+          </td>
+        ))}
+      </tr>
+
+      {/* Use Case Row */}
+      <tr class="border-b border-outline/50 bg-surface-alt/20">
+        <td class="py-3 px-5 font-label text-muted text-xs sticky left-0 z-10 bg-surface">
+          <span class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-muted-dim text-sm">target</span>
+            Best For
+          </span>
+        </td>
+        {products.map((product, idx) => (
+          <td class:list={['py-3 px-4 text-center text-muted text-xs font-body leading-snug', idx === 0 ? 'comparison-top-pick' : '']}>
             {product.useCase || '—'}
           </td>
         ))}
       </tr>
 
-      <!-- CTA Row -->
+      {/* CTA Row */}
       <tr>
-        <td class="py-4 px-4"></td>
-        {products.map((product) => (
-          <td class="py-4 px-4 text-center">
-            <a
-              href={url(`/go/${product.affiliateSlug}/`)}
-              class="inline-block px-4 py-2 bg-primary hover:bg-primary-hover text-on-primary text-xs font-label font-semibold uppercase tracking-wide rounded transition-colors duration-200 no-underline"
-              target="_blank"
-              rel="nofollow sponsored noopener"
-            >
-              Try Free
-            </a>
+        <td class="py-5 px-5 sticky left-0 z-10 bg-surface"></td>
+        {products.map((product, idx) => (
+          <td class:list={['py-5 px-4 text-center', idx === 0 ? 'comparison-top-pick comparison-top-pick-bottom' : '']}>
+            <div class="flex flex-col items-center gap-2">
+              <a
+                href={url(`/go/${product.affiliateSlug}/`)}
+                class:list={[
+                  'inline-flex items-center gap-1.5 px-4 py-2 text-xs font-label font-semibold uppercase tracking-wide rounded transition-all duration-200 no-underline',
+                  idx === 0
+                    ? 'bg-primary hover:bg-primary-hover text-on-primary hover:shadow-[0_0_16px_rgba(0,207,255,0.3)]'
+                    : 'bg-surface-alt hover:bg-surface-hover text-primary border border-primary/20 hover:border-primary/40',
+                ]}
+                target="_blank"
+                rel="nofollow sponsored noopener"
+                aria-label={`Try ${product.name} free (opens in new tab)`}
+              >
+                Try Free
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+              </a>
+              {showReviewLinks && product.slug && (
+                <a
+                  href={url(`/reviews/${product.slug}/`)}
+                  class="text-primary text-[10px] font-label font-bold no-underline hover:text-primary-hover hover:underline underline-offset-4 transition-colors"
+                  aria-label={`Full review of ${product.name}`}
+                >
+                  Full Review →
+                </a>
+              )}
+            </div>
           </td>
         ))}
       </tr>
     </tbody>
   </table>
 </div>
+
+<style>
+  /* ── Desktop table polish ── */
+  .comparison-table {
+    border-spacing: 0;
+  }
+
+  /* Top pick column highlight */
+  .comparison-top-pick {
+    background: rgba(10, 173, 207, 0.04);
+    border-left: 1px solid rgba(0, 207, 255, 0.08);
+    border-right: 1px solid rgba(0, 207, 255, 0.08);
+  }
+
+  thead .comparison-top-pick {
+    border-top: 2px solid rgba(0, 207, 255, 0.25);
+    background: rgba(10, 173, 207, 0.06);
+  }
+
+  .comparison-top-pick-bottom {
+    border-bottom: 2px solid rgba(0, 207, 255, 0.15);
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+  }
+
+  /* Highlight row */
+  .comparison-row-highlight td {
+    background: rgba(30, 34, 48, 0.5);
+  }
+
+  .comparison-row-highlight .comparison-top-pick {
+    background: rgba(10, 173, 207, 0.08);
+  }
+
+  /* Row hover */
+  .comparison-table tbody tr:hover td:not(.comparison-label-cell):not([class*="sticky"]) {
+    background: rgba(30, 34, 48, 0.35);
+  }
+
+  /* Sticky label cell overlay — ensure it stays opaque on scroll */
+  .comparison-table td[class*="sticky"],
+  .comparison-table th[class*="sticky"] {
+    background: #171A21;
+  }
+
+  /* Winner badge pulse */
+  .comparison-winner {
+    color: #22C55E;
+    text-shadow: 0 0 8px rgba(34, 197, 94, 0.3);
+  }
+
+  /* ── Score bars ── */
+  .comparison-bar {
+    transition: width 0.6s cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .comparison-bar.bar-high {
+    background: linear-gradient(to right, #22C55E, #4ADE80);
+  }
+
+  .comparison-bar.bar-mid {
+    background: linear-gradient(to right, #00CFFF, #FFB347);
+  }
+
+  .comparison-bar.bar-low {
+    background: linear-gradient(to right, #6B7280, #A7AFBF);
+  }
+
+  /* ── Mobile card score ring ── */
+  .comparison-score-ring {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 9999px;
+    border-width: 2px;
+    border-style: solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .comparison-score-ring.ring-high {
+    color: #22C55E;
+    border-color: #22C55E;
+  }
+
+  .comparison-score-ring.ring-mid {
+    color: #FFB347;
+    border-color: #FFB347;
+  }
+
+  .comparison-score-ring.ring-low {
+    color: #A7AFBF;
+    border-color: #A7AFBF;
+  }
+
+  /* ── Mobile card hover ── */
+  .comparison-card {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .comparison-card:hover {
+    border-color: rgba(0, 207, 255, 0.2);
+    box-shadow:
+      0 0 16px rgba(0, 207, 255, 0.06),
+      0 4px 16px rgba(0, 0, 0, 0.3);
+    transform: translateY(-1px);
+  }
+
+  /* ── Print styles ── */
+  @media print {
+    .comparison-mobile { display: none !important; }
+    .comparison-desktop { display: block !important; }
+    .comparison-top-pick { background: none !important; border: none !important; }
+    .comparison-bar { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  }
+</style>

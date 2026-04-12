@@ -10,6 +10,7 @@ export interface AffiliateLink {
   name: string;
   destination: string;
   network: string;
+  placeholder: boolean;
   active: boolean;
 }
 

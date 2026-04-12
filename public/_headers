@@ -1,0 +1,25 @@
+# Cache headers for static hosting (Cloudflare Pages, Netlify)
+# GitHub Pages uses its own caching — these apply when migrating
+
+# Hashed assets — immutable, cache for 1 year
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Fonts — long cache, rarely change
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Images — long cache with revalidation
+/images/*
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+
+# HTML pages — short cache, always revalidate
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Security headers
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()

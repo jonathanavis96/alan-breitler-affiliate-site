@@ -15,7 +15,7 @@ dist/
 # Test/automation logs
 .playwright-mcp/
 
-# Internal dev tooling
+# Internal dev files
 brain/
 CLAUDE.md
 .claude/

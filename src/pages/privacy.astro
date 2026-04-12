@@ -1,27 +1,30 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import siteData from '../../data/site.json';
-import { url } from '../lib/base';
+import { url, canonicalUrl } from '../lib/base';
+import { staticPageSchema } from '../lib/schema';
 
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'WebPage',
-  name: `Privacy Policy — ${siteData.name}`,
-  url: `${siteData.url}/privacy/`,
-  description: `How ${siteData.name} handles your data. We collect minimal information and never sell personal data to third parties.`,
-};
+const pageUrl = canonicalUrl('/privacy/');
+const schema = staticPageSchema(
+  'WebPage',
+  `Privacy Policy — ${siteData.name}`,
+  `How ${siteData.name} handles your data. We collect minimal information, never sell personal data, and give you full control over your privacy.`,
+  pageUrl,
+  'Privacy Policy',
+);
 ---
 
 <BaseLayout
   title="Privacy Policy"
-  description={`How ${siteData.name} handles your data. We collect minimal information and never sell personal data to third parties.`}
+  description={`How ${siteData.name} handles your data. We collect minimal information, never sell personal data, and give you full control over your privacy.`}
+  canonicalUrl={pageUrl}
   schema={schema}
 >
   <!-- Hero -->
-  <section class="container-narrow py-20 md:py-32">
-    <span class="text-xs font-semibold uppercase tracking-widest text-primary mb-6 block">Legal</span>
-    <h1 class="font-headline text-4xl md:text-5xl leading-tight tracking-tighter mb-8 font-bold text-primary">Privacy Policy</h1>
-    <p class="text-muted text-lg max-w-xl leading-relaxed font-body">
+  <section class="container-narrow py-12 sm:py-20 md:py-32">
+    <span class="text-xs font-semibold uppercase tracking-widest text-primary mb-4 sm:mb-6 block">Legal</span>
+    <h1 class="font-headline text-3xl sm:text-4xl md:text-5xl leading-tight tracking-tighter mb-6 sm:mb-8 font-bold text-primary">Privacy Policy</h1>
+    <p class="text-muted text-base sm:text-lg max-w-xl leading-relaxed font-body">
       We believe in minimal data collection and maximum transparency. Here's exactly what we collect, why, and how you stay in control.
     </p>
     <p class="text-muted-dim text-sm mt-4 font-body">Last updated: March 2026</p>
@@ -169,7 +172,7 @@ const schema = {
         </p>
         <a href={url('/contact/')} class="btn-outline no-underline inline-flex items-center gap-2">
           Contact Us
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
         </a>
       </div>
     </div>

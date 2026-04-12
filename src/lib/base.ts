@@ -5,7 +5,7 @@
  *
  * Usage:
  *   import { url } from '../lib/base';
- *   <a href={url('/best/')}>Best Picks</a>
+ *   <a href={url('/top-tools/')}>Top Tools</a>
  *   <img src={url('/images/hero.jpg')} />
  */
 export function url(path: string): string {
@@ -18,4 +18,25 @@ export function url(path: string): string {
   // Remove leading slash from path since base already ends with /
   const cleanPath = path.startsWith('/') ? path.slice(1) : path;
   return `${base}${cleanPath}`;
+}
+
+/**
+ * Build an absolute canonical URL for a page path.
+ * Combines the configured site origin with the base path and the given path
+ * to produce a fully-qualified URL suitable for <link rel="canonical">,
+ * og:url, and schema.org references.
+ *
+ * Ensures trailing slash consistency and avoids double slashes.
+ *
+ * Usage:
+ *   import { canonicalUrl } from '../lib/base';
+ *   const pageCanonical = canonicalUrl('/reviews/consensus-ai/');
+ *   // → "https://jonathanavis96.github.io/alan-breitler-affiliate-site/reviews/consensus-ai/"
+ */
+export function canonicalUrl(path: string = '/'): string {
+  const site = import.meta.env.SITE || 'https://jonathanavis96.github.io';
+  const basePath = url(path);
+  // Combine site origin (no trailing slash) with the base-prefixed path
+  const origin = site.replace(/\/+$/, '');
+  return `${origin}${basePath}`;
 }

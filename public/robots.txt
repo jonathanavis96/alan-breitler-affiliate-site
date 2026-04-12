@@ -2,6 +2,6 @@ User-agent: *
 Allow: /
 
 # Disallow affiliate redirect URLs from indexing
-Disallow: /go/
+Disallow: /alan-breitler-affiliate-site/go/
 
 Sitemap: https://jonathanavis96.github.io/alan-breitler-affiliate-site/sitemap-index.xml

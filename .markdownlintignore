@@ -1,6 +1,4 @@
-# Markdownlint ignore patterns for new repos bootstrapped from Brain templates
-#
-# Keep this file in sync with the Brain root `.markdownlintignore`.
+# Markdownlint ignore patterns
 
 node_modules
 .git

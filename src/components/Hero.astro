@@ -25,13 +25,13 @@ const {
 } = Astro.props;
 ---
 
-<section class="relative min-h-[85vh] flex items-center overflow-hidden grain-overlay">
+<section class="relative min-h-[80vh] sm:min-h-[85vh] flex items-center overflow-hidden grain-overlay" aria-label="Hero introduction">
   <!-- Decorative gradient blur orbs -->
   <GradientOrbs variant="hero" />
   <!-- Grid lines decoration -->
   <div class="absolute inset-0 pointer-events-none opacity-[0.03]" aria-hidden="true" style="background-image: linear-gradient(rgba(0,207,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(0,207,255,0.3) 1px, transparent 1px); background-size: 60px 60px;"></div>
 
-  <div class="container-wide relative z-20 py-20 md:py-32">
+  <div class="container-wide relative z-20 py-12 sm:py-20 md:py-32">
     <div class="max-w-4xl">
       <!-- Eyebrow -->
       {eyebrow && (
@@ -42,7 +42,7 @@ const {
       )}
 
       <!-- Main headline with typewriter -->
-      <h1 class="font-headline font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-text mb-8 animate-fade-in animation-delay-100">
+      <h1 class="font-headline font-bold text-3xl sm:text-4xl md:text-5xl lg:text-7xl leading-[1.05] tracking-tight text-text mb-6 sm:mb-8 animate-fade-in animation-delay-100">
         {title}{' '}
         <span class="block mt-2">
           <span class="text-primary" id="hero-rotating-word">{rotatingWords[0]}</span><span id="hero-cursor" class="hero-cursor"></span><span class="text-accent">.</span>
@@ -51,7 +51,7 @@ const {
 
       <!-- Subtitle -->
       {subtitle && (
-        <p class="text-muted text-lg md:text-xl max-w-2xl leading-relaxed font-body mb-12 animate-fade-in animation-delay-200">
+        <p class="text-muted text-base sm:text-lg md:text-xl max-w-2xl leading-relaxed font-body mb-8 sm:mb-12 animate-fade-in animation-delay-200">
           {subtitle}
         </p>
       )}
@@ -60,7 +60,7 @@ const {
       <div class="flex flex-wrap gap-4 animate-fade-in animation-delay-300">
         <a href={ctaHref} class="btn-primary no-underline">
           {ctaText}
-          <svg class="w-4 h-4 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+          <svg class="w-4 h-4 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
         </a>
         <a href={secondaryCtaHref} class="btn-secondary no-underline">
           {secondaryCtaText}
@@ -83,7 +83,7 @@ const {
 </section>
 
 <!-- Typewriter script -->
-<script define:vars={{ rotatingWords }}>
+<script is:inline define:vars={{ rotatingWords }}>
   window.__HERO_WORDS__ = rotatingWords;
 </script>
 

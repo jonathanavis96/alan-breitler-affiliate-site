@@ -1,6 +1,4 @@
-# Markdownlint configuration for new repos bootstrapped from Brain templates
-#
-# Keep this file in sync with the Brain root `.markdownlint.yaml`.
+# Markdownlint configuration
 # Docs: https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
 
 # Default: enable all rules

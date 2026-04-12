@@ -11,7 +11,7 @@ const { compact = false } = Astro.props;
 {compact ? (
   <p class="affiliate-disclosure">
     <strong>Disclosure:</strong> This page contains affiliate links. We may earn a commission at no extra cost to you.
-    <a href={url('/disclosure/')} class="underline">Learn more</a>.
+    <a href={url('/disclosure/')} class="underline" aria-label="Learn more about our affiliate disclosure policy">Learn more</a>.
   </p>
 ) : (
   <div class="affiliate-disclosure">

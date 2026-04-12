@@ -1,16 +1,17 @@
 ---
 title: "Prompt Engineering for Literature Reviews"
 slug: "prompt-engineering-literature-reviews"
-description: "Learn how to craft effective prompts that help AI research assistants surface relevant papers, synthesise findings, and accelerate your literature review workflow."
+description: "Learn to craft effective prompts for AI research assistants — surface relevant papers, synthesise findings, and accelerate your literature review."
 category: "prompt-engineering"
 image: "/images/resources/prompt-engineering-lit-review.jpg"
 imageAlt: "Illustration of a researcher using AI prompts to navigate academic literature"
 publishDate: 2026-03-15
-readTime: 8
+updatedDate: 2026-04-10
+readTime: 12
 level: "intermediate"
 relatedProducts:
-  - consensus
-  - elicit
+  - consensus-ai
+  - elicit-ai
 draft: false
 keywords:
   - prompt engineering
@@ -18,62 +19,151 @@ keywords:
   - research workflow
   - AI prompts
   - academic research
+  - systematic review
+  - Consensus AI
+  - Elicit
+  - research synthesis
 ---
 
-{/* ── Introduction context is rendered by the template header section ── */}
-
 A well-crafted prompt can mean the difference between a wall of irrelevant citations and a focused, high-quality reading list. In this guide, we walk through practical prompt-engineering strategies tailored for academic literature reviews — whether you are writing a thesis chapter, a systematic review, or simply trying to map an unfamiliar field.
+
+The techniques here are tool-agnostic but include specific examples for **Consensus** and **Elicit**, two of the most capable AI research assistants available today.
 
 ## Step 1: Define Your Research Scope
 
 Before opening any AI tool, crystallise what you are looking for. Write down:
 
-- **Your research question** — be as specific as possible.
+- **Your research question** — be as specific as possible. Vague questions produce vague results.
 - **Discipline boundaries** — are you staying within one field or crossing domains?
 - **Time range** — recent work only, or a historical sweep?
-- **Methodology filters** — empirical, theoretical, meta-analysis?
+- **Methodology filters** — empirical, theoretical, meta-analysis, qualitative?
+- **Population or context** — specific demographics, geographies, or experimental conditions?
 
-> *Example prompt:* "Find empirical studies published between 2020 and 2025 on transformer-based models applied to biomedical named-entity recognition. Prioritise papers with benchmark comparisons."
+This pre-work shapes every prompt you write and dramatically improves result quality.
+
+> *Example prompt:* "Find empirical studies published between 2020 and 2025 on transformer-based models applied to biomedical named-entity recognition. Prioritise papers with benchmark comparisons on the NCBI Disease corpus."
+
+**Why this works:** The prompt specifies the method (empirical), date range, domain (biomedical NER), model class (transformers), and even the benchmark dataset. Each constraint eliminates hundreds of irrelevant results.
 
 ## Step 2: Craft Scope-Framing Prompts
 
 Tell the AI **what** you are reviewing and **why**. Include your discipline, the time range of interest, and any methodological filters. Scope-framing prompts reduce noise dramatically.
 
-- Start with a role instruction: *"Act as a research librarian specialising in computational linguistics."*
-- Specify output format: tables, bullet lists, or annotated bibliographies.
-- Set explicit constraints: journal tiers, citation counts, or date ranges.
+### The Anatomy of a Strong Scope-Framing Prompt
+
+A complete scope-framing prompt has four components:
+
+1. **Role instruction** — sets the AI's expertise lens
+2. **Task specification** — what you want it to do
+3. **Constraints** — boundaries that filter results
+4. **Output format** — how you want the information structured
+
+> *Example:* "Act as a research librarian specialising in computational linguistics. Find the 15 most-cited papers on few-shot learning for clinical NLP published since 2021. Return results as a table with columns for: authors, year, method, dataset, and key finding."
+
+### Tool-Specific Tips
+
+**In Consensus:** Frame prompts as research questions rather than search queries. Instead of "few-shot learning clinical NLP," try "What are the most effective few-shot learning approaches for clinical natural language processing?" Consensus is optimised for natural-language research questions and will return evidence-based answers with citations.
+
+**In Elicit:** Use the structured search to specify exactly which columns of data you want extracted. Elicit excels when you tell it to pull specific variables — sample size, methodology, results — across a batch of papers.
 
 ## Step 3: Use Synthesis Prompts to Compare Sources
 
-After gathering an initial set of papers, ask the AI to **compare and contrast** findings rather than simply listing them.
+After gathering an initial set of papers, ask the AI to **compare and contrast** findings rather than simply listing them. This is where most researchers under-use AI tools.
 
-> *Example:* "Summarise the key methodological differences between the top five papers on zero-shot classification in clinical NLP, focusing on dataset size, evaluation metrics, and reported F1 scores."
+### Moving from Lists to Synthesis
 
-Synthesis prompts transform a flat list into a structured understanding of the landscape.
+A common mistake is using AI only for discovery — finding papers — when it can also help you understand the relationships between them. Synthesis prompts transform a flat reading list into a structured understanding of the landscape.
+
+> *Example:* "Summarise the key methodological differences between the top five papers on zero-shot classification in clinical NLP, focusing on dataset size, evaluation metrics, and reported F1 scores. Highlight areas of agreement and disagreement."
+
+### Layered Synthesis Strategy
+
+For comprehensive literature reviews, use a three-layer approach:
+
+1. **Descriptive synthesis** — "Summarise the main findings of these papers on [topic]."
+2. **Comparative synthesis** — "Compare the methodological approaches used in these studies. What are the key differences?"
+3. **Critical synthesis** — "What limitations do these studies share? Where do their conclusions conflict?"
+
+Each layer builds on the previous one, giving you progressively deeper understanding.
+
+### Consensus Meter Technique
+
+When using **Consensus**, pay attention to the consensus meter that appears for well-studied topics. It shows the degree of agreement across the literature. Use this to frame your own review:
+
+- High consensus (>80% agreement) suggests established findings worth summarising quickly
+- Mixed consensus (40–60%) indicates an active debate — ideal territory for your contribution
+- Low or no consensus means emerging or contested ground where original research is most needed
 
 ## Step 4: Identify Gaps with Targeted Prompts
 
-Use prompts that explicitly request the AI to highlight **what is missing** in the literature.
+Use prompts that explicitly request the AI to highlight **what is missing** in the literature. Gap identification is one of the most valuable skills in academic writing, and AI tools can accelerate it significantly.
 
-> *Example:* "Based on these ten abstracts, identify research gaps and under-explored sub-topics related to low-resource language adaptation of large language models."
+> *Example:* "Based on these ten abstracts, identify research gaps and under-explored sub-topics related to low-resource language adaptation of large language models. Suggest three specific research questions that would address these gaps."
 
-Gap-identification prompts help you position your own contribution and frame your literature review's narrative arc.
+### Gap-Finding Prompt Templates
+
+Use these templates as starting points and adapt them to your field:
+
+- **Methodological gaps:** "What methodological approaches have NOT been applied to [topic]? Which commonly used methods in [related field] could be adapted?"
+- **Population gaps:** "Which populations, geographies, or contexts are under-represented in this body of research?"
+- **Temporal gaps:** "How has the research focus on [topic] shifted over the past decade? What earlier findings need to be revisited with newer methods?"
+- **Integration gaps:** "Which findings from [Field A] and [Field B] have not yet been combined or compared? Where would interdisciplinary research add value?"
+
+Gap-identification prompts help you position your own contribution and frame your literature review's narrative arc — making the transition from "what exists" to "what I plan to do" far more compelling.
 
 ## Step 5: Iterate and Cross-Validate
 
 No single prompt yields a perfect literature review. Treat the process as a conversation:
 
 1. **Run your initial prompt** and review the first batch of results.
-2. **Refine** — narrow or broaden based on what you see.
-3. **Cross-validate** — always verify AI-surfaced citations against primary databases like PubMed, Semantic Scholar, or Google Scholar.
+2. **Refine** — narrow or broaden based on what you see. If results are too broad, add constraints. If too narrow, remove a filter or expand the date range.
+3. **Cross-validate** — always verify AI-surfaced citations against primary databases like PubMed, Semantic Scholar, or Google Scholar. AI tools can hallucinate references that sound plausible but do not exist.
 4. **Export and organise** — move verified references into your reference manager (Zotero, Mendeley, etc.).
+5. **Document your search strategy** — keep a log of the prompts that worked well. This is invaluable for methodology sections and for reproducing your search later.
+
+### The Refinement Loop in Practice
+
+Here is a realistic refinement sequence:
+
+**Prompt 1 (broad):** "What are the main approaches to AI-assisted drug discovery published since 2022?"
+*Result: 50+ papers, many only tangentially related.*
+
+**Prompt 2 (narrowed):** "What are the main deep learning approaches specifically for molecular property prediction in drug discovery, published since 2022? Focus on graph neural networks and transformer architectures."
+*Result: 20 focused papers with strong relevance.*
+
+**Prompt 3 (synthesis):** "Compare the graph neural network and transformer-based approaches to molecular property prediction found in these results. Which approach shows better performance on standard benchmarks?"
+*Result: Structured comparison that maps directly to your review structure.*
+
+Each iteration takes the output of the previous step and sharpens it further.
+
+## Step 6: Build Your Prompt Library
+
+As you refine your techniques, save the prompts that produce the best results. A personal prompt library compounds in value over time.
+
+### Organising Your Library
+
+Structure your library by research task:
+
+- **Discovery prompts** — for finding papers on a new topic
+- **Extraction prompts** — for pulling specific data points from a set of papers
+- **Synthesis prompts** — for comparing and contrasting findings
+- **Gap prompts** — for identifying what is missing
+- **Writing prompts** — for drafting sections of your literature review
+
+### Example Prompt Library Entry
+
+> **Name:** Systematic methodology comparison
+> **When to use:** After collecting 10–20 papers on a topic and needing to map the methodological landscape
+> **Prompt:** "Create a comparison table of the papers I've provided. Include columns for: first author, year, study design, sample size, primary method, key finding, and stated limitations. Then write a one-paragraph summary of the dominant methodological trends."
+> **Notes:** Works best in Elicit's extraction mode. In Consensus, break this into two separate prompts — one for the table and one for the summary.
 
 ## Tips for Better Results
 
-- **Be specific about output format** — ask for tables, bullet lists, or structured summaries.
-- **Iterate** — refine prompts based on initial outputs; treat it as a conversation.
-- **Cross-validate** — always verify AI-surfaced citations against primary databases.
-- **Set constraints** — specify journal tiers, citation counts, or date ranges to narrow results.
-- **Combine tools** — use Consensus for paper discovery and Elicit for extraction and synthesis.
-
-{/* Full version with tool-specific screenshots coming in milestone 2 */}
+- **Be specific about output format** — ask for tables, bullet lists, or structured summaries. Formatted outputs are easier to integrate into your review.
+- **Iterate relentlessly** — the first prompt is rarely the best. Refine based on initial outputs and treat each interaction as a conversation, not a one-shot query.
+- **Cross-validate every citation** — always verify AI-surfaced references against primary databases. Never cite a paper based solely on an AI summary.
+- **Set constraints explicitly** — specify journal tiers, citation counts, date ranges, or methodology types to narrow results. The more specific your constraints, the more useful the output.
+- **Combine tools strategically** — use Consensus for paper discovery and evidence synthesis, and Elicit for structured data extraction across multiple papers. Each tool has distinct strengths.
+- **Use follow-up prompts** — after getting initial results, ask the AI to elaborate, compare, or critique what it found. Follow-ups often produce the most valuable insights.
+- **Avoid jargon overload** — while technical terms help with precision, overly dense prompts can confuse AI tools. Strike a balance between specificity and clarity.
+- **Save what works** — maintain a running document of effective prompts, organised by task type. A good prompt library saves hours on future reviews.

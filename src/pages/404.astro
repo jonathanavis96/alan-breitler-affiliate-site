@@ -3,11 +3,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { url } from '../lib/base';
 ---
 
-<BaseLayout title="404 — Lost in the Neural Net" noindex={true}>
-  <div class="container-narrow py-32 md:py-48 text-center">
-    <p class="font-headline italic text-[8rem] md:text-[12rem] leading-none text-surface-container-highest mb-4" aria-hidden="true">404</p>
-    <h1 class="font-headline italic text-3xl md:text-4xl text-on-surface mb-4">This Page Hallucinated Itself Out of Existence</h1>
-    <p class="text-on-surface-variant font-body text-lg mb-2">
+<BaseLayout title="404 — Page Not Found" description="The page you're looking for doesn't exist or has been moved. Browse our AI tool reviews, guides, and resources instead." noindex={true}>
+  <div class="container-narrow py-20 sm:py-32 md:py-48 text-center">
+    <p class="font-headline italic text-[5rem] sm:text-[8rem] md:text-[12rem] leading-none text-surface-container-highest mb-4" aria-hidden="true">404</p>
+    <h1 class="font-headline italic text-2xl sm:text-3xl md:text-4xl text-on-surface mb-4">This Page Hallucinated Itself Out of Existence</h1>
+    <p class="text-on-surface-variant font-body text-base sm:text-lg mb-2">
       Even the best models confabulate sometimes — and this URL is one of them.
     </p>
     <p class="text-on-surface-variant font-body text-base mb-12">
@@ -16,11 +16,11 @@ import { url } from '../lib/base';
     <div class="flex flex-col sm:flex-row gap-4 justify-center">
       <a href={url('/')} class="btn-primary no-underline">
         Back to Home
-        <span class="material-symbols-outlined text-sm ml-3">home</span>
+        <span class="material-symbols-outlined text-sm ml-3" aria-hidden="true">home</span>
       </a>
       <a href={url('/top-tools/')} class="btn-secondary no-underline">
         Explore Top AI Tools
-        <span class="material-symbols-outlined text-sm ml-3">apps</span>
+        <span class="material-symbols-outlined text-sm ml-3" aria-hidden="true">apps</span>
       </a>
     </div>
   </div>

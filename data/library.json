@@ -7,7 +7,7 @@
       "author": "Max Tegmark",
       "category": "Foundational AI",
       "description": "A sweeping exploration of how AI will transform every aspect of society — from jobs and law to war and consciousness. Essential reading for anyone entering the AI field.",
-      "image": "/images/library/life-3-0.jpg",
+      "image": "/images/library/life-3-0.webp",
       "year": 2017,
       "link": "https://www.amazon.com/dp/1101946598?tag=aifocus-20",
       "badge": "Essential Read"
@@ -18,7 +18,7 @@
       "author": "Stuart Russell & Peter Norvig",
       "category": "Foundational AI",
       "description": "The definitive AI textbook used in over 1,500 universities. Covers search, knowledge, planning, learning, perception, and robotics with rigorous depth.",
-      "image": "/images/library/ai-modern-approach.jpg",
+      "image": "/images/library/ai-modern-approach.webp",
       "year": 2020,
       "link": "https://www.amazon.com/dp/0134610997?tag=aifocus-20",
       "badge": "Textbook Standard"
@@ -29,7 +29,7 @@
       "author": "Ian Goodfellow, Yoshua Bengio & Aaron Courville",
       "category": "Machine Learning",
       "description": "The authoritative textbook on deep learning covering linear algebra, probability, numerical computation, and modern deep network architectures.",
-      "image": "/images/library/deep-learning.jpg",
+      "image": "/images/library/deep-learning.webp",
       "year": 2016,
       "link": "https://www.amazon.com/dp/0262035618?tag=aifocus-20",
       "badge": null
@@ -40,7 +40,7 @@
       "author": "Aurelien Geron",
       "category": "Practical Guides",
       "description": "The most practical ML book available. Takes you from zero to building production-ready models with Python, with clear code examples throughout.",
-      "image": "/images/library/hands-on-ml.jpg",
+      "image": "/images/library/hands-on-ml.webp",
       "year": 2022,
       "link": "https://www.amazon.com/dp/1098125975?tag=aifocus-20",
       "badge": "Best for Beginners"
@@ -51,7 +51,7 @@
       "author": "Kate Crawford",
       "category": "AI Ethics",
       "description": "A revelatory investigation into the material and political costs of AI — from lithium mines to data labourers. Critical for understanding AI's societal impact.",
-      "image": "/images/library/atlas-of-ai.jpg",
+      "image": "/images/library/atlas-of-ai.webp",
       "year": 2021,
       "link": "https://www.amazon.com/dp/0300264631?tag=aifocus-20",
       "badge": null
@@ -62,7 +62,7 @@
       "author": "Stuart Russell",
       "category": "AI Ethics",
       "description": "A leading AI researcher makes the case that we need to fundamentally rethink how we build AI systems to ensure they remain beneficial to humanity.",
-      "image": "/images/library/human-compatible.jpg",
+      "image": "/images/library/human-compatible.webp",
       "year": 2019,
       "link": "https://www.amazon.com/dp/0525558632?tag=aifocus-20",
       "badge": null
@@ -73,7 +73,7 @@
       "author": "DAIR.AI",
       "category": "Practical Guides",
       "description": "A comprehensive, regularly updated guide to prompt engineering techniques for LLMs. Covers zero-shot, few-shot, chain-of-thought, and advanced prompting strategies.",
-      "image": "/images/library/prompt-engineering.jpg",
+      "image": "/images/library/prompt-engineering.webp",
       "year": 2024,
       "link": "https://www.promptingguide.ai/",
       "badge": "Free Resource"
@@ -84,7 +84,7 @@
       "author": "Nick Singh & Kevin Huo",
       "category": "Practical Guides",
       "description": "201 real interview questions from top tech companies. Covers statistics, ML, SQL, product sense, and case studies — ideal for academics transitioning to industry.",
-      "image": "/images/library/ace-ds-interview.jpg",
+      "image": "/images/library/ace-ds-interview.webp",
       "year": 2021,
       "link": "https://www.amazon.com/dp/0578973839?tag=aifocus-20",
       "badge": null

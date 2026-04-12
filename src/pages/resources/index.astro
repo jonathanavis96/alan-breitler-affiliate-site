@@ -1,53 +1,105 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import siteData from '../../../data/site.json';
-import { url } from '../../lib/base';
+import { url, canonicalUrl } from '../../lib/base';
+import { collectionPageSchema } from '../../lib/schema';
 
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'CollectionPage',
-  name: `Resources - ${siteData.name}`,
-  description: 'Guides, tutorials, and practical tips for getting the most out of AI tools in academic work.',
+const allResources = await getCollection('resources', ({ data }) => !data.draft);
+
+// Sort by publish date, newest first
+const resources = allResources.sort(
+  (a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()
+);
+
+// Category labels for display
+const categoryLabels: Record<string, string> = {
+  'getting-started': 'Getting Started',
+  'prompt-engineering': 'Prompt Engineering',
+  'workflow-guides': 'Workflow Guides',
+  'tool-comparisons': 'Tool Comparisons',
 };
 
-// Resources will be populated from Content Collections in milestone 2
-const resources = [];
+// Level badge styling
+function levelColor(level: string): string {
+  switch (level) {
+    case 'beginner': return 'bg-success/10 text-success';
+    case 'intermediate': return 'bg-accent/10 text-accent';
+    case 'advanced': return 'bg-primary/10 text-primary';
+    default: return 'bg-muted/10 text-muted';
+  }
+}
+
+// Category icon mapping
+function categoryIcon(cat: string): string {
+  switch (cat) {
+    case 'getting-started': return 'rocket_launch';
+    case 'prompt-engineering': return 'terminal';
+    case 'workflow-guides': return 'route';
+    case 'tool-comparisons': return 'compare_arrows';
+    default: return 'article';
+  }
+}
+
+const pageUrl = canonicalUrl('/resources/');
+const schema = collectionPageSchema(
+  `AI Research Guides & Tutorials - ${siteData.name}`,
+  'Practical guides, prompt engineering tips, and step-by-step tutorials for integrating AI tools into your academic research workflow.',
+  pageUrl,
+  'Resources',
+  resources.map((r) => ({
+    name: r.data.title,
+    url: canonicalUrl(`/resources/${r.data.slug}/`),
+  })),
+);
 ---
 
 <BaseLayout
-  title="Resources"
-  description="Guides, tutorials, and practical tips for getting the most out of AI tools in academic work."
+  title="Guides & Tutorials for AI in Research"
+  description="Practical guides, prompt engineering tips, and step-by-step tutorials for integrating AI tools into your academic research workflow."
+  canonicalUrl={pageUrl}
   schema={schema}
 >
   <!-- Header -->
-  <section class="container-wide py-20 md:py-32">
-    <span class="label-text text-secondary font-bold mb-6 block">Learn & Apply</span>
-    <h1 class="font-headline text-5xl md:text-6xl leading-[0.9] tracking-tighter max-w-3xl mb-8">Resources</h1>
-    <p class="text-on-surface-variant text-lg max-w-xl leading-relaxed font-body">
-      Practical guides and tutorials to help you integrate AI tools into your academic workflow — from prompt engineering tips to tool comparison frameworks.
+  <section class="container-wide py-12 sm:py-20 md:py-32">
+    <span class="label-text text-secondary font-bold mb-4 sm:mb-6 block scroll-reveal">Learn & Apply</span>
+    <h1 class="font-headline text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[0.9] tracking-tighter max-w-3xl mb-6 sm:mb-8 scroll-reveal">Resources</h1>
+    <p class="text-muted text-base sm:text-lg max-w-xl leading-relaxed font-body scroll-reveal">
+      Practical guides and tutorials to help you integrate AI tools into your academic workflow — from prompt engineering techniques to workspace setup and tool selection strategies.
     </p>
   </section>
 
   <!-- Resource listings -->
-  <section class="bg-surface-container-low py-16 md:py-24">
+  <section class="bg-surface py-16 md:py-24" aria-label="Resource guides and tutorials">
     <div class="container-wide">
       {resources.length > 0 ? (
         <div class="space-y-4">
           {resources.map((resource, i) => (
-            <a href={resource.href} class="flex flex-col md:flex-row md:items-center gap-6 bg-surface p-8 md:p-10 group no-underline text-on-surface hover:bg-surface-container-high transition-colors duration-300">
-              <span class="font-headline text-5xl text-surface-container-highest group-hover:text-secondary transition-colors">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <div class="flex-1">
-                <div class="flex items-center gap-3 mb-2">
-                  <span class="label-text text-secondary font-bold">{resource.category}</span>
-                  <span class="label-text text-on-surface-variant/40">·</span>
-                  <span class="label-text text-on-surface-variant/60">{resource.readTime}</span>
-                </div>
-                <h3 class="font-headline text-xl md:text-2xl mb-2">{resource.title}</h3>
-                <p class="text-on-surface-variant text-sm font-body leading-relaxed max-w-2xl">{resource.description}</p>
+            <a
+              href={url(`/resources/${resource.data.slug}/`)}
+              class="flex flex-col md:flex-row md:items-center gap-4 sm:gap-6 card p-5 sm:p-8 md:p-10 group no-underline text-text hover:border-primary/30 transition-all duration-300 scroll-reveal"
+              aria-label={`Guide: ${resource.data.title}`}
+            >
+              <div class="flex items-center gap-4 md:flex-col md:items-center md:gap-2 shrink-0">
+                <span class="font-headline text-4xl sm:text-5xl text-muted-dim group-hover:text-primary transition-colors">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span class="material-symbols-outlined text-2xl text-muted-dim group-hover:text-primary transition-colors md:block hidden" aria-hidden="true">
+                  {categoryIcon(resource.data.category)}
+                </span>
               </div>
-              <span class="material-symbols-outlined text-surface-container-highest group-hover:text-secondary transition-colors text-3xl">
+              <div class="flex-1 min-w-0">
+                <div class="flex flex-wrap items-center gap-3 mb-3">
+                  <span class="badge-editorial">{categoryLabels[resource.data.category] ?? resource.data.category}</span>
+                  <span class={`inline-block px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider ${levelColor(resource.data.level)}`}>
+                    {resource.data.level}
+                  </span>
+                  <span class="label-text text-muted-dim">{resource.data.readTime} min read</span>
+                </div>
+                <h2 class="font-headline text-xl md:text-2xl mb-2 group-hover:text-primary transition-colors">{resource.data.title}</h2>
+                <p class="text-muted text-sm font-body leading-relaxed max-w-2xl">{resource.data.description}</p>
+              </div>
+              <span class="material-symbols-outlined text-muted-dim group-hover:text-primary transition-colors text-3xl shrink-0 hidden md:block" aria-hidden="true">
                 arrow_forward
               </span>
             </a>
@@ -55,9 +107,9 @@ const resources = [];
         </div>
       ) : (
         <div class="text-center py-16">
-          <span class="material-symbols-outlined text-5xl text-on-surface-variant/20 mb-6 block">auto_stories</span>
+          <span class="material-symbols-outlined text-5xl text-muted-dim mb-6 block">auto_stories</span>
           <h2 class="font-headline text-2xl mb-4">Resources Coming Soon</h2>
-          <p class="text-on-surface-variant font-body leading-relaxed max-w-lg mx-auto">
+          <p class="text-muted font-body leading-relaxed max-w-lg mx-auto">
             We're preparing in-depth guides and tutorials to help you get the most out of AI tools in your academic work. Check back soon.
           </p>
         </div>
@@ -65,12 +117,49 @@ const resources = [];
     </div>
   </section>
 
+  <!-- What you'll find -->
+  <section class="py-16 md:py-24 scroll-reveal" aria-label="Resource categories overview">
+    <div class="container-wide">
+      <h2 class="font-headline font-bold text-2xl md:text-3xl mb-10 text-center text-text">What You'll Find Here</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="card text-center p-8">
+          <span class="material-symbols-outlined text-3xl text-primary mb-4 block">rocket_launch</span>
+          <h3 class="font-headline font-bold text-lg mb-2 text-text">Getting Started</h3>
+          <p class="text-muted text-sm leading-relaxed">Beginner-friendly roadmaps for academics new to AI-assisted research.</p>
+        </div>
+        <div class="card text-center p-8">
+          <span class="material-symbols-outlined text-3xl text-accent mb-4 block">terminal</span>
+          <h3 class="font-headline font-bold text-lg mb-2 text-text">Prompt Engineering</h3>
+          <p class="text-muted text-sm leading-relaxed">Techniques for crafting effective prompts that get better results from AI tools.</p>
+        </div>
+        <div class="card text-center p-8">
+          <span class="material-symbols-outlined text-3xl text-secondary mb-4 block">route</span>
+          <h3 class="font-headline font-bold text-lg mb-2 text-text">Workflow Guides</h3>
+          <p class="text-muted text-sm leading-relaxed">Step-by-step workflows for integrating AI into your daily research routine.</p>
+        </div>
+        <div class="card text-center p-8">
+          <span class="material-symbols-outlined text-3xl text-success mb-4 block">compare_arrows</span>
+          <h3 class="font-headline font-bold text-lg mb-2 text-text">Tool Comparisons</h3>
+          <p class="text-muted text-sm leading-relaxed">Head-to-head evaluations to help you choose the right tool for your needs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CTA -->
-  <section class="container-narrow py-16 md:py-24 text-center">
-    <h2 class="font-headline text-2xl mb-4">Have a Topic in Mind?</h2>
-    <p class="text-on-surface-variant font-body leading-relaxed max-w-lg mx-auto mb-6">
-      We're always expanding our resource library. If there's an AI topic you'd like us to cover, let us know.
-    </p>
-    <a href={url('/contact/')} class="btn-outline no-underline">Suggest a Topic</a>
+  <section class="container-narrow py-16 md:py-24 text-center scroll-reveal">
+    <div class="glass-panel rounded-xl p-6 sm:p-10 md:p-14">
+      <h2 class="font-headline text-xl sm:text-2xl md:text-3xl mb-4 text-text">Looking for Tool Recommendations?</h2>
+      <p class="text-muted font-body leading-relaxed max-w-lg mx-auto mb-8">
+        Our curated top tools page ranks the best AI tools for academic research, with detailed scores across ease of use, academic value, and price-to-value.
+      </p>
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4">
+        <a href={url('/top-tools/')} class="btn-primary no-underline inline-flex items-center justify-center gap-2">
+          Browse Top Tools
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+        </a>
+        <a href={url('/contact/')} class="btn-outline no-underline text-center">Suggest a Topic</a>
+      </div>
+    </div>
   </section>
 </BaseLayout>

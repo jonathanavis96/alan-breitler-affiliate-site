@@ -3,25 +3,25 @@
     {
       "name": "Writing Tools",
       "slug": "writing-tools",
-      "description": "AI-powered writing assistants for drafting papers, editing prose, generating citations, and overcoming writer's block in academic workflows.",
+      "description": "Draft papers faster, sharpen your prose, and beat the blank page. These tools handle everything from first-draft brainstorms to final-pass polish — without losing your academic voice.",
       "icon": "edit_note"
     },
     {
       "name": "Research Assistants",
       "slug": "research-assistants",
-      "description": "Intelligent research tools that help academics discover papers, summarise literature, extract insights, and manage references at scale.",
+      "description": "Cut literature review time from days to hours. These tools search millions of papers, extract key findings, and surface connections you'd miss reading abstracts one by one.",
       "icon": "science"
     },
     {
       "name": "Image Generation",
       "slug": "image-generation",
-      "description": "AI image generators for creating figures, diagrams, presentation visuals, and concept illustrations suited to academic publishing.",
+      "description": "Create publication-quality figures, conference poster visuals, and presentation graphics without hiring a designer or learning Illustrator.",
       "icon": "palette"
     },
     {
       "name": "Coding Assistants",
       "slug": "coding-assistants",
-      "description": "AI coding tools that accelerate data analysis, automate scripting tasks, debug research code, and streamline computational workflows.",
+      "description": "Write analysis scripts in half the time. Get inline suggestions for Python, R, and MATLAB — plus instant explanations for legacy code you inherited from a former lab member.",
       "icon": "terminal"
     }
   ]

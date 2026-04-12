@@ -17,15 +17,17 @@ const isViolet = index % 2 === 0;
 <a
   href={href}
   class:list={[
-    'category-card group block no-underline rounded-xl p-8 relative overflow-hidden',
+    'category-card group block no-underline rounded-xl p-5 sm:p-8 relative overflow-hidden',
     'bg-surface border border-outline',
+    'focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-base focus-visible:outline-none',
     isViolet ? 'hover-glow-violet' : 'hover-glow-amber',
     `scroll-reveal scroll-delay-${index * 100}`,
   ]}
+  aria-label={`Explore ${title} — ${toolCount} ${toolCount === 1 ? 'tool' : 'tools'}`}
 >
   <!-- Icon -->
   <div class:list={['mb-5', isViolet ? 'text-primary' : 'text-accent']}>
-    <span class="material-symbols-outlined text-4xl">{icon}</span>
+    <span class="material-symbols-outlined text-4xl" aria-hidden="true">{icon}</span>
   </div>
 
   <!-- Title -->
@@ -46,7 +48,7 @@ const isViolet = index % 2 === 0;
     {toolCount > 0 && (
       <span class:list={[
         'label-text font-bold',
-        isViolet ? 'text-primary/70' : 'text-accent/70',
+        isViolet ? 'text-primary' : 'text-accent',
       ]}>
         {toolCount} {toolCount === 1 ? 'tool' : 'tools'}
       </span>
@@ -64,6 +66,7 @@ const isViolet = index % 2 === 0;
         viewBox="0 0 24 24"
         stroke-width="2"
         stroke="currentColor"
+        aria-hidden="true"
       >
         <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
       </svg>
@@ -72,6 +75,7 @@ const isViolet = index % 2 === 0;
 
   <!-- Decorative gradient on hover -->
   <div
+    aria-hidden="true"
     class:list={[
       'absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none',
       isViolet
@@ -82,6 +86,7 @@ const isViolet = index % 2 === 0;
 
   <!-- Grid pattern decoration -->
   <div
+    aria-hidden="true"
     class:list={[
       'absolute inset-0 opacity-0 group-hover:opacity-[0.03] transition-opacity duration-700 pointer-events-none',
     ]}

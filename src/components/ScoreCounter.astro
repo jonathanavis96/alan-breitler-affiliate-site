@@ -70,8 +70,6 @@ const barGradients: Record<string, string> = {
 };
 const gradientCls = barGradients[barColor] ?? barGradients['violet-amber'];
 
-/* Unique ID for ring SVG */
-const uid = `sc-${Math.random().toString(36).slice(2, 8)}`;
 ---
 
 <div
@@ -79,40 +77,44 @@ const uid = `sc-${Math.random().toString(36).slice(2, 8)}`;
   data-score-counter
   data-target={value.toString()}
   data-decimals={value % 1 !== 0 ? '1' : '0'}
+  role="meter"
+  aria-valuenow={value}
+  aria-valuemin={0}
+  aria-valuemax={max}
+  aria-label={label ? `${label}: ${value} out of ${max}` : `Score: ${value} out of ${max}`}
 >
   {ring ? (
-    <!-- Ring variant -->
-    <div class:list={['score-counter__ring relative inline-flex items-center justify-center', tokens.ring]}>
-      <svg class="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 36 36">
-        <!-- Background track -->
-        <circle
-          cx="18" cy="18" r="15.5"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          class="text-surface-alt opacity-50"
-        />
-        <!-- Animated score arc -->
-        <circle
-          cx="18" cy="18" r="15.5"
-          fill="none"
-          stroke-width="2.5"
-          stroke-linecap="round"
-          stroke-dasharray={`${pct * 0.975} 100`}
-          stroke-dashoffset="0"
-          class="score-counter__arc"
-          data-target-dash={`${pct * 0.975}`}
-        />
-      </svg>
-      <span class:list={['score-counter__value font-headline font-bold relative z-[1]', tokens.text]} data-score-value>
-        {value % 1 !== 0 ? value.toFixed(1) : value}
-      </span>
-    </div>
-    {label && (
-      <span class="score-counter__label label-text text-muted-dim mt-1 block text-center">{label}</span>
-    )}
+    <Fragment>
+      {/* Ring variant */}
+      <div class:list={['score-counter__ring relative inline-flex items-center justify-center', tokens.ring]}>
+        <svg class="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 36 36" aria-hidden="true">
+          <circle
+            cx="18" cy="18" r="15.5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            class="text-surface-alt opacity-50"
+          />
+          <circle
+            cx="18" cy="18" r="15.5"
+            fill="none"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-dasharray={`${pct * 0.975} 100`}
+            stroke-dashoffset="0"
+            class="score-counter__arc"
+            data-target-dash={`${pct * 0.975}`}
+          />
+        </svg>
+        <span class:list={['score-counter__value font-headline font-bold relative z-[1]', tokens.text]} data-score-value>
+          {value % 1 !== 0 ? value.toFixed(1) : value}
+        </span>
+      </div>
+      {label && (
+        <span class="score-counter__label label-text text-muted-dim mt-1 block text-center">{label}</span>
+      )}
+    </Fragment>
   ) : showBar ? (
-    <!-- Bar variant -->
     <div class="score-counter__bar-wrap w-full">
       {label && (
         <div class="flex items-center justify-between mb-1">
@@ -131,16 +133,18 @@ const uid = `sc-${Math.random().toString(36).slice(2, 8)}`;
       </div>
     </div>
   ) : (
-    <!-- Inline number variant -->
-    <span class:list={['score-counter__value font-headline font-bold', tokens.text]} data-score-value>
-      {value % 1 !== 0 ? value.toFixed(1) : value}
-    </span>
-    {suffix && (
-      <span class="text-muted-dim text-xs font-normal">{suffix}</span>
-    )}
-    {label && (
-      <span class="score-counter__label label-text text-muted-dim ml-2">{label}</span>
-    )}
+    <Fragment>
+      {/* Inline number variant */}
+      <span class:list={['score-counter__value font-headline font-bold', tokens.text]} data-score-value>
+        {value % 1 !== 0 ? value.toFixed(1) : value}
+      </span>
+      {suffix && (
+        <span class="text-muted-dim text-xs font-normal">{suffix}</span>
+      )}
+      {label && (
+        <span class="score-counter__label label-text text-muted-dim ml-2">{label}</span>
+      )}
+    </Fragment>
   )}
 </div>
 
@@ -209,7 +213,6 @@ const uid = `sc-${Math.random().toString(36).slice(2, 8)}`;
   function initScoreCounters() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const DURATION = 1200; // ms — matches CSS transition duration
-    const FRAME_INTERVAL = 16; // ~60fps
 
     function animateCounter(el: Element) {
       const container = el as HTMLElement;

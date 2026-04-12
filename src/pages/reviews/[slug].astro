@@ -4,7 +4,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
 import GradientOrbs from '../../components/GradientOrbs.astro';
 import productData from '../../../data/products.json';
-import { url } from '../../lib/base';
+import siteData from '../../../data/site.json';
+import { url, canonicalUrl } from '../../lib/base';
+import { productReviewSchema } from '../../lib/schema';
 import type { GetStaticPaths } from 'astro';
 
 export const getStaticPaths = (async () => {
@@ -43,48 +45,35 @@ function overallColor(score: number): string {
   return 'text-muted border-muted';
 }
 
-// Schema.org structured data
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'Review',
-  name: review.title,
-  description: review.description,
-  datePublished: review.publishDate.toISOString(),
-  ...(review.updatedDate && { dateModified: review.updatedDate.toISOString() }),
-  itemReviewed: {
-    '@type': 'SoftwareApplication',
-    name: product?.name ?? review.productSlug,
-    applicationCategory: 'AI Tool',
-    ...(product && { brand: { '@type': 'Brand', name: product.brand } }),
-  },
-  reviewRating: {
-    '@type': 'Rating',
-    ratingValue: review.overallScore,
-    bestRating: 10,
-    worstRating: 0,
-  },
-  author: {
-    '@type': 'Organization',
-    name: 'AIfocus',
-  },
-};
+// Schema.org structured data — rich Product + Review + WebPage graph
+const pageUrl = canonicalUrl(`/reviews/${review.slug}/`);
+const schema = productReviewSchema(review, product, pageUrl);
+
+// OG image: use review hero if specified, else product logo, else default
+const ogImage = review.image || (product?.image ? product.image : undefined);
+const ogImageAlt = review.imageAlt || `${review.title} — ${siteData.name} Review`;
 ---
 
 <BaseLayout
   title={review.title}
   description={review.description}
   ogType="article"
+  ogImage={ogImage}
+  ogImageAlt={ogImageAlt}
+  canonicalUrl={pageUrl}
   schema={schema}
+  publishedTime={review.publishDate.toISOString()}
+  modifiedTime={review.updatedDate?.toISOString()}
 >
   <!-- ═══════════════════════════════════════
        Review Header
        ═══════════════════════════════════════ -->
-  <section class="relative py-20 md:py-28 overflow-hidden">
+  <section class="relative py-12 sm:py-20 md:py-28 overflow-hidden" aria-label="Review overview">
     <!-- Decorative gradient blur orbs -->
     <GradientOrbs variant="section" />
 
     <div class="container-wide relative z-10">
-      <div class="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
+      <div class="flex flex-col lg:flex-row gap-6 sm:gap-10 lg:gap-16 items-start">
         <!-- Left: Meta + Title -->
         <div class="lg:w-3/5 animate-fade-in">
           <div class="flex flex-wrap items-center gap-3 mb-4">
@@ -95,7 +84,7 @@ const schema = {
             <span class="label-text text-muted">{review.readTime} min read</span>
           </div>
 
-          <h1 class="font-headline font-bold text-4xl md:text-5xl lg:text-[3.25rem] leading-tight tracking-tight mb-6 text-text">
+          <h1 class="font-headline font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[3.25rem] leading-tight tracking-tight mb-6 text-text">
             {review.title}
           </h1>
 
@@ -117,20 +106,20 @@ const schema = {
 
         <!-- Right: Score Card -->
         <div class="lg:w-2/5 w-full animate-fade-in animation-delay-200">
-          <div class="glass-panel rounded-xl p-8">
+          <div class="glass-panel rounded-xl p-5 sm:p-8" role="region" aria-label="Score summary">
             <!-- Overall Score -->
             <div class="text-center mb-6">
-              <div class={`inline-flex items-center justify-center w-20 h-20 rounded-full border-2 mb-3 ${overallColor(review.overallScore)}`}>
+              <div class={`inline-flex items-center justify-center w-20 h-20 rounded-full border-2 mb-3 ${overallColor(review.overallScore)}`} role="img" aria-label={`Overall score: ${review.overallScore} out of 10`}>
                 <span class="font-headline text-3xl font-bold">{review.overallScore}</span>
               </div>
               <p class="label-text text-muted">Overall Score</p>
             </div>
 
             <!-- Individual Scores -->
-            <div class="space-y-3">
+            <div class="space-y-3 sm:space-y-4">
               {scoreEntries.map(({ label, value }) => (
-                <div class="flex items-center gap-3">
-                  <span class="text-sm text-muted w-36 shrink-0">{label}</span>
+                <div class="flex items-center gap-2 sm:gap-3">
+                  <span class="text-[11px] sm:text-sm text-muted w-[4.5rem] sm:w-36 shrink-0 leading-tight">{label}</span>
                   <div class="flex-1 h-2 bg-surface-container-highest rounded-full overflow-hidden">
                     <div
                       class="h-full rounded-full bg-gradient-to-r from-primary to-accent"
@@ -143,14 +132,14 @@ const schema = {
             </div>
 
             <!-- Pricing + Use Case -->
-            <div class="mt-6 pt-6 border-t border-outline flex justify-between items-center">
+            <div class="mt-6 pt-6 border-t border-outline flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4">
               <div>
                 <p class="label-text text-muted-dim mb-1">Pricing</p>
-                <p class="text-text font-medium">{review.pricing}</p>
+                <p class="text-text font-medium text-sm sm:text-base">{review.pricing}</p>
               </div>
-              <div class="text-right">
+              <div class="sm:text-right">
                 <p class="label-text text-muted-dim mb-1">Best For</p>
-                <p class="text-text font-medium">{review.useCase}</p>
+                <p class="text-text font-medium text-sm sm:text-base">{review.useCase}</p>
               </div>
             </div>
           </div>
@@ -164,8 +153,8 @@ const schema = {
        ═══════════════════════════════════════ -->
   <section id="tldr" class="py-12 md:py-16 bg-surface scroll-reveal">
     <div class="container-narrow">
-      <div class="glass-panel rounded-xl p-8 md:p-10">
-        <h2 class="font-headline font-bold text-2xl md:text-3xl mb-6 flex items-center gap-3 text-text">
+      <div class="glass-panel rounded-xl p-5 sm:p-8 md:p-10">
+        <h2 class="font-headline font-bold text-xl sm:text-2xl md:text-3xl mb-6 flex items-center gap-3 text-text">
           <span class="text-accent material-symbols-outlined">bolt</span> TL;DR
         </h2>
         <p class="text-lg text-muted leading-relaxed italic mb-8">
@@ -227,7 +216,7 @@ const schema = {
         <span class="text-accent material-symbols-outlined">payments</span> Pricing
       </h2>
 
-      <div class="glass-panel rounded-xl p-8 md:p-10">
+      <div class="glass-panel rounded-xl p-5 sm:p-8 md:p-10">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
           <div>
             <p class="label-text text-muted-dim mb-1">Starting Price</p>
@@ -337,43 +326,44 @@ const schema = {
       </h2>
 
       <div class="relative grain-overlay rounded-xl overflow-hidden">
-        <div class="bg-gradient-to-br from-primary/20 via-surface-alt to-accent/10 p-8 md:p-12">
+        <div class="bg-gradient-to-br from-primary/20 via-surface-alt to-accent/10 p-5 sm:p-8 md:p-12">
           <!-- Score + Verdict -->
-          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-8">
-            <div class={`flex items-center justify-center w-24 h-24 rounded-2xl border-2 shrink-0 ${overallColor(review.overallScore)}`} style="background: rgba(0, 207, 255, 0.1);">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 mb-8">
+            <div class={`flex items-center justify-center w-16 h-16 sm:w-24 sm:h-24 rounded-2xl border-2 shrink-0 ${overallColor(review.overallScore)}`} style="background: rgba(0, 207, 255, 0.1);">
               <div class="text-center">
-                <span class="font-headline text-4xl font-bold">{review.overallScore}</span>
-                <p class="label-text mt-1 opacity-70">/10</p>
+                <span class="font-headline text-3xl sm:text-4xl font-bold">{review.overallScore}</span>
+                <p class="label-text mt-0.5 sm:mt-1 opacity-80">/10</p>
               </div>
             </div>
-            <p class="text-lg md:text-xl text-text leading-relaxed font-medium">
+            <p class="text-base sm:text-lg md:text-xl text-text leading-relaxed font-medium">
               {review.verdict}
             </p>
           </div>
 
           <!-- Score Summary Grid -->
-          <div class="grid grid-cols-3 gap-4 mb-8">
+          <div class="grid grid-cols-3 gap-2 sm:gap-4 mb-8">
             {scoreEntries.map(({ label, value }) => (
-              <div class="text-center p-3 bg-base/40 rounded-lg">
-                <p class={`text-xl font-bold font-headline ${scoreColor(value)}`}>{value}</p>
-                <p class="label-text text-muted-dim mt-1">{label}</p>
+              <div class="text-center p-2 sm:p-3 bg-base/40 rounded-lg">
+                <p class={`text-lg sm:text-xl font-bold font-headline ${scoreColor(value)}`}>{value}</p>
+                <p class="font-label text-muted-dim mt-1 text-[9px] sm:text-[10px] uppercase tracking-wide leading-tight">{label}</p>
               </div>
             ))}
           </div>
 
           <!-- CTA -->
           {review.affiliateSlug && (
-            <div class="flex flex-col sm:flex-row items-center gap-4">
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
               <a
                 href={url(`/go/${review.affiliateSlug}/`)}
-                class="btn-primary no-underline inline-flex items-center gap-3"
+                class="btn-primary no-underline inline-flex items-center gap-3 w-full sm:w-auto justify-center sm:justify-start min-h-[48px]"
                 target="_blank"
                 rel="nofollow sponsored noopener"
+                aria-label={`Try ${product?.name ?? 'this tool'} (opens in new tab)`}
               >
                 Try {product?.name ?? 'This Tool'}
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
               </a>
-              <p class="text-xs text-muted-dim italic">
+              <p class="text-xs text-muted-dim italic text-center sm:text-left">
                 Affiliate link — we may earn a commission at no cost to you.
               </p>
             </div>
@@ -385,12 +375,12 @@ const schema = {
 
   <!-- Section Navigation (desktop sidebar) -->
   <nav class="hidden lg:block fixed right-6 top-1/2 -translate-y-1/2 z-40" aria-label="Review sections">
-    <div class="glass-panel rounded-lg p-2 space-y-1">
-      <a href="#tldr" class="block px-3 py-1.5 text-xs text-muted hover:text-primary transition-colors rounded no-underline">TL;DR</a>
-      <a href="#deep-dive" class="block px-3 py-1.5 text-xs text-muted hover:text-primary transition-colors rounded no-underline">Deep Dive</a>
-      <a href="#pricing" class="block px-3 py-1.5 text-xs text-muted hover:text-primary transition-colors rounded no-underline">Pricing</a>
-      <a href="#who-its-for" class="block px-3 py-1.5 text-xs text-muted hover:text-primary transition-colors rounded no-underline">Who It's For</a>
-      <a href="#verdict" class="block px-3 py-1.5 text-xs text-muted hover:text-primary transition-colors rounded no-underline">Verdict</a>
+    <div class="glass-panel rounded-lg p-2 space-y-0.5">
+      <a href="#tldr" class="block px-3 py-2 text-xs text-muted hover:text-primary hover:bg-surface-alt/50 transition-colors rounded no-underline">TL;DR</a>
+      <a href="#deep-dive" class="block px-3 py-2 text-xs text-muted hover:text-primary hover:bg-surface-alt/50 transition-colors rounded no-underline">Deep Dive</a>
+      <a href="#pricing" class="block px-3 py-2 text-xs text-muted hover:text-primary hover:bg-surface-alt/50 transition-colors rounded no-underline">Pricing</a>
+      <a href="#who-its-for" class="block px-3 py-2 text-xs text-muted hover:text-primary hover:bg-surface-alt/50 transition-colors rounded no-underline">Who It's For</a>
+      <a href="#verdict" class="block px-3 py-2 text-xs text-muted hover:text-primary hover:bg-surface-alt/50 transition-colors rounded no-underline">Verdict</a>
     </div>
   </nav>
 </BaseLayout>

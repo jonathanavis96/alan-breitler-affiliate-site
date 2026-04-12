@@ -13,13 +13,14 @@ export default {
         'surface-hover': '#252A3A',
         primary: '#0AADCF',
         'primary-hover': '#00CFFF',
+        'primary-dark': '#087A94',  /* Darkened primary for bg panels — WCAG AA ≥ 4.5:1 with white text */
         'primary-muted': 'rgba(10, 173, 207, 0.15)',
         accent: '#FFB347',
         'accent-hover': '#FFC46B',
         'accent-muted': 'rgba(255, 179, 71, 0.15)',
         text: '#F3F4F6',
         muted: '#A7AFBF',
-        'muted-dim': '#6B7280',
+        'muted-dim': '#8B95A5',  /* WCAG AA ≥ 4.5:1 on all surface variants */
         error: '#EF4444',
         success: '#22C55E',
         /* ── Semantic aliases (backward-compat) ── */
@@ -28,15 +29,15 @@ export default {
         'on-surface-variant': '#A7AFBF',
         secondary: '#0AADCF',
         tertiary: '#FFB347',
-        'on-primary': '#ffffff',
-        'on-secondary': '#ffffff',
+        'on-primary': '#0F1115',  /* WCAG AA ≥ 4.5:1 on primary (#0AADCF) */
+        'on-secondary': '#0F1115',
         'on-tertiary': '#0F1115',
-        outline: '#2E3344',
-        'outline-variant': '#3A4055',
+        outline: '#5E6A7E',       /* WCAG AA ≥ 3:1 on surface for UI components */
+        'outline-variant': '#6B7788',
         'surface-container-low': '#171A21',
         'surface-container': '#1E2230',
         'surface-container-high': '#252A3A',
-        'surface-container-highest': '#2E3344',
+        'surface-container-highest': '#3D4556',
         'on-tertiary-container': '#FFB347',
         'surface-dim': '#0F1115',
       },

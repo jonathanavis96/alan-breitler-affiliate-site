@@ -4,32 +4,36 @@ import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
 import GradientOrbs from '../../components/GradientOrbs.astro';
 import siteData from '../../../data/site.json';
 import libraryData from '../../../data/library.json';
-import { url } from '../../lib/base';
+import { url, canonicalUrl } from '../../lib/base';
+import { librarySchema } from '../../lib/schema';
 
 const books = libraryData.books;
 const articles = libraryData.articles;
 const bookCategories = libraryData.bookCategories;
 const articleCategories = libraryData.articleCategories;
 
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'CollectionPage',
-  name: `AI Library - ${siteData.name}`,
-  description: 'Curated AI books and landmark research articles for academics — from foundational texts to cutting-edge papers.',
-};
+const pageUrl = canonicalUrl('/library/');
+const schema = librarySchema(
+  `AI Library - ${siteData.name}`,
+  'Curated AI books and landmark research papers for academics — from foundational machine learning texts to cutting-edge studies shaping the field.',
+  pageUrl,
+  books,
+  articles,
+);
 ---
 
 <BaseLayout
   title="AI Library"
-  description="Curated AI books and landmark research articles for academics — from foundational texts to cutting-edge papers."
+  description="Curated AI books and landmark research papers for academics — from foundational machine learning texts to cutting-edge studies shaping the field."
+  canonicalUrl={pageUrl}
   schema={schema}
 >
   <!-- Header -->
-  <section class="container-wide py-20 md:py-32 relative overflow-hidden">
+  <section class="container-wide py-12 sm:py-20 md:py-32 relative overflow-hidden" aria-label="AI Library collection">
     <GradientOrbs variant="section" />
     <div class="relative z-10">
       <span class="label-text text-primary font-bold mb-6 block">Curated Collection</span>
-      <h1 class="font-headline text-5xl md:text-6xl leading-[0.9] tracking-tighter max-w-3xl mb-8 text-text">
+      <h1 class="font-headline font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[0.9] tracking-tight max-w-3xl mb-6 sm:mb-8 text-text">
         AI <span class="text-primary">Library</span>
       </h1>
       <p class="text-muted text-lg max-w-xl leading-relaxed font-body mb-6">
@@ -41,18 +45,18 @@ const schema = {
 
   <!-- Tab-style navigation -->
   <section class="container-wide pb-8">
-    <div class="flex flex-wrap gap-3">
+    <nav class="flex flex-wrap gap-3" aria-label="Library sections">
       <a href="#books" class="inline-flex items-center gap-2 px-4 py-2 glass-panel text-sm font-label font-medium text-muted hover:text-primary hover:border-primary/30 transition-all duration-200 no-underline rounded-full">
-        <span class="material-symbols-outlined text-sm">menu_book</span>
+        <span class="material-symbols-outlined text-sm" aria-hidden="true">menu_book</span>
         <span>Books</span>
         <span class="text-xs text-muted-dim">({books.length})</span>
       </a>
       <a href="#articles" class="inline-flex items-center gap-2 px-4 py-2 glass-panel text-sm font-label font-medium text-muted hover:text-primary hover:border-primary/30 transition-all duration-200 no-underline rounded-full">
-        <span class="material-symbols-outlined text-sm">article</span>
+        <span class="material-symbols-outlined text-sm" aria-hidden="true">article</span>
         <span>Articles & Papers</span>
         <span class="text-xs text-muted-dim">({articles.length})</span>
       </a>
-    </div>
+    </nav>
   </section>
 
   <!-- Disclosure -->
@@ -63,7 +67,7 @@ const schema = {
   <!-- ═══════════════════════════════════════
        BOOKS SECTION
        ═══════════════════════════════════════ -->
-  <section id="books" class="py-16 md:py-24 bg-surface">
+  <section id="books" class="py-16 md:py-24 bg-surface" aria-label="Recommended AI books">
     <div class="container-wide">
       <div class="flex items-center gap-3 mb-3">
         <span class="material-symbols-outlined text-3xl text-primary">menu_book</span>
@@ -88,14 +92,18 @@ const schema = {
                   target="_blank"
                   rel="nofollow sponsored noopener"
                   class="glass-panel rounded-xl p-6 flex gap-5 group no-underline hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300"
+                  aria-label={`${book.title} by ${book.author} (opens in new tab)`}
                 >
                   <!-- Book cover -->
                   <div class="w-20 h-28 flex-shrink-0 bg-surface-alt rounded-lg overflow-hidden">
                     <img
                       src={url(book.image)}
-                      alt={book.title}
-                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      alt={`${book.title} book cover`}
+                      width="80"
+                      height="112"
                       loading="lazy"
+                      decoding="async"
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                   <!-- Details -->
@@ -108,9 +116,9 @@ const schema = {
                     </div>
                     <p class="text-xs text-muted-dim mb-2">{book.author} · {book.year}</p>
                     <p class="text-sm text-muted leading-relaxed line-clamp-2">{book.description}</p>
-                    <div class="flex items-center gap-1 mt-3 text-xs font-label font-bold uppercase tracking-widest text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div class="flex items-center gap-1 mt-3 text-xs font-label font-bold uppercase tracking-widest text-primary opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
                       View on Amazon
-                      <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                      <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                     </div>
                   </div>
                 </a>
@@ -125,7 +133,7 @@ const schema = {
   <!-- ═══════════════════════════════════════
        ARTICLES & PAPERS SECTION
        ═══════════════════════════════════════ -->
-  <section id="articles" class="py-16 md:py-24">
+  <section id="articles" class="py-16 md:py-24" aria-label="Landmark research articles and papers">
     <div class="container-wide">
       <div class="flex items-center gap-3 mb-3">
         <span class="material-symbols-outlined text-3xl text-accent">article</span>
@@ -154,6 +162,7 @@ const schema = {
                     'hover:border-accent/30 hover:shadow-lg hover:shadow-accent/5',
                     `scroll-reveal scroll-delay-${i * 100}`,
                   ]}
+                  aria-label={`${article.title} — ${article.authors} (opens in new tab)`}
                 >
                   <div class="flex flex-col sm:flex-row sm:items-start gap-4">
                     <div class="flex-1 min-w-0">
@@ -166,9 +175,9 @@ const schema = {
                       <p class="text-xs text-muted-dim mb-2">{article.authors} · {article.journal} · {article.year}</p>
                       <p class="text-sm text-muted leading-relaxed">{article.description}</p>
                     </div>
-                    <div class="flex items-center gap-1 text-xs font-label font-bold uppercase tracking-widest text-accent shrink-0 sm:mt-1 opacity-70 group-hover:opacity-100 transition-opacity duration-300">
+                    <div class="flex items-center gap-1 text-xs font-label font-bold uppercase tracking-widest text-accent shrink-0 sm:mt-1 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
                       Read paper
-                      <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                      <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                     </div>
                   </div>
                 </a>
@@ -188,7 +197,7 @@ const schema = {
       <p class="text-muted font-body mb-8 max-w-lg mx-auto">We're always expanding this collection. If there's a title that shaped your understanding of AI, we'd love to hear about it.</p>
       <a href={url('/contact/')} class="btn-primary no-underline inline-flex items-center gap-3">
         Suggest a Title
-        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        <span class="material-symbols-outlined text-sm" aria-hidden="true">arrow_forward</span>
       </a>
     </div>
   </section>

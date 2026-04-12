@@ -2,45 +2,58 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import siteData from '../../../data/site.json';
 import productData from '../../../data/products.json';
-import { url } from '../../lib/base';
+import { url, canonicalUrl } from '../../lib/base';
+import { collectionPageSchema } from '../../lib/schema';
 
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'CollectionPage',
-  name: `Reviews - ${siteData.name}`,
-  description: 'In-depth, honest product reviews covering features, performance, and value.',
-};
+const pageUrl = canonicalUrl('/reviews/');
 
 // Use products as review entries
 const reviews = productData.products;
+
+const reviewDescription = `In-depth reviews of ${reviews.length} AI tools for academic research. Each tool scored across ease of use, academic value, and price-to-value with honest, hands-on verdicts.`;
+
+const schema = collectionPageSchema(
+  `Reviews - ${siteData.name}`,
+  reviewDescription,
+  pageUrl,
+  'Reviews',
+  reviews.map((p) => ({
+    name: p.name,
+    url: canonicalUrl(`/reviews/${p.slug}/`),
+  })),
+);
 ---
 
 <BaseLayout
-  title="Reviews"
-  description="In-depth, honest product reviews covering features, performance, and value."
+  title="AI Tool Reviews for Academics & Researchers"
+  description={reviewDescription}
+  canonicalUrl={pageUrl}
   schema={schema}
 >
   <!-- Header -->
-  <section class="container-wide py-20 md:py-32">
-    <span class="label-text text-primary font-bold mb-6 block">In-Depth Analysis</span>
-    <h1 class="font-headline font-bold text-5xl md:text-6xl leading-[0.9] tracking-tight max-w-3xl mb-8">Product Reviews</h1>
-    <p class="text-muted text-lg max-w-xl leading-relaxed font-body">
+  <section class="container-wide py-12 sm:py-20 md:py-32">
+    <span class="label-text text-primary font-bold mb-4 sm:mb-6 block">In-Depth Analysis</span>
+    <h1 class="font-headline font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[0.9] tracking-tight max-w-3xl mb-6 sm:mb-8">Product Reviews</h1>
+    <p class="text-muted text-base sm:text-lg max-w-xl leading-relaxed font-body">
       Detailed, honest reviews of individual products. We cover features, performance, value, and who each product is best for.
     </p>
   </section>
 
   <!-- Review listings -->
-  <section class="bg-surface py-16 md:py-24">
+  <section class="bg-surface py-16 md:py-24" aria-label="AI tool product reviews">
     <div class="container-wide">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {reviews.map((product) => (
-          <a href={url(`/reviews/${product.slug}/`)} class="card group no-underline text-text">
-            <div class="aspect-square bg-surface-alt rounded-lg mb-6 flex items-center justify-center p-4">
+          <a href={url(`/reviews/${product.slug}/`)} class="card group no-underline text-text" aria-label={`Review of ${product.name} — ${product.overallScore.toFixed(1)}/10`}>
+            <div class="aspect-square bg-surface-alt rounded-lg mb-4 sm:mb-6 flex items-center justify-center p-4 sm:p-6">
               <img
                 src={url(product.image)}
-                alt={product.name}
-                class="max-w-full max-h-full object-contain group-hover:scale-105 transition-all duration-500"
+                alt={`${product.name} logo`}
+                width="200"
+                height="200"
                 loading="lazy"
+                decoding="async"
+                class="max-w-full max-h-full object-contain group-hover:scale-105 transition-all duration-500"
               />
             </div>
 
@@ -50,7 +63,7 @@ const reviews = productData.products;
               <span class="label-text text-muted-dim">{product.categories.map((c: string) => c.replaceAll('-', ' ')).join(', ')}</span>
             </div>
 
-            <h3 class="font-headline font-bold text-xl mb-3">{product.name}</h3>
+            <h2 class="font-headline font-bold text-xl mb-3">{product.name}</h2>
 
             <div class="flex items-center gap-2 mb-4">
               <span class={`font-headline font-bold text-sm ${product.overallScore >= 8.5 ? 'text-success' : product.overallScore >= 7 ? 'text-accent' : 'text-muted'}`}>
@@ -61,9 +74,9 @@ const reviews = productData.products;
 
             <p class="text-muted text-sm font-body leading-relaxed line-clamp-2">{product.verdict}</p>
 
-            <span class="inline-flex items-center gap-2 mt-4 text-primary label-text font-bold group-hover:gap-3 transition-all">
+            <span class="inline-flex items-center gap-2 mt-4 min-h-[44px] text-primary label-text font-bold group-hover:gap-3 transition-all">
               Read full review
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
             </span>
           </a>
         ))}

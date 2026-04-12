@@ -1,33 +1,36 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import siteData from '../../data/site.json';
-import { url } from '../lib/base';
+import { url, canonicalUrl } from '../lib/base';
+import { staticPageSchema } from '../lib/schema';
 
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'WebPage',
-  name: `Affiliate Disclosure — ${siteData.name}`,
-  url: `${siteData.url}/disclosure/`,
-  description: `How ${siteData.name} earns revenue through affiliate partnerships with AI SaaS companies, and why it never affects our editorial independence.`,
-};
+const pageUrl = canonicalUrl('/disclosure/');
+const schema = staticPageSchema(
+  'WebPage',
+  `Affiliate Disclosure — ${siteData.name}`,
+  `How ${siteData.name} earns revenue through affiliate partnerships with AI SaaS companies, and why it never affects our editorial independence.`,
+  pageUrl,
+  'Affiliate Disclosure',
+);
 ---
 
 <BaseLayout
   title="Affiliate Disclosure"
   description={`How ${siteData.name} earns revenue through affiliate partnerships with AI SaaS companies, and why it never affects our editorial independence.`}
+  canonicalUrl={pageUrl}
   schema={schema}
 >
   <!-- Hero -->
-  <section class="container-narrow py-20 md:py-32">
-    <span class="text-xs font-semibold uppercase tracking-widest text-primary mb-6 block">Transparency</span>
-    <h1 class="font-headline text-4xl md:text-5xl leading-tight tracking-tighter mb-8 font-bold text-primary">Affiliate Disclosure</h1>
-    <p class="text-muted text-lg max-w-xl leading-relaxed font-body">
+  <section class="container-narrow py-12 sm:py-20 md:py-32">
+    <span class="text-xs font-semibold uppercase tracking-widest text-primary mb-4 sm:mb-6 block">Transparency</span>
+    <h1 class="font-headline text-3xl sm:text-4xl md:text-5xl leading-tight tracking-tighter mb-6 sm:mb-8 font-bold text-primary">Affiliate Disclosure</h1>
+    <p class="text-muted text-base sm:text-lg max-w-xl leading-relaxed font-body">
       Transparency is fundamental to everything we do. Here's exactly how {siteData.name} earns revenue and why it never compromises our reviews.
     </p>
   </section>
 
   <!-- Content -->
-  <section class="bg-surface py-16 md:py-24">
+  <section class="bg-surface py-16 md:py-24" aria-label="Affiliate disclosure details">
     <div class="container-narrow space-y-12">
 
       <!-- How We Earn -->
@@ -162,7 +165,7 @@ const schema = {
         </p>
         <a href={url('/contact/')} class="btn-outline no-underline inline-flex items-center gap-2">
           Contact Us
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
         </a>
       </div>
     </div>

@@ -3,18 +3,33 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import CategoryCard from '../components/CategoryCard.astro';
 import GradientOrbs from '../components/GradientOrbs.astro';
-import siteData from '../../data/site.json';
 import categoriesData from '../../data/categories.json';
 import productsData from '../../data/products.json';
-import { url } from '../lib/base';
+import { url, canonicalUrl } from '../lib/base';
+import { schemaGraph, webSiteSchema, organizationSchema, breadcrumbSchema } from '../lib/schema';
+import siteData from '../../data/site.json';
 
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: siteData.name,
-  url: siteData.url,
-  description: siteData.description,
-};
+const siteUrl = canonicalUrl('/');
+const schema = schemaGraph(
+  webSiteSchema(),
+  organizationSchema(),
+  {
+    '@type': 'WebPage',
+    '@id': siteUrl,
+    url: siteUrl,
+    name: `${siteData.name} — ${siteData.tagline}`,
+    description: siteData.description,
+    isPartOf: { '@id': `${siteUrl}#website` },
+    about: { '@id': `${siteUrl}#organization` },
+    publisher: { '@id': `${siteUrl}#organization` },
+    breadcrumb: { '@id': `${siteUrl}#breadcrumb` },
+    inLanguage: 'en-US',
+  },
+  breadcrumbSchema(
+    [{ name: 'Home', url: siteUrl }],
+    siteUrl,
+  ),
+);
 
 const categories = categoriesData.categories;
 const topProduct = productsData.products
@@ -30,7 +45,7 @@ for (const p of productsData.products) {
 }
 ---
 
-<BaseLayout title="Home" schema={schema}>
+<BaseLayout title="Home" description="Compare the best AI tools for academic research, writing, and analysis. Independent reviews and scores to help scholars work smarter." canonicalUrl={siteUrl} schema={schema}>
   <!-- Hero: Typographic Hero with Typewriter -->
   <Hero
     eyebrow="Academic AI Intelligence"
@@ -44,7 +59,7 @@ for (const p of productsData.products) {
   />
 
   <!-- Bento Box Grid: Content Discovery -->
-  <section class="container-wide mt-24 md:mt-40">
+  <section class="container-wide mt-16 sm:mt-24 md:mt-40" aria-label="Content discovery hub">
     <div class="mb-12 md:mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8">
       <div class="max-w-xl">
         <div class="flex items-center gap-3 mb-4">
@@ -60,11 +75,11 @@ for (const p of productsData.products) {
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:grid-rows-2 lg:auto-rows-[220px]">
       <!-- LARGE TILE: 50+ AI Tools Tested (spans 2 cols, 2 rows) -->
-      <a href={url('/top-tools/')} class="lg:col-span-2 lg:row-span-2 glass-panel rounded-xl p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group no-underline text-text scroll-reveal min-h-[340px]">
+      <a href={url('/top-tools/')} class="lg:col-span-2 lg:row-span-2 glass-panel rounded-xl p-6 sm:p-8 md:p-10 flex flex-col justify-between relative overflow-hidden group no-underline text-text scroll-reveal min-h-[260px] sm:min-h-[300px] lg:min-h-[340px]" aria-label="Explore 50+ rigorously tested AI tools for academics">
         <div class="z-20 relative">
           <span class="badge-editorial mb-4 inline-block">Rigorously Evaluated</span>
           <div class="flex items-baseline gap-3 mb-2">
-            <span class="font-headline font-bold text-6xl md:text-7xl lg:text-8xl text-primary leading-none">50+</span>
+            <span class="font-headline font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-primary leading-none">50+</span>
           </div>
           <h3 class="font-headline font-bold text-2xl md:text-3xl leading-tight">AI Tools Tested</h3>
           <p class="mt-4 text-muted max-w-sm font-body text-sm leading-relaxed">Rigorously scored across ease of use, academic value, and price-to-value — so you can pick with confidence.</p>
@@ -72,7 +87,7 @@ for (const p of productsData.products) {
         <div class="flex justify-between items-end z-20 relative mt-6">
           <span class="btn-outline text-primary">
             Explore the list
-            <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+            <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
           </span>
           <div class="text-right hidden md:block">
             <div class="text-4xl font-headline font-bold text-primary">{topProduct.overallScore}</div>
@@ -86,25 +101,25 @@ for (const p of productsData.products) {
       </a>
 
       <!-- SMALL TILE 1: In-Depth Reviews -->
-      <a href={url('/reviews/')} class="bg-primary rounded-xl p-6 md:p-8 flex flex-col justify-between grain-overlay no-underline group scroll-reveal scroll-delay-100 min-h-[180px]">
+      <a href={url('/reviews/')} class="bg-primary-dark rounded-xl p-5 sm:p-6 md:p-8 flex flex-col justify-between grain-overlay no-underline group scroll-reveal scroll-delay-100 min-h-[160px] sm:min-h-[180px]" aria-label="Browse in-depth AI tool reviews">
         <div class="relative z-20">
-          <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+          <div class="w-10 h-10 rounded-lg bg-white/15 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
           </div>
           <h3 class="font-headline font-bold text-xl text-white">In-Depth Reviews</h3>
-          <p class="text-white/70 text-sm mt-2 font-body leading-relaxed">Multi-dimensional scoring and honest verdicts for every tool.</p>
+          <p class="text-white text-sm mt-2 font-body leading-relaxed">Multi-dimensional scoring and honest verdicts for every tool.</p>
         </div>
         <div class="flex justify-between items-center z-20 relative mt-3">
-          <span class="label-text text-white/60 group-hover:text-white transition-colors">Read our latest</span>
-          <svg class="w-5 h-5 text-white/60 group-hover:text-white group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+          <span class="label-text text-white group-hover:text-white transition-colors">Read our latest</span>
+          <svg class="w-5 h-5 text-white group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
         </div>
       </a>
 
       <!-- SMALL TILE 2: 4 Academic Categories -->
-      <a href={url('/top-tools/')} class="bg-surface border border-outline rounded-xl p-6 md:p-8 flex flex-col justify-between no-underline group scroll-reveal scroll-delay-200 min-h-[180px] hover:border-accent/40 hover:shadow-lg hover:shadow-accent/5 transition-all duration-300">
+      <a href={url('/top-tools/')} class="bg-surface border border-outline rounded-xl p-5 sm:p-6 md:p-8 flex flex-col justify-between no-underline group scroll-reveal scroll-delay-200 min-h-[160px] sm:min-h-[180px] hover:border-accent/40 hover:shadow-lg hover:shadow-accent/5 transition-all duration-300" aria-label={`Browse ${categories.length} curated academic AI tool categories`}>
         <div>
           <div class="w-10 h-10 rounded-lg bg-accent-muted flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
           </div>
           <div class="flex items-baseline gap-2 mb-1">
             <span class="font-headline font-bold text-3xl text-accent leading-none">{categories.length}</span>
@@ -114,29 +129,29 @@ for (const p of productsData.products) {
         </div>
         <div class="flex justify-between items-center mt-3">
           <span class="label-text text-muted-dim group-hover:text-accent transition-colors">Browse all</span>
-          <svg class="w-5 h-5 text-muted-dim group-hover:text-accent group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+          <svg class="w-5 h-5 text-muted-dim group-hover:text-accent group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
         </div>
       </a>
 
       <!-- SMALL TILE 3: 3-Dimension Scoring -->
-      <a href={url('/about/')} class="bg-surface-alt border border-outline rounded-xl p-6 md:p-8 flex flex-col justify-between no-underline group scroll-reveal scroll-delay-300 min-h-[180px] hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 md:col-span-2 lg:col-span-1">
+      <a href={url('/about/')} class="bg-surface-alt border border-outline rounded-xl p-5 sm:p-6 md:p-8 flex flex-col justify-between no-underline group scroll-reveal scroll-delay-300 min-h-[160px] sm:min-h-[180px] hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 md:col-span-2 lg:col-span-1" aria-label="Learn about our 3-dimension scoring methodology">
         <div>
           <div class="w-10 h-10 rounded-lg bg-primary-muted flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
           </div>
           <h3 class="font-headline font-bold text-lg text-text mb-1">3-D Scoring</h3>
           <p class="text-muted text-sm font-body leading-relaxed">Ease of Use · Academic Value · Price-to-Value — transparent, unbiased ratings.</p>
         </div>
         <div class="flex justify-between items-center mt-3">
           <span class="label-text text-muted-dim group-hover:text-primary transition-colors">Our methodology</span>
-          <svg class="w-5 h-5 text-muted-dim group-hover:text-primary group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+          <svg class="w-5 h-5 text-muted-dim group-hover:text-primary group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
         </div>
       </a>
     </div>
   </section>
 
   <!-- Category Browser: 4-Card Grid -->
-  <section class="container-wide mt-24 md:mt-40">
+  <section class="container-wide mt-16 sm:mt-24 md:mt-40" aria-label="Browse AI tools by academic discipline">
     <div class="mb-12 md:mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8">
       <div class="max-w-xl">
         <div class="flex items-center gap-3 mb-4">
@@ -165,13 +180,13 @@ for (const p of productsData.products) {
   </section>
 
   <!-- Methodology Steps: How We Evaluate -->
-  <section class="mt-24 md:mt-40 bg-surface grain-overlay relative overflow-hidden">
+  <section class="mt-16 sm:mt-24 md:mt-40 bg-surface grain-overlay relative overflow-hidden" aria-label="Our evaluation methodology">
     <!-- Decorative gradient blur orbs -->
     <GradientOrbs variant="section" />
     <div class="container-wide py-16 md:py-28 relative z-10">
       <div class="max-w-4xl mx-auto text-center mb-16 md:mb-20 scroll-reveal">
         <span class="label-text text-primary font-bold mb-4 block">Our Methodology</span>
-        <h2 class="font-headline font-bold text-4xl md:text-5xl mb-6">Built on Academic Rigour.</h2>
+        <h2 class="font-headline font-bold text-3xl sm:text-4xl md:text-5xl mb-6">Built on Academic Rigour.</h2>
         <p class="text-muted text-lg leading-relaxed font-body max-w-2xl mx-auto">We don't skim feature lists. Every AI tool is evaluated through a structured, four-step process designed for scholarly workflows.</p>
       </div>
 
@@ -187,9 +202,9 @@ for (const p of productsData.products) {
             <span class="label-text text-muted-dim mt-1">Step</span>
           </div>
           <div class="w-10 h-10 rounded-full bg-primary-muted flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
           </div>
-          <h4 class="font-headline font-bold text-xl mb-3">Feature Analysis</h4>
+          <h3 class="font-headline font-bold text-xl mb-3">Feature Analysis</h3>
           <p class="text-sm text-muted leading-relaxed font-body max-w-[280px]">We map every capability, integration, and limitation — breaking down feature sets so academics know exactly what each tool offers before committing.</p>
         </div>
 
@@ -200,9 +215,9 @@ for (const p of productsData.products) {
             <span class="label-text text-muted-dim mt-1">Step</span>
           </div>
           <div class="w-10 h-10 rounded-full bg-accent-muted flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
           </div>
-          <h4 class="font-headline font-bold text-xl mb-3">Workflow Integration Testing</h4>
+          <h3 class="font-headline font-bold text-xl mb-3">Workflow Integration Testing</h3>
           <p class="text-sm text-muted leading-relaxed font-body max-w-[280px]">We run real academic workflows — literature reviews, data analysis, paper drafting — not synthetic benchmarks. Each tool is tested against tasks researchers actually perform.</p>
         </div>
 
@@ -213,9 +228,9 @@ for (const p of productsData.products) {
             <span class="label-text text-muted-dim mt-1">Step</span>
           </div>
           <div class="w-10 h-10 rounded-full bg-primary-muted flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
           </div>
-          <h4 class="font-headline font-bold text-xl mb-3">Academic Use Case Scoring</h4>
+          <h3 class="font-headline font-bold text-xl mb-3">Academic Use Case Scoring</h3>
           <p class="text-sm text-muted leading-relaxed font-body max-w-[280px]">Multi-dimensional scoring across ease of use, academic value, and price-to-value — calibrated for researchers, students, and educators rather than general consumers.</p>
         </div>
 
@@ -226,9 +241,9 @@ for (const p of productsData.products) {
             <span class="label-text text-muted-dim mt-1">Step</span>
           </div>
           <div class="w-10 h-10 rounded-full bg-accent-muted flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
           </div>
-          <h4 class="font-headline font-bold text-xl mb-3">Value Assessment</h4>
+          <h3 class="font-headline font-bold text-xl mb-3">Value Assessment</h3>
           <p class="text-sm text-muted leading-relaxed font-body max-w-[280px]">We weigh pricing against academic budgets, compare free tiers to paid plans, and publish transparent verdicts — no vendor editing, no pay-for-ranking.</p>
         </div>
       </div>
@@ -248,23 +263,23 @@ for (const p of productsData.products) {
   </section>
 
   <!-- Split CTA: Top Tools + Newsletter -->
-  <section id="newsletter" class="container-wide mt-24 md:mt-40 mb-20">
+  <section id="newsletter" class="container-wide mt-16 sm:mt-24 md:mt-40 mb-12 sm:mb-20" aria-label="Newsletter signup and top tools">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
       <!-- Left: Explore Top Tools CTA -->
-      <div class="bg-primary rounded-xl p-10 md:p-14 relative overflow-hidden grain-overlay flex flex-col justify-between min-h-[360px]">
+      <div class="bg-primary-dark rounded-xl p-6 sm:p-10 md:p-14 relative overflow-hidden grain-overlay flex flex-col justify-between min-h-[280px] sm:min-h-[320px] lg:min-h-[360px]">
         <div class="relative z-20">
-          <span class="label-text text-white/60 mb-4 block">Curated Rankings</span>
+          <span class="label-text text-white mb-4 block">Curated Rankings</span>
           <h2 class="font-headline font-bold text-3xl md:text-4xl text-white mb-4">Explore Top AI Tools</h2>
-          <p class="text-white/70 font-body leading-relaxed max-w-md">Browse our rigorously scored rankings. Every tool evaluated across ease of use, academic value, and price-to-value.</p>
+          <p class="text-white font-body leading-relaxed max-w-md">Browse our rigorously scored rankings. Every tool evaluated across ease of use, academic value, and price-to-value.</p>
         </div>
         <div class="relative z-20 mt-8">
           <a href={url('/top-tools/')} class="btn-accent no-underline">
             Browse Top Tools
-            <svg class="w-4 h-4 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+            <svg class="w-4 h-4 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
           </a>
-          <div class="mt-6 flex flex-wrap gap-3">
+          <div class="mt-6 flex flex-wrap gap-2 sm:gap-3">
             {categories.map(cat => (
-              <a class="label-text hover:text-accent no-underline text-white/50 transition-colors" href={url(`/top-tools/#${cat.slug}`)}>{cat.name}</a>
+              <a class="label-text inline-flex items-center min-h-[36px] sm:min-h-0 px-2 py-1.5 sm:py-0 hover:text-accent no-underline text-white transition-colors" href={url(`/top-tools/#${cat.slug}`)}>{cat.name}</a>
             ))}
           </div>
         </div>
@@ -277,7 +292,7 @@ for (const p of productsData.products) {
       </div>
 
       <!-- Right: Newsletter Signup CTA -->
-      <div class="glass-panel rounded-xl p-10 md:p-14 flex flex-col justify-between min-h-[360px] relative overflow-hidden">
+      <div class="glass-panel rounded-xl p-6 sm:p-10 md:p-14 flex flex-col justify-between min-h-[280px] sm:min-h-[320px] lg:min-h-[360px] relative overflow-hidden">
         <div class="relative z-20">
           <span class="label-text text-accent font-semibold mb-4 block">Stay Sharp</span>
           <h2 class="font-headline font-bold text-3xl md:text-4xl text-text mb-4">Join the Newsletter</h2>
@@ -285,7 +300,7 @@ for (const p of productsData.products) {
         </div>
         <div class="relative z-20 mt-8">
           <!-- Visual placeholder form — no submission backend -->
-          <form class="flex flex-col sm:flex-row gap-3" onsubmit="return false;">
+          <form class="flex flex-col sm:flex-row gap-3" onsubmit="return false;" aria-label="Newsletter signup">
             <input
               type="email"
               placeholder="your@university.edu"
@@ -297,7 +312,7 @@ for (const p of productsData.products) {
               class="btn-accent whitespace-nowrap"
             >
               Subscribe
-              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
             </button>
           </form>
           <p class="text-xs text-muted-dim mt-4 font-body">No spam, ever. Unsubscribe anytime. We respect your inbox.</p>

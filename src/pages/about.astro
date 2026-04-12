@@ -1,35 +1,38 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import siteData from '../../data/site.json';
-import { url } from '../lib/base';
+import { url, canonicalUrl } from '../lib/base';
+import { staticPageSchema } from '../lib/schema';
 
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'AboutPage',
-  name: `About ${siteData.name}`,
-  url: `${siteData.url}/about/`,
-  description: `Learn about ${siteData.name} — an independent editorial team reviewing AI tools for academics, researchers, and students.`,
-};
+const pageUrl = canonicalUrl('/about/');
+const schema = staticPageSchema(
+  'AboutPage',
+  `About ${siteData.name}`,
+  `Learn about ${siteData.name} — an independent editorial team that tests and reviews AI tools built for academics, researchers, and students.`,
+  pageUrl,
+  'About',
+);
 ---
 
 <BaseLayout
   title="About Us"
-  description={`Learn about ${siteData.name} — an independent editorial team reviewing AI tools for academics, researchers, and students.`}
+  description={`Learn about ${siteData.name} — an independent editorial team that tests and reviews AI tools built for academics, researchers, and students.`}
+  canonicalUrl={pageUrl}
   schema={schema}
 >
   <!-- Hero -->
-  <section class="container-wide py-20 md:py-32">
-    <span class="text-xs font-semibold uppercase tracking-widest text-primary mb-6 block scroll-reveal-fade">About Us</span>
-    <h1 class="font-headline text-5xl md:text-6xl lg:text-7xl leading-[0.9] tracking-tighter max-w-3xl mb-8 font-bold text-primary scroll-reveal-blur">
+  <section class="container-wide py-12 sm:py-20 md:py-32" aria-label="About AIfocus">
+    <span class="text-xs font-semibold uppercase tracking-widest text-primary mb-4 sm:mb-6 block scroll-reveal-fade">About Us</span>
+    <h1 class="font-headline text-3xl sm:text-4xl md:text-5xl lg:text-7xl leading-[0.95] tracking-tighter max-w-3xl mb-6 sm:mb-8 font-bold text-primary scroll-reveal-blur">
       AI Tools, Evaluated for <span class="text-accent">Academics.</span>
     </h1>
-    <p class="text-muted text-lg md:text-xl max-w-xl leading-relaxed font-body scroll-reveal scroll-delay-200">
+    <p class="text-muted text-base sm:text-lg md:text-xl max-w-xl leading-relaxed font-body scroll-reveal scroll-delay-200">
       We built {siteData.name} because choosing the right AI tool shouldn't require a literature review of its own. We do the rigorous evaluation so you can focus on what matters — your research.
     </p>
   </section>
 
   <!-- Mission -->
-  <section class="bg-surface py-16 md:py-24">
+  <section class="bg-surface py-16 md:py-24" aria-label="Our mission">
     <div class="container-narrow">
       <span class="text-xs font-semibold uppercase tracking-widest text-primary mb-6 block">Our Mission</span>
       <h2 class="font-headline text-3xl md:text-4xl mb-8 font-bold tracking-tight text-primary">Honest Evaluation for the Academic Community.</h2>
@@ -45,7 +48,7 @@ const schema = {
   </section>
 
   <!-- How We Work -->
-  <section class="container-wide py-16 md:py-24">
+  <section class="container-wide py-16 md:py-24" aria-label="How we evaluate AI tools">
     <div class="mb-16">
       <span class="text-xs font-semibold uppercase tracking-widest text-primary mb-4 block">The Process</span>
       <h2 class="font-headline text-3xl md:text-4xl font-bold tracking-tight text-primary">How We Evaluate</h2>
@@ -76,7 +79,7 @@ const schema = {
   </section>
 
   <!-- Standards -->
-  <section class="bg-surface py-16 md:py-24 grain-overlay">
+  <section class="bg-surface py-16 md:py-24 grain-overlay" aria-label="Editorial standards">
     <div class="container-narrow relative z-20">
       <span class="text-xs font-semibold uppercase tracking-widest text-accent mb-6 block">Editorial Standards</span>
       <h2 class="font-headline text-3xl md:text-4xl text-primary mb-10 font-bold tracking-tight">What We Stand For</h2>
@@ -128,7 +131,7 @@ const schema = {
       </p>
       <a href={url('/contact/')} class="btn-primary no-underline inline-flex items-center gap-2">
         Contact Us
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
       </a>
     </div>
   </section>

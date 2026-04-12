@@ -51,6 +51,9 @@ const scoreDimensions = [
   { key: 'price_to_value', label: 'Price-to-Value', value: scores.price_to_value },
 ];
 
+/* Smart CTA text based on product context */
+const ctaText = freeTier ? 'Try It Free' : `Get ${name.split(' ')[0]}`;
+
 /* Color tier for the overall score ring */
 function scoreColor(score: number): string {
   if (score >= 8.5) return 'score-high';
@@ -65,7 +68,7 @@ function barPercent(value: number): string {
 const scoreClass = scoreColor(overallScore);
 ---
 
-<article class="product-card glass-panel relative overflow-hidden group transition-all duration-300">
+<article class="product-card glass-panel relative overflow-hidden group transition-all duration-300" aria-label={`${name} — rated ${overallScore.toFixed(1)} out of 10`}>
   {badge && (
     <div class="absolute top-0 right-0 z-10">
       <span class:list={[
@@ -81,18 +84,21 @@ const scoreClass = scoreColor(overallScore);
 
   <div class="flex flex-col sm:flex-row">
     <!-- Product Image -->
-    <div class="sm:w-56 flex-shrink-0 bg-surface-alt/50 flex items-center justify-center p-6 relative overflow-hidden">
+    <div class="sm:w-56 flex-shrink-0 bg-surface-alt/50 flex items-center justify-center p-4 sm:p-6 relative overflow-hidden min-h-[120px] sm:min-h-0">
       <div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
       <img
         src={image.startsWith('/') ? url(image) : image}
-        alt={name}
-        class="max-w-full max-h-32 sm:max-h-full object-contain grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out relative z-[1]"
+        alt={`${name} logo`}
+        width="200"
+        height="200"
         loading="lazy"
+        decoding="async"
+        class="max-w-[160px] sm:max-w-full max-h-24 sm:max-h-full object-contain grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out relative z-[1]"
       />
     </div>
 
     <!-- Product Info -->
-    <div class="flex-1 min-w-0 p-6 sm:p-8">
+    <div class="flex-1 min-w-0 p-4 sm:p-6 md:p-8">
       <div class="flex items-start justify-between gap-4 mb-4">
         <div>
           <h3 class="font-headline text-xl text-text mb-1 group-hover:text-primary transition-colors duration-200">{name}</h3>
@@ -101,7 +107,7 @@ const scoreClass = scoreColor(overallScore);
               <span class="text-muted-dim font-body">{brand}</span>
             )}
             {brand && category && (
-              <span class="text-muted-dim/40">·</span>
+              <span class="text-muted-dim">·</span>
             )}
             {category && (
               <span class="inline-flex items-center px-2 py-0.5 text-xs font-label font-medium text-primary bg-primary-muted rounded-full">{category}</span>
@@ -114,7 +120,7 @@ const scoreClass = scoreColor(overallScore);
 
         <!-- Overall Score Ring -->
         <div class="flex-shrink-0 flex flex-col items-center">
-          <div class:list={['score-ring', scoreClass]}>
+          <div class:list={['score-ring', scoreClass]} role="img" aria-label={`Overall score: ${overallScore.toFixed(1)} out of 10`}>
             <span class="text-lg font-headline font-bold">{overallScore.toFixed(1)}</span>
           </div>
           <span class="text-[10px] text-muted-dim mt-1 uppercase tracking-wider font-label">Overall</span>
@@ -122,12 +128,12 @@ const scoreClass = scoreColor(overallScore);
       </div>
 
       <!-- Score Dimensions -->
-      <div class="grid grid-cols-3 gap-3 mb-5">
+      <div class="grid grid-cols-3 gap-2 sm:gap-3 mb-5">
         {scoreDimensions.map(({ label, value }) => (
           <div class="space-y-1">
-            <div class="flex items-center justify-between">
-              <span class="text-xs text-muted font-label">{label}</span>
-              <span class="text-xs font-bold text-text font-headline">{value}/10</span>
+            <div class="flex items-center justify-between gap-1">
+              <span class="text-[10px] sm:text-xs text-muted font-label leading-tight truncate">{label}</span>
+              <span class="text-xs font-bold text-text font-headline shrink-0">{value}/10</span>
             </div>
             <div class="h-1.5 bg-surface-alt rounded-full overflow-hidden">
               <div
@@ -147,7 +153,7 @@ const scoreClass = scoreColor(overallScore);
           )}
           {freeTier && (
             <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-label font-medium text-success bg-success/10 rounded-full border border-success/20">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
               Free tier
             </span>
           )}
@@ -188,18 +194,19 @@ const scoreClass = scoreColor(overallScore);
       )}
 
       <!-- CTAs -->
-      <div class="flex flex-wrap items-center gap-4">
+      <div class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 sm:gap-4">
         <a
           href={url(`/go/${affiliateSlug}/`)}
-          class="cta-primary inline-flex items-center gap-2 px-5 py-2.5 bg-primary hover:bg-primary-hover text-on-primary text-xs font-label font-semibold uppercase tracking-wide rounded transition-all duration-200 no-underline hover:shadow-[0_0_20px_rgba(0,207,255,0.3)]"
+          class="cta-primary inline-flex items-center justify-center gap-2 px-5 py-3 min-h-[44px] bg-primary hover:bg-primary-hover text-on-primary text-xs font-label font-semibold uppercase tracking-wide rounded transition-all duration-200 no-underline hover:shadow-[0_0_20px_rgba(0,207,255,0.3)] focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-base focus-visible:outline-none"
           target="_blank"
           rel="nofollow sponsored noopener"
+          aria-label={`${ctaText} — ${name} (opens in new tab)`}
         >
-          Try It Free
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+          {ctaText}
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
         </a>
         {slug && (
-          <a href={url(`/reviews/${slug}/`)} class="text-primary text-xs font-label font-bold no-underline hover:text-primary-hover hover:underline underline-offset-4 transition-colors">
+          <a href={url(`/reviews/${slug}/`)} class="inline-flex items-center min-h-[44px] text-primary text-xs font-label font-bold no-underline hover:text-primary-hover hover:underline underline-offset-4 transition-colors px-1 sm:px-0 rounded focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-base focus-visible:outline-none" aria-label={`Read full review of ${name}`}>
             Read Full Review →
           </a>
         )}

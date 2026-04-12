@@ -5,7 +5,9 @@ import ComparisonTable from '../../components/ComparisonTable.astro';
 import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
 import siteData from '../../../data/site.json';
 import categoriesData from '../../../data/categories.json';
-import { url } from '../../lib/base';
+import { url, canonicalUrl } from '../../lib/base';
+import { itemListSchema } from '../../lib/schema';
+import { getCollection } from 'astro:content';
 
 interface Scores {
   ease_of_use: number;
@@ -50,46 +52,120 @@ const productsByCategory = categories.map((cat) => ({
     .sort((a, b) => b.overallScore - a.overallScore),
 })).filter((group) => group.products.length > 0);
 
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'CollectionPage',
-  name: `Top AI Tools - ${siteData.name}`,
-  description: 'Curated rankings of the best AI tools for academics — researched, scored, and compared.',
-};
+/* Count free-tier tools for intro copy */
+const freeToolCount = products.filter((p) => p.freeTier).length;
+
+/* Fetch resource/guide articles for internal linking */
+let resourceEntries: { slug: string; data: { title: string; slug: string; description: string; level: string; readTime: number; relatedProducts?: string[]; draft?: boolean } }[] = [];
+try {
+  const allResources = await getCollection('resources');
+  resourceEntries = allResources
+    .filter((r: any) => !r.data.draft)
+    .map((r: any) => ({ slug: r.data.slug, data: r.data }));
+} catch {
+  resourceEntries = [];
+}
+
+/* Map category slugs to relevant resource guides based on relatedProducts overlap */
+const productSlugsByCategory = new Map<string, string[]>();
+for (const cat of categories) {
+  productSlugsByCategory.set(
+    cat.slug,
+    products.filter((p) => p.categories.includes(cat.slug)).map((p) => p.slug),
+  );
+}
+
+function getGuidesForCategory(catSlug: string): typeof resourceEntries {
+  const catProductSlugs = productSlugsByCategory.get(catSlug) || [];
+  return resourceEntries.filter((r) =>
+    r.data.relatedProducts?.some((rp: string) => catProductSlugs.includes(rp)),
+  );
+}
+
+const pageUrl = canonicalUrl('/top-tools/');
+const pageTitle = `Best AI Tools for Academics & Researchers (2026) | ${siteData.name}`;
+const pageDescription = `The ${products.length} best AI tools for academic research and writing in 2026. Hands-on reviews, side-by-side comparisons, and independent scoring across 3 dimensions.`;
+
+/* FAQ schema items for methodology section */
+const faqItems = [
+  {
+    question: 'How do you select and score AI tools?',
+    answer: 'We evaluate every tool hands-on across three dimensions: ease of use (how quickly you can get productive), academic value (how well it handles research-specific tasks), and price-to-value (whether pricing makes sense for researchers on a budget). Each dimension is scored 1–10 and averaged for the overall score.',
+  },
+  {
+    question: 'How often are these rankings updated?',
+    answer: 'Rankings are reviewed and updated as tools release significant new features or pricing changes. The current list was last updated in April 2026.',
+  },
+  {
+    question: 'Are there free AI tools for academics?',
+    answer: `Yes — ${freeToolCount} of the ${products.length} tools on this page offer free tiers or free plans for students and educators. GitHub Copilot is completely free for verified students via GitHub Education.`,
+  },
+];
+
+const schema = itemListSchema(products, pageTitle, pageDescription, pageUrl, faqItems);
 ---
 
 <BaseLayout
-  title="Top AI Tools"
-  description="Curated rankings of the best AI tools for academics — researched, scored, and compared by our editorial team."
+  title="Best AI Tools for Academics & Researchers (2026)"
+  description={pageDescription}
+  ogType="website"
+  ogImageAlt={`${siteData.name} — Best AI Tools for Academic Research, Writing & Productivity`}
+  canonicalUrl={pageUrl}
   schema={schema}
 >
   <!-- Header -->
-  <section class="container-wide py-20 md:py-32">
-    <span class="label-text text-primary font-bold mb-6 block">Editor's Choice</span>
-    <h1 class="font-headline text-5xl md:text-6xl leading-[0.9] tracking-tighter max-w-3xl mb-8 text-text">
-      Top AI Tools <span class="text-primary">2026</span>
+  <section class="container-wide py-12 sm:py-20 md:py-32">
+    <span class="label-text text-primary font-bold mb-4 sm:mb-6 block">Editor's Picks · Updated April 2026</span>
+    <h1 class="font-headline text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[0.95] tracking-tighter max-w-3xl mb-6 sm:mb-8 text-text">
+      The Best AI Tools for <span class="text-primary">Academic Research</span> & Writing
     </h1>
-    <p class="text-muted text-lg max-w-xl leading-relaxed font-body mb-6">
-      We evaluated dozens of AI tools across every major category relevant to academic work. These are the top performers — the tools that deliver real value for researchers, students, and educators.
+    <p class="text-muted text-base sm:text-lg max-w-xl leading-relaxed font-body mb-4">
+      We spent 100+ hours testing every major AI tool that claims to help researchers, students, and educators. Most were mediocre. These {products.length} earned their spot.
     </p>
-    <p class="label-text text-muted-dim">Last updated: March 2026 · {products.length} tools reviewed</p>
+    <p class="text-muted text-base max-w-xl leading-relaxed font-body mb-6">
+      Each tool is scored across three dimensions — ease of use, academic value, and price-to-value — so you can find what fits your workflow, not just what's trending. {freeToolCount} of {products.length} tools offer free tiers for academics. Dive into our <a href={url('/reviews/')} class="text-primary hover:text-primary-hover no-underline hover:underline underline-offset-2 transition-colors">in-depth reviews</a> or explore our <a href={url('/resources/')} class="text-primary hover:text-primary-hover no-underline hover:underline underline-offset-2 transition-colors">hands-on guides</a> to put these tools to work.
+    </p>
+    <p class="label-text text-muted-dim">Last updated: April 2026 · {products.length} tools reviewed · 3 scoring dimensions</p>
   </section>
 
-  <!-- Category navigation pills -->
-  <section class="container-wide pb-8">
-    <div class="flex flex-wrap gap-3">
+  <!-- Category navigation pills (jump links) -->
+  <nav class="container-wide pb-8" aria-label="Tool categories">
+    <div class="flex flex-wrap gap-2 sm:gap-3">
       {productsByCategory.map((group) => (
         <a
           href={`#${group.slug}`}
-          class="inline-flex items-center gap-2 px-4 py-2 glass-panel text-sm font-label font-medium text-muted hover:text-primary hover:border-primary/30 transition-all duration-200 no-underline rounded-full"
+          class="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-2.5 sm:py-2 min-h-[44px] sm:min-h-0 glass-panel text-xs sm:text-sm font-label font-medium text-muted hover:text-primary hover:border-primary/30 active:scale-[0.97] transition-all duration-200 no-underline rounded-full"
         >
-          <span class="material-symbols-outlined text-sm">{group.icon}</span>
+          <span class="material-symbols-outlined text-xs sm:text-sm" aria-hidden="true">{group.icon}</span>
           <span>{group.name}</span>
-          <span class="text-xs text-muted-dim">({group.products.length})</span>
+          <span class="text-[10px] sm:text-xs text-muted-dim">({group.products.length})</span>
         </a>
       ))}
+      <a
+        href="#comparison"
+        class="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-2.5 sm:py-2 min-h-[44px] sm:min-h-0 glass-panel text-xs sm:text-sm font-label font-medium text-muted hover:text-primary hover:border-primary/30 active:scale-[0.97] transition-all duration-200 no-underline rounded-full"
+      >
+        <span class="material-symbols-outlined text-xs sm:text-sm" aria-hidden="true">compare</span>
+        <span>Compare All</span>
+      </a>
+      {resourceEntries.length > 0 && (
+        <a
+          href="#guides"
+          class="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-2.5 sm:py-2 min-h-[44px] sm:min-h-0 glass-panel text-xs sm:text-sm font-label font-medium text-muted hover:text-primary hover:border-primary/30 active:scale-[0.97] transition-all duration-200 no-underline rounded-full"
+        >
+          <span class="material-symbols-outlined text-xs sm:text-sm" aria-hidden="true">school</span>
+          <span>Guides</span>
+        </a>
+      )}
+      <a
+        href="#faq"
+        class="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-2.5 sm:py-2 min-h-[44px] sm:min-h-0 glass-panel text-xs sm:text-sm font-label font-medium text-muted hover:text-primary hover:border-primary/30 active:scale-[0.97] transition-all duration-200 no-underline rounded-full"
+      >
+        <span class="material-symbols-outlined text-xs sm:text-sm" aria-hidden="true">help</span>
+        <span>FAQ</span>
+      </a>
     </div>
-  </section>
+  </nav>
 
   <!-- Disclosure -->
   <section class="container-wide pb-8">
@@ -100,13 +176,13 @@ const schema = {
   {productsByCategory.map((group, groupIndex) => (
     <section id={group.slug} class={`py-16 md:py-24 ${groupIndex % 2 === 0 ? 'bg-surface' : 'bg-base'}`}>
       <div class="container-wide">
-        <div class="flex items-center gap-3 mb-3">
-          <span class="material-symbols-outlined text-3xl text-primary">{group.icon}</span>
-          <h2 class="font-headline font-bold text-3xl md:text-4xl tracking-tight text-text">
+        <div class="flex items-center gap-2 sm:gap-3 mb-3">
+          <span class="material-symbols-outlined text-2xl sm:text-3xl text-primary">{group.icon}</span>
+          <h2 class="font-headline font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight text-text">
             {group.name}
           </h2>
         </div>
-        <p class="text-muted text-lg mb-10 max-w-2xl font-body">
+        <p class="text-muted text-base sm:text-lg mb-8 sm:mb-10 max-w-2xl font-body">
           {group.description}
         </p>
 
@@ -122,7 +198,7 @@ const schema = {
               overallScore={product.overallScore}
               pricing={product.pricing}
               freeTier={product.freeTier}
-              freeTierNote={product.freeTierNote}
+              freeTierNote={product.freeTierNote ?? undefined}
               pros={product.pros}
               cons={product.cons}
               verdict={product.verdict}
@@ -132,30 +208,130 @@ const schema = {
             />
           ))}
         </div>
+
+        {/* Related guides for this category */}
+        {getGuidesForCategory(group.slug).length > 0 && (
+          <div class="mt-6 sm:mt-8 p-4 sm:p-5 glass-panel rounded-xl border border-primary/10">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="material-symbols-outlined text-primary text-base sm:text-lg">menu_book</span>
+              <h3 class="font-headline font-bold text-xs sm:text-sm uppercase tracking-wide text-muted">Related Guides</h3>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3">
+              {getGuidesForCategory(group.slug).map((guide) => (
+                <a
+                  href={url(`/resources/${guide.slug}/`)}
+                  class="flex-1 flex items-center gap-2 sm:gap-3 p-3 rounded-lg bg-surface-alt/30 hover:bg-surface-alt/60 transition-colors duration-200 no-underline group/guide"
+                  aria-label={`Guide: ${guide.data.title}`}
+                >
+                  <span class="material-symbols-outlined text-primary/80 group-hover/guide:text-primary transition-colors text-lg sm:text-2xl shrink-0" aria-hidden="true">article</span>
+                  <div class="min-w-0 flex-1">
+                    <span class="block text-xs sm:text-sm font-label font-medium text-text group-hover/guide:text-primary transition-colors leading-snug">{guide.data.title}</span>
+                    <span class="block text-[10px] sm:text-xs text-muted-dim mt-0.5">{guide.data.readTime} min read · {guide.data.level}</span>
+                  </div>
+                  <span class="text-primary/70 group-hover/guide:text-primary ml-auto transition-colors shrink-0">→</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   ))}
 
   <!-- Comparison Table -->
-  <section class="container-wide py-16 md:py-24">
-    <h2 class="font-headline font-bold text-3xl md:text-4xl tracking-tight text-text mb-3">
-      Side-by-Side <span class="text-primary">Comparison</span>
+  <section class="container-wide py-16 md:py-24" id="comparison" aria-label="Side-by-side AI tools comparison">
+    <h2 class="font-headline font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight text-text mb-3">
+      AI Tools <span class="text-primary">Comparison</span> Table
     </h2>
-    <p class="text-muted text-lg mb-10 max-w-2xl">
-      All tools ranked by overall score. Compare pricing, use cases, and our three scoring dimensions at a glance.
+    <p class="text-muted text-base sm:text-lg mb-4 max-w-2xl">
+      Not sure which AI tool to try first? This side-by-side comparison puts every score, price, and free-tier option together so you can find the best fit for your academic needs in seconds.
+    </p>
+    <p class="text-muted text-sm mb-8 sm:mb-10 max-w-2xl">
+      Sorted by overall score. Click any tool name to jump to its full review.
     </p>
     <div class="card p-0 overflow-hidden">
       <ComparisonTable products={products} />
     </div>
   </section>
 
-  <!-- Methodology note -->
-  <section class="container-narrow py-16 md:py-24 text-center">
+  <!-- Guides & Resources -->
+  {resourceEntries.length > 0 && (
+    <section class="bg-surface py-16 md:py-24" id="guides" aria-label="Guides and resources for AI tools">
+      <div class="container-wide">
+        <div class="flex items-center gap-2 sm:gap-3 mb-3">
+          <span class="material-symbols-outlined text-2xl sm:text-3xl text-primary">school</span>
+          <h2 class="font-headline font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight text-text">
+            Guides & <span class="text-primary">Resources</span>
+          </h2>
+        </div>
+        <p class="text-muted text-base sm:text-lg mb-8 sm:mb-10 max-w-2xl font-body">
+          Go beyond tool reviews — these hands-on guides help you put AI tools to work in your actual research workflow.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {resourceEntries.map((guide) => (
+            <a
+              href={url(`/resources/${guide.slug}/`)}
+              class="glass-panel p-6 rounded-xl hover:border-primary/30 transition-all duration-300 no-underline group/res"
+              aria-label={`Guide: ${guide.data.title}`}
+            >
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 flex-shrink-0 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <span class="material-symbols-outlined text-primary" aria-hidden="true">
+                    {guide.data.level === 'beginner' ? 'rocket_launch' : guide.data.level === 'intermediate' ? 'psychology' : 'workspace_premium'}
+                  </span>
+                </div>
+                <div class="min-w-0">
+                  <h3 class="font-headline font-bold text-lg text-text group-hover/res:text-primary transition-colors mb-1">{guide.data.title}</h3>
+                  <p class="text-muted text-sm font-body leading-relaxed mb-3">{guide.data.description}</p>
+                  <div class="flex items-center gap-3 text-xs text-muted-dim">
+                    <span class="inline-flex items-center gap-1">
+                      <span class="material-symbols-outlined text-xs" aria-hidden="true">schedule</span>
+                      {guide.data.readTime} min read
+                    </span>
+                    <span class="inline-flex items-center gap-1 capitalize">
+                      <span class="material-symbols-outlined text-xs" aria-hidden="true">signal_cellular_alt</span>
+                      {guide.data.level}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+        <div class="text-center mt-8">
+          <a href={url('/resources/')} class="text-primary text-sm font-label font-bold no-underline hover:text-primary-hover hover:underline underline-offset-4 transition-colors">
+            Browse All Guides →
+          </a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Methodology / FAQ section -->
+  <section class="container-narrow py-16 md:py-24 text-center" id="methodology" aria-label="Evaluation methodology">
     <div class="text-primary mb-6"><span class="material-symbols-outlined text-4xl">science</span></div>
-    <h2 class="font-headline text-2xl mb-4 text-text">How We Score</h2>
-    <p class="text-muted font-body leading-relaxed max-w-lg mx-auto mb-6">
-      Every tool on this list went through our multi-dimensional evaluation process. We assess ease of use, academic value, and price-to-value ratio to give you scores you can trust.
+    <h2 class="font-headline text-2xl mb-4 text-text">How We Test & Rank AI Tools for Academics</h2>
+    <p class="text-muted font-body leading-relaxed max-w-lg mx-auto mb-4">
+      We don't accept paid placements. Every tool on this page was evaluated hands-on across three dimensions: how quickly you can get productive, how well it handles academic-specific tasks like literature reviews and data analysis, and whether the pricing makes sense for researchers on a budget.
     </p>
-    <a href={url('/about/')} class="btn-outline no-underline">Read Our Methodology</a>
+    <p class="text-muted-dim text-sm font-body leading-relaxed max-w-lg mx-auto mb-6">
+      Scores update as tools release new features and pricing changes. If a tool improves, its score goes up — and if it regresses, we reflect that too.
+    </p>
+    <a href={url('/about/')} class="btn-outline no-underline">Read Our Full Methodology</a>
+  </section>
+
+  <!-- FAQ section (structured for FAQ schema) -->
+  <section class="container-narrow py-8 md:py-12" id="faq" itemscope itemtype="https://schema.org/FAQPage" aria-label="Frequently asked questions">
+    <h2 class="font-headline text-2xl mb-8 text-text text-center">Frequently Asked Questions</h2>
+    <div class="space-y-6 text-left max-w-2xl mx-auto">
+      {faqItems.map((faq) => (
+        <div class="glass-panel p-6 rounded-xl" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <h3 class="font-headline font-bold text-lg text-text mb-3" itemprop="name">{faq.question}</h3>
+          <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p class="text-muted font-body leading-relaxed" itemprop="text">{faq.answer}</p>
+          </div>
+        </div>
+      ))}
+    </div>
   </section>
 </BaseLayout>

@@ -1,46 +1,90 @@
 {
-  "_comment": "Affiliate link registry for AIfocus. Each slug matches an affiliateSlug in products.json. Replace placeholder destinations with real affiliate URLs when accounts are approved.",
+  "_docs": {
+    "overview": "Affiliate link registry for AIfocus. This file controls ALL outbound affiliate links across the entire site.",
+    "how_it_works": "Every 'Try [Product]' button and affiliate link on the site points to /go/[slug]/, which redirects visitors to the 'destination' URL below. To start earning commissions, replace each placeholder destination with your real affiliate tracking URL.",
+    "how_to_update": [
+      "1. Sign up for the affiliate program listed in each link's 'network' field (see 'signup_urls' below)",
+      "2. Once approved, copy your unique affiliate/tracking URL from the network dashboard",
+      "3. Replace the 'destination' value for that product with your real tracking URL",
+      "4. Save this file and rebuild the site (npm run build)",
+      "5. Test by visiting /go/[slug]/ — it should redirect to your affiliate URL"
+    ],
+    "field_reference": {
+      "slug": "URL identifier — must match the affiliateSlug in products.json (do not change)",
+      "name": "Product display name — for your reference only (does not appear on site)",
+      "destination": "The URL visitors are redirected to — REPLACE with your real affiliate tracking URL",
+      "network": "Which affiliate network or program manages this link (for your reference)",
+      "placeholder": "true = this link still uses a placeholder URL and needs your real tracking link",
+      "active": "true = link is live on the site, false = link is disabled (button still shows but goes nowhere)"
+    },
+    "signup_urls": {
+      "impact": "https://app.impact.com — ChatGPT Plus and GitHub Copilot affiliate programs",
+      "partnerstack": "https://partnerstack.com — Consensus and Elicit affiliate programs",
+      "shareasale": "https://www.shareasale.com — Grammarly affiliate program",
+      "direct": "Contact the company directly — Midjourney and Claude/Anthropic"
+    },
+    "important_notes": [
+      "All affiliate links on the site automatically include rel='nofollow sponsored' for compliance",
+      "The /go/ redirect pages are excluded from search engines via robots.txt and noindex tags",
+      "You can disable any product's affiliate link by setting 'active' to false",
+      "After updating, always test each link to confirm it redirects correctly"
+    ]
+  },
   "links": [
     {
       "slug": "chatgpt-plus",
-      "destination": "https://chat.openai.com/upgrade?ref=aifocus",
+      "name": "ChatGPT Plus (OpenAI)",
+      "destination": "https://chat.openai.com/upgrade?ref=REPLACE_WITH_YOUR_TRACKING_ID",
       "network": "impact",
+      "placeholder": true,
       "active": true
     },
     {
       "slug": "consensus-ai",
-      "destination": "https://consensus.app/?via=aifocus",
+      "name": "Consensus",
+      "destination": "https://consensus.app/?via=REPLACE_WITH_YOUR_TRACKING_ID",
       "network": "partnerstack",
+      "placeholder": true,
       "active": true
     },
     {
       "slug": "midjourney",
-      "destination": "https://www.midjourney.com/account/?ref=aifocus",
+      "name": "Midjourney",
+      "destination": "https://www.midjourney.com/account/?ref=REPLACE_WITH_YOUR_TRACKING_ID",
       "network": "direct",
+      "placeholder": true,
       "active": true
     },
     {
       "slug": "github-copilot",
-      "destination": "https://github.com/features/copilot?ref=aifocus",
+      "name": "GitHub Copilot",
+      "destination": "https://github.com/features/copilot?ref=REPLACE_WITH_YOUR_TRACKING_ID",
       "network": "impact",
+      "placeholder": true,
       "active": true
     },
     {
       "slug": "elicit-ai",
-      "destination": "https://elicit.com/?ref=aifocus",
+      "name": "Elicit",
+      "destination": "https://elicit.com/?ref=REPLACE_WITH_YOUR_TRACKING_ID",
       "network": "partnerstack",
+      "placeholder": true,
       "active": true
     },
     {
       "slug": "grammarly-ai",
-      "destination": "https://www.grammarly.com/plans?ref=aifocus",
+      "name": "Grammarly with AI",
+      "destination": "https://www.grammarly.com/plans?ref=REPLACE_WITH_YOUR_TRACKING_ID",
       "network": "shareasale",
+      "placeholder": true,
       "active": true
     },
     {
       "slug": "claude-pro",
-      "destination": "https://claude.ai/upgrade?ref=aifocus",
+      "name": "Claude Pro (Anthropic)",
+      "destination": "https://claude.ai/upgrade?ref=REPLACE_WITH_YOUR_TRACKING_ID",
       "network": "direct",
+      "placeholder": true,
       "active": true
     }
   ]

@@ -23,20 +23,22 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 
   body {
     @apply text-text bg-base font-body leading-relaxed flex flex-col;
     min-height: 100dvh;
+    overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-headline font-bold tracking-tight text-text;
   }
 
-  h1 { @apply text-4xl md:text-5xl lg:text-6xl; }
-  h2 { @apply text-3xl md:text-4xl lg:text-5xl; }
-  h3 { @apply text-2xl md:text-3xl; }
+  h1 { @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl; }
+  h2 { @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl; }
+  h3 { @apply text-xl sm:text-2xl md:text-3xl; }
 
   a {
     @apply text-primary transition-colors hover:text-primary-hover;
@@ -49,30 +51,50 @@
   ::selection {
     @apply bg-primary/30 text-text;
   }
+
+  /* ── Keyboard focus indicators (focus-visible only — no impact on click) ── */
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Remove default outline on mouse click — focus-visible handles keyboard */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
 }
 
 @layer components {
-  /* Layout containers */
+  /* Layout containers — mobile-first padding scale */
   .container-narrow {
-    @apply max-w-3xl mx-auto px-4 sm:px-6;
+    @apply max-w-3xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
   .container-wide {
-    @apply max-w-[1152px] mx-auto px-6;
+    @apply max-w-[1152px] mx-auto px-4 sm:px-6 lg:px-8;
   }
 
   /* Buttons — dark theme, violet/amber accent */
   .btn-primary {
-    @apply inline-flex items-center justify-center px-8 py-4
+    @apply inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4
            bg-primary text-on-primary font-label uppercase text-xs tracking-widest font-bold
            rounded-lg hover:bg-primary-hover transition-colors duration-300
            shadow-lg shadow-primary/25;
   }
+  .btn-primary:focus-visible {
+    @apply ring-2 ring-primary ring-offset-2 ring-offset-base;
+    outline: none;
+  }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-8 py-4
+    @apply inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4
            bg-surface-alt text-text font-label uppercase text-xs tracking-widest font-bold
            rounded-lg hover:bg-surface-hover transition-colors;
+  }
+  .btn-secondary:focus-visible {
+    @apply ring-2 ring-primary ring-offset-2 ring-offset-base;
+    outline: none;
   }
 
   .btn-outline {
@@ -81,12 +103,20 @@
            border-b-2 border-primary pb-1
            hover:pr-4 transition-all;
   }
+  .btn-outline:focus-visible {
+    @apply ring-2 ring-primary ring-offset-2 ring-offset-base;
+    outline: none;
+  }
 
   .btn-accent {
-    @apply inline-flex items-center justify-center px-8 py-4
+    @apply inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-4
            bg-accent text-on-tertiary font-label uppercase text-xs tracking-widest font-bold
            rounded-lg hover:bg-accent-hover transition-colors duration-300
            shadow-lg shadow-accent/25;
+  }
+  .btn-accent:focus-visible {
+    @apply ring-2 ring-accent ring-offset-2 ring-offset-base;
+    outline: none;
   }
 
   /* ── Glass panel system — dark frosted overlays ── */
@@ -220,7 +250,7 @@
 
   /* Cards — dark surface with violet hover glow */
   .card {
-    @apply bg-surface p-8 rounded-xl
+    @apply bg-surface p-5 sm:p-8 rounded-xl
            border border-outline;
     transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
   }
@@ -231,6 +261,12 @@
       0 0 48px rgba(0, 207, 255, 0.05),
       0 8px 32px rgba(0, 0, 0, 0.35);
     transform: translateY(-2px);
+  }
+  .card:focus-within {
+    border-color: rgba(0, 207, 255, 0.4);
+    box-shadow:
+      0 0 0 2px rgba(10, 173, 207, 0.5),
+      0 0 20px rgba(0, 207, 255, 0.1);
   }
 
   /* Badge variants */
@@ -258,19 +294,106 @@
     @apply inline-flex items-center gap-0.5 text-accent;
   }
 
-  /* Article/review content styling */
+  /* Article/review content styling — mobile-first: base prose on small screens, lg on md+ */
   .prose-affiliate {
-    @apply prose prose-lg prose-invert max-w-none
+    @apply prose prose-invert max-w-none
            prose-headings:font-headline prose-headings:text-text
            prose-p:text-muted prose-li:text-muted
            prose-a:text-primary prose-a:no-underline prose-a:hover:underline
            prose-strong:text-text
-           prose-img:shadow-lg prose-img:rounded-xl;
+           prose-img:shadow-lg prose-img:rounded-xl
+           md:prose-lg;
+  }
+
+  /* Ensure prose images scale correctly on mobile */
+  .prose-affiliate img {
+    @apply w-full h-auto;
+  }
+
+  /* Prevent long URLs/code from causing horizontal overflow in prose on mobile */
+  .prose-affiliate {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .prose-affiliate pre {
+    @apply overflow-x-auto text-sm;
+    max-width: 100%;
+  }
+
+  .prose-affiliate table {
+    @apply block overflow-x-auto text-sm;
   }
 
   /* Material Symbols */
   .material-symbols-outlined {
     font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  }
+
+  /* ── Mobile-first responsive utilities ── */
+
+  /* Ensure all interactive elements meet minimum touch target size (44x44) on mobile */
+  @media (max-width: 639px) {
+    .btn-primary,
+    .btn-secondary,
+    .btn-accent {
+      min-height: 48px;
+      @apply text-[11px];
+    }
+
+    .btn-outline {
+      min-height: 44px;
+    }
+
+    /* CTA primary buttons inside product cards & comparison cards */
+    .cta-primary {
+      min-height: 44px;
+      @apply justify-center;
+    }
+  }
+
+  /* Touch feedback: active states for interactive elements on mobile */
+  @media (pointer: coarse) {
+    .btn-primary:active,
+    .btn-secondary:active,
+    .btn-accent:active,
+    .cta-primary:active {
+      transform: scale(0.97);
+      transition-duration: 100ms;
+    }
+
+    .card:active {
+      transform: translateY(0);
+      transition-duration: 100ms;
+    }
+
+    .glass-panel:active,
+    .glass-card:active {
+      transition-duration: 100ms;
+    }
+
+    /* Ensure links inside cards/lists are easily tappable */
+    .product-card a,
+    .comparison-card a {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+    }
+  }
+
+  /* Prevent horizontal overflow from any element on mobile */
+  @media (max-width: 767px) {
+    .container-narrow,
+    .container-wide {
+      overflow-x: hidden;
+    }
+  }
+
+  /* Ensure comparison table scrolls properly on mobile-tablet gap */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .comparison-desktop {
+      -webkit-overflow-scrolling: touch;
+    }
   }
 }
 
@@ -428,6 +551,38 @@
     animation: none;
     opacity: var(--orb-opacity, 0.10);
   }
+
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-pulse-slow {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+
+  .scroll-reveal,
+  .scroll-reveal-left,
+  .scroll-reveal-right,
+  .scroll-reveal-scale,
+  .scroll-reveal-blur,
+  .scroll-reveal-fade {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+
+  /* Disable all hover transforms */
+  .glass-card:hover,
+  .card:hover,
+  .hover-glow-violet:hover,
+  .hover-glow-amber:hover {
+    transform: none;
+  }
+
+  * {
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* --- Scroll-triggered reveal system --- */
@@ -510,8 +665,8 @@
 .scroll-delay-700 { transition-delay: 0.7s; }
 .scroll-delay-800 { transition-delay: 0.8s; }
 
-/* Mobile bottom nav safe-area padding */
-@media (max-width: 768px) {
+/* Mobile bottom nav safe-area padding (synced with lg breakpoint at 1024px) */
+@media (max-width: 1023px) {
   main {
     padding-bottom: 5rem;
   }
