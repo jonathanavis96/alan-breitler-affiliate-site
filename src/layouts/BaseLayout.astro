@@ -3,6 +3,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import SearchOverlay from '../components/SearchOverlay.astro';
 import GradientOrbs from '../components/GradientOrbs.astro';
+import GoogleAnalytics from '../components/GoogleAnalytics.astro';
 import siteData from '../../data/site.json';
 import { url } from '../lib/base';
 import '../styles/global.css';
@@ -138,6 +139,13 @@ const ogImageAbsolute = resolveAbsoluteUrl(ogImage);
   <noscript>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
   </noscript>
+
+  <!--
+    Google Analytics (GA4) — renders nothing unless PUBLIC_GA_MEASUREMENT_ID
+    is set at build time. See src/components/GoogleAnalytics.astro for
+    full setup instructions and how to enable it on Cloudflare Pages.
+  -->
+  <GoogleAnalytics />
 
   <!-- Schema markup -->
   {schema && (
