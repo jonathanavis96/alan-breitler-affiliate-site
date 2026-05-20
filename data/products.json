@@ -1,5 +1,5 @@
 {
-  "_comment": "AI tool product data for AIfocus. Products support multi-category assignment via the 'categories' array. Scores use 3 dimensions (each 1-10): ease_of_use, academic_value, price_to_value. Overall is their simple average. affiliateSlug references data/affiliates.json entries.",
+  "_comment": "AI tool product data for AIfocus. Products support multi-category assignment via the 'categories' array. Scores use 3 dimensions (each 1-10): ease_of_use, academic_value, price_to_value. Overall is their simple average. affiliateSlug references data/affiliates.json entries. Optional displayPriority field (number, default 0) pins a product to the top of all sorted lists (homepage discovery, category groups, comparison tables, reviews index, schema.org ItemList). Higher displayPriority wins first; ties fall back to overallScore. Used to keep revenue-generating tools above non-monetisable ones.",
   "scoreDimensions": {
     "ease_of_use": "Ease of Use",
     "academic_value": "Academic Value",
@@ -47,6 +47,7 @@
       "freeTier": true,
       "freeTierNote": "Free plan with 20 searches per month",
       "badge": "Best for Research",
+      "displayPriority": 10,
       "scores": {
         "ease_of_use": 8,
         "academic_value": 10,
@@ -167,6 +168,7 @@
       "freeTier": true,
       "freeTierNote": "Free plan with basic grammar and spelling checks",
       "badge": "Most Polished",
+      "displayPriority": 10,
       "scores": {
         "ease_of_use": 10,
         "academic_value": 7,

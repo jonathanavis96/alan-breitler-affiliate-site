@@ -7,6 +7,7 @@ import siteData from '../../../data/site.json';
 import categoriesData from '../../../data/categories.json';
 import { url, canonicalUrl } from '../../lib/base';
 import { itemListSchema } from '../../lib/schema';
+import { rankProducts } from '../../lib/rankProducts';
 import { getCollection } from 'astro:content';
 
 interface Scores {
@@ -28,6 +29,8 @@ interface Product {
   badge: string;
   scores: Scores;
   overallScore: number;
+  /** Optional pin-to-top weight for sorted lists. See src/lib/rankProducts.ts. */
+  displayPriority?: number;
   useCase: string;
   pros: string[];
   cons: string[];
@@ -44,12 +47,10 @@ try {
 
 const categories = categoriesData.categories;
 
-/* Group products by category, sorted by overallScore within each group */
+/* Group products by category, sorted by display priority then overall score */
 const productsByCategory = categories.map((cat) => ({
   ...cat,
-  products: products
-    .filter((p) => p.categories.includes(cat.slug))
-    .sort((a, b) => b.overallScore - a.overallScore),
+  products: rankProducts(products.filter((p) => p.categories.includes(cat.slug))),
 })).filter((group) => group.products.length > 0);
 
 /* Count free-tier tools for intro copy */

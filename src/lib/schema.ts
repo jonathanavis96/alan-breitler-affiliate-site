@@ -7,6 +7,7 @@
  */
 
 import siteData from '../../data/site.json';
+import { rankProducts } from './rankProducts';
 
 /** Product data shape from products.json */
 interface ProductData {
@@ -26,6 +27,8 @@ interface ProductData {
     price_to_value: number;
   };
   overallScore: number;
+  /** Optional pin-to-top weight for sorted lists. See ./rankProducts.ts. */
+  displayPriority?: number;
   useCase: string;
   pros: string[];
   cons: string[];
@@ -322,8 +325,10 @@ export function itemListSchema(
   const siteUrl = getSiteUrl();
   const orgId = `${siteUrl}#organization`;
 
-  // Sort products by overallScore descending to create a ranked list
-  const ranked = [...products].sort((a, b) => b.overallScore - a.overallScore);
+  // Sort products by display priority then overall score (rankProducts helper)
+  // so the schema.org ItemList matches the on-page visible ranking. Sending
+  // Google a different order than what the user sees would be a mixed signal.
+  const ranked = rankProducts(products);
 
   // Build the ItemList with each product as a ListItem
   const itemList = {

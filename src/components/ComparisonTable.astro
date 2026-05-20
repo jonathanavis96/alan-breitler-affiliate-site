@@ -1,5 +1,6 @@
 ---
 import { url } from '../lib/base';
+import { rankProducts } from '../lib/rankProducts';
 
 interface Scores {
   ease_of_use: number;
@@ -13,6 +14,8 @@ interface Product {
   affiliateSlug: string;
   scores: Scores;
   overallScore: number;
+  /** Optional pin-to-top weight for sorted lists. See src/lib/rankProducts.ts. */
+  displayPriority?: number;
   pricing?: string;
   freeTier?: boolean;
   useCase?: string;
@@ -33,8 +36,8 @@ const {
   showReviewLinks = true,
 } = Astro.props;
 
-// Sort products by overall score descending
-const sorted = [...rawProducts].sort((a, b) => b.overallScore - a.overallScore);
+// Sort products by display priority then overall score (rankProducts helper)
+const sorted = rankProducts(rawProducts);
 const products = limit ? sorted.slice(0, limit) : sorted;
 
 const scoreDimensions: { key: keyof Scores; label: string; icon: string }[] = [

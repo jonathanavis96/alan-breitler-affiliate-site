@@ -4,11 +4,14 @@ import siteData from '../../../data/site.json';
 import productData from '../../../data/products.json';
 import { url, canonicalUrl } from '../../lib/base';
 import { collectionPageSchema } from '../../lib/schema';
+import { rankProducts } from '../../lib/rankProducts';
 
 const pageUrl = canonicalUrl('/reviews/');
 
-// Use products as review entries
-const reviews = productData.products;
+// Use products as review entries, sorted by display priority then overall score
+// (matches the ranking used on the homepage and top-tools page so the running
+// "order" of products is consistent everywhere on the site).
+const reviews = rankProducts(productData.products);
 
 const reviewDescription = `In-depth reviews of ${reviews.length} AI tools for academic research. Each tool scored across ease of use, academic value, and price-to-value with honest, hands-on verdicts.`;
 
