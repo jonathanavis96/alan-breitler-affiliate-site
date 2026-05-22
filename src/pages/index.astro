@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import CategoryCard from '../components/CategoryCard.astro';
 import GradientOrbs from '../components/GradientOrbs.astro';
+import NewsletterSignup from '../components/NewsletterSignup.astro';
 import categoriesData from '../../data/categories.json';
 import productsData from '../../data/products.json';
 import { url, canonicalUrl } from '../lib/base';
@@ -299,23 +300,7 @@ for (const p of productsData.products) {
           <p class="text-muted font-body leading-relaxed max-w-md">Weekly insights on AI tools for academics — new reviews, scoring updates, and curated picks delivered to your inbox.</p>
         </div>
         <div class="relative z-20 mt-8">
-          <!-- Visual placeholder form — no submission backend -->
-          <form class="flex flex-col sm:flex-row gap-3" onsubmit="return false;" aria-label="Newsletter signup">
-            <input
-              type="email"
-              placeholder="your@university.edu"
-              class="flex-grow px-5 py-4 bg-surface-alt border border-outline rounded-lg text-text font-body text-sm placeholder:text-muted-dim focus:outline-none focus:border-primary/60 focus:ring-1 focus:ring-primary/30 transition-colors"
-              aria-label="Email address"
-            />
-            <button
-              type="button"
-              class="btn-accent whitespace-nowrap"
-            >
-              Subscribe
-              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-            </button>
-          </form>
-          <p class="text-xs text-muted-dim mt-4 font-body">No spam, ever. Unsubscribe anytime. We respect your inbox.</p>
+          <NewsletterSignup variant="inline" source="homepage" heading="" subheading="" />
         </div>
         <!-- Decorative accent glow -->
         <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-accent/5 rounded-full blur-3xl pointer-events-none"></div>

@@ -38,5 +38,18 @@
       { "label": "Privacy Policy", "href": "/privacy/" },
       { "label": "Contact", "href": "/contact/" }
     ]
+  },
+  "newsletter": {
+    "_comment": "Newsletter signup configuration. The component reads 'provider' to pick the right submission flow. Supported values: 'buttondown', 'convertkit', 'mailchimp', or 'placeholder' (disabled). When you sign up with a provider, set provider + endpoint + (optional) formId, then the form goes live with no code changes.",
+    "provider": "placeholder",
+    "endpoint": "",
+    "formId": "",
+    "heading": "Stay ahead of the curve",
+    "subheading": "Get weekly AI tool picks, academic workflow tips, and exclusive reviews — straight to your inbox.",
+    "successMessage": "Thanks for subscribing! Check your inbox for a confirmation email.",
+    "errorMessage": "Something went wrong. Please try again or email us directly.",
+    "buttonLabel": "Subscribe",
+    "placeholder": "your@university.edu",
+    "consentText": "No spam. Unsubscribe anytime. We never share your email."
   }
 }

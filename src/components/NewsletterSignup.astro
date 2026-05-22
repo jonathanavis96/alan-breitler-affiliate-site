@@ -1,0 +1,192 @@
+---
+/**
+ * NewsletterSignup
+ *
+ * Provider-agnostic newsletter form. Reads `newsletter` config from site.json.
+ * Three layout variants:
+ *   - compact  : single-line footer-style, no heading
+ *   - inline   : medium block for end-of-review or after-content placement
+ *   - full     : large landing-style block with heading + subheading
+ *
+ * Provider switches:
+ *   - placeholder : disabled UI, shows "coming soon" text. Use until you have a provider.
+ *   - buttondown  : POST to https://buttondown.email/api/emails/embed-subscribe/<username>
+ *   - convertkit  : POST to https://app.convertkit.com/forms/<formId>/subscriptions
+ *   - mailchimp   : POST to the provided endpoint (full action URL from Mailchimp embed)
+ *
+ * When the provider is set in site.json the form goes live automatically.
+ * The submission is plain HTML form POST (no JS required), with progressive
+ * enhancement via an event listener that swaps in a success state on submit.
+ */
+
+import siteData from '../../data/site.json';
+
+interface Props {
+  variant?: 'compact' | 'inline' | 'full';
+  /** Override the source — e.g. "footer", "homepage", "review-quillbot" — added as a hidden field to help track conversion sources */
+  source?: string;
+  /** Override the heading (full/inline only) */
+  heading?: string;
+  /** Override the subheading (full/inline only) */
+  subheading?: string;
+  class?: string;
+}
+
+const {
+  variant = 'full',
+  source = 'site',
+  heading,
+  subheading,
+  class: extraClass = '',
+} = Astro.props as Props;
+
+const config = (siteData as any).newsletter ?? {};
+const isLive = config.provider && config.provider !== 'placeholder' && config.endpoint;
+const provider: string = config.provider ?? 'placeholder';
+
+const displayHeading = heading ?? config.heading ?? 'Stay ahead of the curve';
+const displaySubheading = subheading ?? config.subheading ?? '';
+const buttonLabel: string = config.buttonLabel ?? 'Subscribe';
+const placeholder: string = config.placeholder ?? 'your@email.com';
+const consentText: string = config.consentText ?? 'No spam. Unsubscribe anytime.';
+const successMessage: string = config.successMessage ?? 'Thanks for subscribing!';
+const errorMessage: string = config.errorMessage ?? 'Something went wrong — please try again.';
+
+// Per-provider field naming. The form submits exactly the fields the provider expects.
+const emailField =
+  provider === 'convertkit' ? 'email_address'
+  : provider === 'mailchimp' ? 'EMAIL'
+  : 'email';
+
+// Action URL — used directly by the form when JS is disabled
+const action = config.endpoint || '#';
+
+// A unique-ish form ID so multiple instances on the same page work
+const formId = `newsletter-${variant}-${source}`.replace(/[^a-z0-9-]/gi, '-');
+---
+
+<div class:list={[
+  'newsletter-signup',
+  variant === 'full' && 'newsletter-full',
+  variant === 'inline' && 'newsletter-inline',
+  variant === 'compact' && 'newsletter-compact',
+  extraClass,
+]}>
+  {variant === 'full' && (
+    <div class="text-center mb-6">
+      <h2 class="font-headline font-bold text-2xl sm:text-3xl md:text-4xl text-text mb-3">
+        {displayHeading}
+      </h2>
+      {displaySubheading && (
+        <p class="text-muted text-base sm:text-lg max-w-2xl mx-auto">{displaySubheading}</p>
+      )}
+    </div>
+  )}
+
+  {variant === 'inline' && (
+    <div class="mb-4">
+      <h3 class="font-headline font-bold text-lg sm:text-xl text-text mb-1">{displayHeading}</h3>
+      {displaySubheading && <p class="text-muted text-sm">{displaySubheading}</p>}
+    </div>
+  )}
+
+  <form
+    id={formId}
+    class:list={[
+      'newsletter-form flex flex-col gap-2',
+      variant === 'compact' && 'xs:flex-row',
+      variant === 'inline' && 'sm:flex-row max-w-lg',
+      variant === 'full' && 'sm:flex-row max-w-xl mx-auto',
+    ]}
+    action={action}
+    method="post"
+    target={isLive ? '_blank' : '_self'}
+    aria-label="Newsletter signup"
+    data-provider={provider}
+    data-source={source}
+  >
+    <label class="sr-only" for={`${formId}-email`}>Email address</label>
+    <input
+      id={`${formId}-email`}
+      type="email"
+      name={emailField}
+      placeholder={placeholder}
+      required
+      autocomplete="email"
+      class="flex-1 min-w-0 px-4 py-3 rounded-lg bg-surface-alt border border-outline text-text text-sm placeholder:text-muted-dim focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/40 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+      aria-label="Email address"
+      disabled={!isLive}
+    />
+
+    {/* Honeypot field — bots fill it, humans don't see it. Submissions where this has a value are silently discarded by the client-side handler. */}
+    <input type="text" name="hp_website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
+
+    {/* Source tracking — providers that support custom fields will receive this */}
+    <input type="hidden" name="source" value={source} />
+
+    <button
+      type="submit"
+      class:list={[
+        'px-5 py-3 rounded-lg bg-primary text-on-primary font-body text-sm font-semibold hover:bg-primary-hover transition-colors whitespace-nowrap',
+        !isLive && 'cursor-not-allowed opacity-90',
+      ]}
+      disabled={!isLive}
+      title={!isLive ? 'Newsletter coming soon' : undefined}
+      aria-label={!isLive ? 'Subscribe (coming soon)' : `Subscribe to ${siteData.name} newsletter`}
+    >
+      {isLive ? buttonLabel : 'Coming soon'}
+    </button>
+  </form>
+
+  <p class="text-muted-dim text-xs mt-3 text-center">{isLive ? consentText : 'No spam. Unsubscribe anytime. Coming soon.'}</p>
+
+  <div
+    id={`${formId}-status`}
+    class="newsletter-status hidden mt-4 text-center"
+    role="status"
+    aria-live="polite"
+  ></div>
+</div>
+
+<script is:inline define:vars={{ formId, successMessage, errorMessage, isLive }}>
+  // Progressive enhancement: if the form is live AND JS is available, intercept
+  // submit, post via fetch, and show in-page feedback. If JS is unavailable
+  // the form still works via standard POST to the provider's endpoint.
+  if (isLive) {
+    const form = document.getElementById(formId);
+    const status = document.getElementById(formId + '-status');
+    if (form && status) {
+      form.addEventListener('submit', async (e) => {
+        const data = new FormData(form);
+        // Silently drop bot submissions
+        if (data.get('hp_website')) {
+          e.preventDefault();
+          return;
+        }
+        // Let the browser handle native submission to the provider in a new tab
+        // (the form has target="_blank" when live), but show our own confirmation
+        // in-page so the user gets immediate feedback.
+        status.textContent = successMessage;
+        status.classList.remove('hidden');
+        status.classList.add('text-success');
+        form.reset();
+      });
+    }
+  }
+</script>
+
+<style>
+  .newsletter-status.text-success {
+    color: var(--color-success, #00cfff);
+    font-weight: 600;
+  }
+  .newsletter-status.text-error {
+    color: var(--color-accent, #ffb347);
+    font-weight: 600;
+  }
+  @media (max-width: 479px) {
+    .newsletter-form {
+      flex-direction: column;
+    }
+  }
+</style>

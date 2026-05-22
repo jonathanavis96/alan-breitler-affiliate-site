@@ -217,6 +217,126 @@
         "Usage caps on Pro tier during peak demand periods"
       ],
       "verdict": "The most thoughtful AI assistant for academic work. Claude's combination of long context, careful reasoning, and low hallucination rate makes it the top choice for researchers who need reliability over flash."
+    },
+    {
+      "slug": "quillbot",
+      "name": "QuillBot",
+      "brand": "QuillBot (Chegg)",
+      "categories": ["writing-tools"],
+      "image": "/images/products/placeholder.svg",
+      "affiliateSlug": "quillbot",
+      "pricing": "$9.95/mo",
+      "freeTier": true,
+      "freeTierNote": "Free plan with Standard and Fluency modes, 125-word paraphrase limit",
+      "badge": "Best for Revision",
+      "scores": {
+        "ease_of_use": 9,
+        "academic_value": 7,
+        "price_to_value": 8
+      },
+      "overallScore": 8.0,
+      "useCase": "Paraphrasing & sentence-level revision",
+      "pros": [
+        "Seven paraphrasing modes that genuinely produce different outputs",
+        "Free tier covers casual use without hitting the paywall",
+        "Inline browser, Word, and Google Docs extensions",
+        "Grammar checker, summariser, and citation generator bundled in"
+      ],
+      "cons": [
+        "Academic Mode can subtly change discipline-specific terminology",
+        "Citation generator unreliable on edited volumes and pre-prints"
+      ],
+      "verdict": "The most polished paraphrasing tool on the market. Useful as a revision assistant rather than a primary drafting tool — used with intent it cuts hours off journal revisions."
+    },
+    {
+      "slug": "otter-ai",
+      "name": "Otter.ai",
+      "brand": "Otter.ai",
+      "categories": ["research-assistants"],
+      "image": "/images/products/placeholder.svg",
+      "affiliateSlug": "otter-ai",
+      "pricing": "$8.33/mo",
+      "freeTier": true,
+      "freeTierNote": "Free plan with 300 transcription minutes per month, 30 min per session",
+      "badge": "Best for Transcription",
+      "scores": {
+        "ease_of_use": 9,
+        "academic_value": 8,
+        "price_to_value": 8
+      },
+      "overallScore": 8.3,
+      "useCase": "Interview transcription, lecture capture, meeting notes",
+      "pros": [
+        "Real-time transcription accurate enough for verbatim research interviews",
+        "Speaker identification automatically separates multi-participant recordings",
+        "Generous free tier suitable for occasional qualitative research",
+        "Live integrations with Zoom, Google Meet, and Microsoft Teams"
+      ],
+      "cons": [
+        "Accent and technical-vocabulary handling weaker than human transcription",
+        "Free tier capped at 30-minute sessions — limiting for longer interviews"
+      ],
+      "verdict": "The fastest path from a recorded interview, lecture, or focus group to a searchable text transcript. Saves qualitative researchers and lecturers hours of work per week."
+    },
+    {
+      "slug": "scite-ai",
+      "name": "Scite.ai",
+      "brand": "Scite.ai",
+      "categories": ["research-assistants"],
+      "image": "/images/products/placeholder.svg",
+      "affiliateSlug": "scite-ai",
+      "pricing": "$20/mo",
+      "freeTier": true,
+      "freeTierNote": "Free plan with limited Smart Citation lookups and basic search",
+      "badge": "Best for Citation Analysis",
+      "scores": {
+        "ease_of_use": 8,
+        "academic_value": 9,
+        "price_to_value": 7
+      },
+      "overallScore": 8.0,
+      "useCase": "Citation context analysis & research validation",
+      "pros": [
+        "Smart Citations classify whether each citation supports, contrasts, or merely mentions a finding",
+        "1.2B+ citation statements indexed across 200M+ scholarly sources",
+        "Reveals replication and contradiction patterns invisible to keyword search",
+        "Assistant chat layer summarises evidence with grounded, linkable citations"
+      ],
+      "cons": [
+        "Premium subscription is the most expensive in the academic AI category",
+        "Coverage skews toward biomedical and STEM literature"
+      ],
+      "verdict": "An indispensable tool for serious literature work. Scite shows you which citations support a claim and which dispute it — context no other database surfaces."
+    },
+    {
+      "slug": "perplexity-pro",
+      "name": "Perplexity Pro",
+      "brand": "Perplexity AI",
+      "categories": ["research-assistants", "writing-tools"],
+      "image": "/images/products/placeholder.svg",
+      "affiliateSlug": "perplexity-pro",
+      "pricing": "$20/mo",
+      "freeTier": true,
+      "freeTierNote": "Free plan with limited Pro searches per day; Pro unlocks full models and follow-ups",
+      "badge": "Best Answer Engine",
+      "scores": {
+        "ease_of_use": 9,
+        "academic_value": 8,
+        "price_to_value": 8
+      },
+      "overallScore": 8.3,
+      "useCase": "Cited answers, exploratory research, fact-checking",
+      "pros": [
+        "Every answer ships with inline source citations you can click and verify",
+        "Academic-focused search mode prioritises peer-reviewed sources",
+        "Switch between GPT-4, Claude, Sonar, and Gemini models on Pro",
+        "Follow-up question chaining makes literature exploration genuinely fast"
+      ],
+      "cons": [
+        "Web-scoped — does not have native database access like Consensus or Elicit",
+        "Citation quality varies; always verify before quoting in published work"
+      ],
+      "verdict": "The best AI answer engine for researchers. Combines live web search with structured citations and is the fastest tool for the early exploratory phase of any research question."
     }
   ]
 }

@@ -86,6 +86,38 @@
       "network": "direct",
       "placeholder": true,
       "active": true
+    },
+    {
+      "slug": "quillbot",
+      "name": "QuillBot (Chegg)",
+      "destination": "https://quillbot.com/?ref=REPLACE_WITH_YOUR_TRACKING_ID",
+      "network": "impact",
+      "placeholder": true,
+      "active": true
+    },
+    {
+      "slug": "otter-ai",
+      "name": "Otter.ai",
+      "destination": "https://otter.ai/?ref=REPLACE_WITH_YOUR_TRACKING_ID",
+      "network": "partnerstack",
+      "placeholder": true,
+      "active": true
+    },
+    {
+      "slug": "scite-ai",
+      "name": "Scite.ai",
+      "destination": "https://scite.ai/?ref=REPLACE_WITH_YOUR_TRACKING_ID",
+      "network": "direct",
+      "placeholder": true,
+      "active": true
+    },
+    {
+      "slug": "perplexity-pro",
+      "name": "Perplexity Pro",
+      "destination": "https://www.perplexity.ai/pro?ref=REPLACE_WITH_YOUR_TRACKING_ID",
+      "network": "direct",
+      "placeholder": true,
+      "active": true
     }
   ]
 }
