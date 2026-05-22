@@ -31,10 +31,13 @@ The goal of the sequence is three-fold:
 - **One affiliate link per email maximum** — keeps the trust-to-monetisation ratio
   honest. Email 5 has no affiliate at all.
 - **British English** — matches the editorial voice on the site.
-- **Always sign off as Alan** (the site owner) — a single named voice reads
-  more authentic than "The AIfocus team" or an anonymous brand voice. If the
-  newsletter is later run by additional contributors, swap the signing name
-  per email rather than reverting to a generic team signature.
+- **Editorial voice is "we"** throughout the body — represents the AIfocus
+  editorial perspective rather than a single individual. This reads more
+  professional and lets the brand outlive any single contributor.
+- **Sign-off is personal**: `Alan Breitler / Founder, AIfocus / https://aifocus.work`.
+  The "we" body + personal founder sign-off pairs the brand voice with a real
+  accountable human at the end — the convention most credible academic
+  newsletters use.
 
 ## How to load these into an email tool
 

@@ -22,7 +22,7 @@ On clean audio with clear speakers, Otter produces transcripts at around 90 to 9
 3. Skim the transcript at 1.5x audio playback, correcting errors as you go.
 4. For a 60-minute interview, this takes about 25-35 minutes — roughly 4-6× faster than manual transcription from scratch.
 
-What makes step 3 actually work is that the transcript is synchronised with the audio. Click any word and it jumps to that moment in the recording. I use this constantly during correction and later during coding — being able to click on a quote to verify it is the feature that turns Otter from "approximate text" into "research-usable transcript."
+What makes step 3 actually work is that the transcript is synchronised with the audio. Click any word and it jumps to that moment in the recording. We use this constantly during correction and later during coding — being able to click on a quote to verify it is the feature that turns Otter from "approximate text" into "research-usable transcript."
 
 **Where it fails**
 
@@ -46,10 +46,11 @@ Otter is a third-party participant in your meetings. Your interview audio is pro
 
 For high-stakes work where every word must be exact (legal research, oral history projects, anything quoting vulnerable participants), Rev's human transcription at ~$1.50/minute remains the safer choice. For routine research interviews, Otter wins on time and cost.
 
-Next email (next Tuesday): the tools I actually reach for every day, and what each one replaced in my previous workflow.
+Next email (next Tuesday): the tools we actually reach for every day, and what each one replaced in our previous workflow.
 
-Alan
-AIfocus — https://aifocus.work
+Alan Breitler
+Founder, AIfocus
+https://aifocus.work
 https://aifocus.work
 
 —

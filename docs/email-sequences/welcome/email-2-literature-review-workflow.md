@@ -7,7 +7,7 @@ tags: [welcome, sequence-position-2, workflow-research]
 
 Hi {{FIRST_NAME}},
 
-A confession: until late 2024, I treated AI tools for literature reviews as a curiosity rather than a serious option. The hallucinated citations were too frequent and the time spent fact-checking AI output usually exceeded the time it would have taken to do the search the old-fashioned way.
+A confession: until late 2024, we treated AI tools for literature reviews as a curiosity rather than a serious option. The hallucinated citations were too frequent and the time spent fact-checking AI output usually exceeded the time it would have taken to do the search the old-fashioned way.
 
 That has changed. Two tools in particular — Elicit and Consensus — have crossed the threshold where they save genuine time on real literature work, not theoretical time on demo searches. Here is the workflow we now use as the default first pass on any new research question.
 
@@ -21,7 +21,7 @@ That has changed. Two tools in particular — Elicit and Consensus — have cros
 
 4. You now have a structured table of the most relevant evidence on your question, in a fraction of the time it would have taken to read and extract manually. From here you decide whether to expand the search, refine the question, or start drafting.
 
-I used this exact workflow last week on a research question I knew well, and it produced an evidence table comparable to one I had previously spent two full days assembling by hand. Not a perfect replacement — there were a couple of methodological nuances the AI missed — but a 90%-accurate first pass in 30 minutes is genuinely transformative.
+We used this exact workflow last week on a research question we knew well, and it produced an evidence table comparable to one our team had previously spent two full days assembling by hand. Not a perfect replacement — there were a couple of methodological nuances the AI missed — but a 90%-accurate first pass in 30 minutes is genuinely transformative.
 
 **Both tools have generous free tiers**
 
@@ -38,8 +38,9 @@ Next email (Saturday): the tool that transcribes a 60-minute research interview 
 
 If you have questions about adapting this workflow to your specific field, reply to this email.
 
-Alan
-AIfocus — https://aifocus.work
+Alan Breitler
+Founder, AIfocus
+https://aifocus.work
 https://aifocus.work
 
 —

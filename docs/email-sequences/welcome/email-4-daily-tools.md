@@ -9,12 +9,12 @@ Hi {{FIRST_NAME}},
 
 The most useful question to ask about any AI tool is not "is it impressive" but "did it permanently change something in your workflow that used to work differently."
 
-Here are the four tools that have cleared that bar in my own workflow, what each one replaced, and the specific moments I reach for them.
+Here are the four tools that have cleared that bar for our team, what each one replaced, and the specific moments we reach for them.
 
 **Claude Pro — drafting and analysis**
 Replaced: ChatGPT Plus as our default writing assistant.
 
-I switched after running both side-by-side on academic writing tasks for three months. Claude produces noticeably fewer hallucinated citations, handles longer documents without losing context (200K token window), and the writing voice is closer to what we want for academic work — less chirpy, less prone to bullet-pointing everything. I still use ChatGPT for image-related work and a few specific cases, but Claude is the default now.
+We switched after running both side-by-side on academic writing tasks for three months. Claude produces noticeably fewer hallucinated citations, handles longer documents without losing context (200K token window), and the writing voice is closer to what we want for academic work — less chirpy, less prone to bullet-pointing everything. We still use ChatGPT for image-related work and a few specific use cases, but Claude is now the default.
 
 Use it for: working through a difficult section of a draft, summarising a long document, asking "what are the methodological objections to this paper" before writing a peer review response.
 
@@ -30,7 +30,7 @@ The one risk: it will sometimes try to "correct" discipline-specific terminology
 → https://aifocus.work/reviews/grammarly-ai/
 
 **QuillBot — focused revision sessions**
-Replaced: the ChatGPT-paste-and-paraphrase workflow I used before.
+Replaced: the ChatGPT-paste-and-paraphrase workflow we used before.
 
 QuillBot is what we reach for when we need to revise a specific passage rather than improve overall writing. The seven paraphrasing modes — Standard, Fluency, Formal, Academic, Simple, Creative, Shorten — produce genuinely different outputs. The Shorten mode alone has rescued multiple abstracts trying to hit a 250-word limit.
 
@@ -45,7 +45,7 @@ Replaced: half of my Google Scholar usage.
 
 For the early phase of any new research question — when you do not yet know what specific question to ask — Perplexity has become our default. Every answer includes inline citations to the actual sources, so you can verify what the tool is telling you. Pro plan lets you switch between GPT-4, Claude, Sonar, and Gemini per question, which is the underrated feature that justifies the upgrade.
 
-I still use Google Scholar for known-author lookups and citation tracing, but for "I need to understand this topic enough to ask a real question" Perplexity is now the first stop.
+We still use Google Scholar for known-author lookups and citation tracing, but for "I need to understand this topic enough to ask a real question" Perplexity is now the first stop.
 
 → https://aifocus.work/reviews/perplexity-pro/
 
@@ -59,8 +59,9 @@ If you only adopt one new tool from this email, make it Claude Pro. The leap in 
 
 Next email (Day 14): what's coming next on AIfocus, plus a small ask.
 
-Alan
-AIfocus — https://aifocus.work
+Alan Breitler
+Founder, AIfocus
+https://aifocus.work
 https://aifocus.work
 
 —
