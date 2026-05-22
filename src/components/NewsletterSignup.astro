@@ -148,7 +148,7 @@ const formId = `newsletter-${variant}-${source}`.replace(/[^a-z0-9-]/gi, '-');
   ></div>
 </div>
 
-<script is:inline define:vars={{ formId, successMessage, errorMessage, isLive }}>
+<script is:inline define:vars={{ formId, successMessage, errorMessage, isLive, source, provider }}>
   // Progressive enhancement: if the form is live AND JS is available, intercept
   // submit, post via fetch, and show in-page feedback. If JS is unavailable
   // the form still works via standard POST to the provider's endpoint.
@@ -163,6 +163,19 @@ const formId = `newsletter-${variant}-${source}`.replace(/[^a-z0-9-]/gi, '-');
           e.preventDefault();
           return;
         }
+
+        // GA4 event: fire if gtag is available. Lets Alan track newsletter
+        // conversion rates per source (footer / homepage / etc.) in GA4.
+        // Non-blocking — if gtag is missing or fails, the form still submits.
+        try {
+          if (typeof window.gtag === 'function') {
+            window.gtag('event', 'newsletter_signup', {
+              source: source,
+              method: provider,
+            });
+          }
+        } catch (err) { /* analytics failure must never block submission */ }
+
         // Let the browser handle native submission to the provider in a new tab
         // (the form has target="_blank" when live), but show our own confirmation
         // in-page so the user gets immediate feedback.
