@@ -40,9 +40,12 @@
     ]
   },
   "newsletter": {
-    "_comment": "Newsletter signup configuration. The component reads 'provider' to pick the right submission flow. Supported values: 'buttondown', 'convertkit', 'mailchimp', or 'placeholder' (disabled). When you sign up with a provider, set provider + endpoint + (optional) formId, then the form goes live with no code changes.",
+    "_comment": "Newsletter signup configuration. The component reads 'provider' to pick the right submission flow. Supported values: 'buttondown', 'convertkit', 'mailchimp', or 'placeholder' (disabled). To go live, see docs/buttondown-setup.md — replace 'placeholder' with 'buttondown' and paste your endpoint URL.",
     "provider": "placeholder",
     "endpoint": "",
+    "_endpoint_example_buttondown": "https://buttondown.email/api/emails/embed-subscribe/<your-buttondown-username>",
+    "_endpoint_example_convertkit": "https://app.convertkit.com/forms/<formId>/subscriptions",
+    "_endpoint_example_mailchimp": "Paste the full action URL from Mailchimp's Embedded Form code",
     "formId": "",
     "heading": "Stay ahead of the curve",
     "subheading": "Get weekly AI tool picks, academic workflow tips, and exclusive reviews — straight to your inbox.",

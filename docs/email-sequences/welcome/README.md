@@ -31,8 +31,10 @@ The goal of the sequence is three-fold:
 - **One affiliate link per email maximum** — keeps the trust-to-monetisation ratio
   honest. Email 5 has no affiliate at all.
 - **British English** — matches the editorial voice on the site.
-- **Always sign off as "The AIfocus team"** with a real-looking person's first name
-  (e.g. "Sarah, AIfocus") — never an anonymous brand voice.
+- **Always sign off as Alan** (the site owner) — a single named voice reads
+  more authentic than "The AIfocus team" or an anonymous brand voice. If the
+  newsletter is later run by additional contributors, swap the signing name
+  per email rather than reverting to a generic team signature.
 
 ## How to load these into an email tool
 

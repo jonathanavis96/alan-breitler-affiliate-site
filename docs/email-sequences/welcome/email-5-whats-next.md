@@ -42,5 +42,6 @@ Thanks for being here. The site is still relatively new and every subscriber mat
 
 See you on Thursday.
 
-Sarah, AIfocus
+Alan
+AIfocus — https://aifocus.work
 https://aifocus.work

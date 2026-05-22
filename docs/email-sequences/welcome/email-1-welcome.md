@@ -29,13 +29,14 @@ What's coming over the next two weeks:
 
 - **Wednesday** — the 30-minute literature review workflow that used to take a full day
 - **Saturday** — the qualitative-research tool that transcribes a 60-minute interview in under 5 minutes
-- **Next Tuesday** — the tools our team actually uses every day, and what each one replaced
+- **Next Tuesday** — the tools I actually use every day, and what each one replaced
 
 If there's a specific tool, workflow, or question you want covered, just hit reply. Every email goes to a real person and we read all of them.
 
 Thanks for being here.
 
-Sarah, AIfocus
+Alan
+AIfocus — https://aifocus.work
 https://aifocus.work
 
 —
