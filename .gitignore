@@ -35,3 +35,9 @@ Thumbs.db
 
 # Debug
 npm-debug.log*
+
+# Debug screenshots in repo root (added 2026-05-23)
+/*.png
+
+# Windows alternate data stream files (when files are downloaded via WSL)
+*:Zone.Identifier
