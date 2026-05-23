@@ -21,10 +21,8 @@ const schema = librarySchema(
   articles,
 );
 
-// Server-side star icon builder. Returns one entry per star position with both
-// the Material Symbols icon name AND the FILL value (1 = filled gold, 0 = outline).
-// Bug fixed 2026-05-23: previously returned 'star' for both filled and empty positions
-// with FILL=1 hard-coded, which made every rating look like 5/5.
+// Star icon builder. Returns one entry per star position with both the
+// Material Symbols icon name and the FILL value (1 = filled, 0 = outline).
 function starIcons(rating: number): { name: string; fill: 0 | 1 }[] {
   const out: { name: string; fill: 0 | 1 }[] = [];
   for (let i = 1; i <= 5; i++) {
@@ -81,7 +79,7 @@ function starIcons(rating: number): { name: string; fill: 0 | 1 }[] {
   </section>
 
   <!-- ═══════════════════════════════════════
-       BOOKS SECTION (with sort UI)
+       BOOKS SECTION (sort UI + click-to-expand)
        ═══════════════════════════════════════ -->
   <section id="books" class="py-16 md:py-24 bg-surface" aria-label="Recommended AI books">
     <div class="container-wide">
@@ -92,7 +90,7 @@ function starIcons(rating: number): { name: string; fill: 0 | 1 }[] {
         </h2>
       </div>
       <p class="text-muted text-lg mb-10 max-w-2xl font-body">
-        Foundational texts, practical guides, and critical perspectives on artificial intelligence — each with our honest editorial take, current Amazon price, and star rating.
+        Foundational texts, practical guides, and critical perspectives on artificial intelligence — each with our honest editorial take, current Amazon price, and star rating. Click any card to read the full review.
       </p>
 
       <!-- Sort controls -->
@@ -126,52 +124,68 @@ function starIcons(rating: number): { name: string; fill: 0 | 1 }[] {
               <h3 class="label-text text-primary font-bold mb-6">{category}</h3>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {categoryBooks.map((book) => (
-                  <a
-                    href={book.link}
-                    target="_blank"
-                    rel="nofollow sponsored noopener"
-                    class="book-card glass-panel rounded-xl p-6 flex gap-5 group no-underline hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300"
-                    aria-label={`${book.title} by ${book.author}${book.price > 0 ? ` — about $${book.price.toFixed(2)} on Amazon` : ''} (opens in new tab)`}
-                    data-slug={book.slug}
-                  >
-                    <div class="w-20 h-28 flex-shrink-0 bg-surface-alt rounded-lg overflow-hidden">
-                      <img
-                        src={url(book.image)}
-                        alt={`${book.title} book cover`}
-                        width="80"
-                        height="112"
-                        loading="lazy"
-                        decoding="async"
-                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
+                  <article class="book-card glass-panel rounded-xl overflow-hidden transition-all duration-300" data-slug={book.slug} data-price={book.price} data-rating={book.rating}>
+                    <!-- Clickable card header -->
+                    <button
+                      type="button"
+                      class="book-card-toggle w-full text-left p-6 flex gap-5 group hover:bg-surface-alt/30 transition-all duration-200"
+                      aria-expanded="false"
+                      aria-controls={`expand-cat-${book.slug}`}
+                    >
+                      <div class="w-20 h-28 flex-shrink-0 bg-surface-alt rounded-lg overflow-hidden">
+                        <img
+                          src={url(book.image)}
+                          alt={`${book.title} book cover`}
+                          width="80"
+                          height="112"
+                          loading="lazy"
+                          decoding="async"
+                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
+                      <div class="flex-1 min-w-0">
+                        <div class="flex items-start justify-between gap-2 mb-1">
+                          <h4 class="font-headline font-bold text-text text-sm leading-snug group-hover:text-primary transition-colors line-clamp-2">{book.title}</h4>
+                          {book.badge && (
+                            <span class="badge-editorial text-[10px] shrink-0">{book.badge}</span>
+                          )}
+                        </div>
+                        <p class="text-xs text-muted-dim mb-2">{book.author} · {book.year}</p>
+                        <div class="flex items-center gap-3 mb-3 text-xs">
+                          <span class="flex items-center gap-0.5 text-primary" aria-label={`Rated ${book.rating} out of 5`}>
+                            {starIcons(book.rating).map((s) => (
+                              <span class="material-symbols-outlined" style={`font-size:14px;font-variation-settings:'FILL' ${s.fill};`} aria-hidden="true">{s.name}</span>
+                            ))}
+                          </span>
+                          <span class="text-muted-dim font-mono text-[11px]">{book.rating.toFixed(1)}</span>
+                          <span class="text-muted-dim font-mono text-[11px]">·</span>
+                          <span class="text-muted-dim font-mono text-[11px]">
+                            {book.price > 0 ? `$${book.price.toFixed(2)}` : 'Free'}
+                          </span>
+                        </div>
+                        <p class="text-sm text-muted leading-relaxed">{book.punchline}</p>
+                        <div class="flex items-center gap-1 mt-3 text-xs font-label font-bold uppercase tracking-widest text-primary">
+                          <span class="book-card-expand-label">Read review</span>
+                          <span class="material-symbols-outlined text-sm transition-transform book-card-chevron" aria-hidden="true">expand_more</span>
+                        </div>
+                      </div>
+                    </button>
+                    <!-- Expanded panel -->
+                    <div id={`expand-cat-${book.slug}`} class="book-card-panel hidden border-t border-white/5">
+                      <div class="p-6 pt-5">
+                        <p class="text-sm text-muted leading-relaxed mb-5">{book.review}</p>
+                        <a
+                          href={book.link}
+                          target="_blank"
+                          rel="nofollow sponsored noopener"
+                          class="btn-primary no-underline inline-flex items-center gap-2 text-sm"
+                        >
+                          {book.price > 0 ? `Buy on Amazon · $${book.price.toFixed(2)}` : 'View free resource'}
+                          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                        </a>
+                      </div>
                     </div>
-                    <div class="flex-1 min-w-0">
-                      <div class="flex items-start justify-between gap-2 mb-1">
-                        <h4 class="font-headline font-bold text-text text-sm leading-snug group-hover:text-primary transition-colors line-clamp-2">{book.title}</h4>
-                        {book.badge && (
-                          <span class="badge-editorial text-[10px] shrink-0">{book.badge}</span>
-                        )}
-                      </div>
-                      <p class="text-xs text-muted-dim mb-2">{book.author} · {book.year}</p>
-                      <div class="flex items-center gap-3 mb-2 text-xs">
-                        <span class="flex items-center gap-0.5 text-primary" aria-label={`Rated ${book.rating} out of 5`}>
-                          {starIcons(book.rating).map((s) => (
-                            <span class="material-symbols-outlined" style={`font-size:14px;font-variation-settings:'FILL' ${s.fill};`} aria-hidden="true">{s.name}</span>
-                          ))}
-                        </span>
-                        <span class="text-muted-dim font-mono text-[11px]">{book.rating.toFixed(1)}</span>
-                        <span class="text-muted-dim font-mono text-[11px]">·</span>
-                        <span class="text-muted-dim font-mono text-[11px]">
-                          {book.price > 0 ? `$${book.price.toFixed(2)}` : 'Free'}
-                        </span>
-                      </div>
-                      <p class="text-sm text-muted leading-relaxed line-clamp-2">{book.description}</p>
-                      <div class="flex items-center gap-1 mt-3 text-xs font-label font-bold uppercase tracking-widest text-primary opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
-                        View on Amazon
-                        <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                      </div>
-                    </div>
-                  </a>
+                  </article>
                 ))}
               </div>
             </div>
@@ -183,54 +197,66 @@ function starIcons(rating: number): { name: string; fill: 0 | 1 }[] {
       <div id="books-flat" data-view="flat" class="hidden">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="books-flat-grid">
           {books.map((book) => (
-            <a
-              href={book.link}
-              target="_blank"
-              rel="nofollow sponsored noopener"
-              class="book-card book-card-flat glass-panel rounded-xl p-6 flex gap-5 group no-underline hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300"
-              aria-label={`${book.title} by ${book.author}${book.price > 0 ? ` — about $${book.price.toFixed(2)} on Amazon` : ''} (opens in new tab)`}
-              data-slug={book.slug}
-              data-price={book.price}
-              data-rating={book.rating}
-            >
-              <div class="w-20 h-28 flex-shrink-0 bg-surface-alt rounded-lg overflow-hidden">
-                <img
-                  src={url(book.image)}
-                  alt={`${book.title} book cover`}
-                  width="80"
-                  height="112"
-                  loading="lazy"
-                  decoding="async"
-                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+            <article class="book-card book-card-flat glass-panel rounded-xl overflow-hidden transition-all duration-300" data-slug={book.slug} data-price={book.price} data-rating={book.rating}>
+              <button
+                type="button"
+                class="book-card-toggle w-full text-left p-6 flex gap-5 group hover:bg-surface-alt/30 transition-all duration-200"
+                aria-expanded="false"
+                aria-controls={`expand-flat-${book.slug}`}
+              >
+                <div class="w-20 h-28 flex-shrink-0 bg-surface-alt rounded-lg overflow-hidden">
+                  <img
+                    src={url(book.image)}
+                    alt={`${book.title} book cover`}
+                    width="80"
+                    height="112"
+                    loading="lazy"
+                    decoding="async"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-start justify-between gap-2 mb-1">
+                    <h4 class="font-headline font-bold text-text text-sm leading-snug group-hover:text-primary transition-colors line-clamp-2">{book.title}</h4>
+                    {book.badge && (
+                      <span class="badge-editorial text-[10px] shrink-0">{book.badge}</span>
+                    )}
+                  </div>
+                  <p class="text-xs text-muted-dim mb-2">{book.author} · {book.year}</p>
+                  <div class="flex items-center gap-3 mb-3 text-xs">
+                    <span class="flex items-center gap-0.5 text-primary" aria-label={`Rated ${book.rating} out of 5`}>
+                      {starIcons(book.rating).map((s) => (
+                        <span class="material-symbols-outlined" style={`font-size:14px;font-variation-settings:'FILL' ${s.fill};`} aria-hidden="true">{s.name}</span>
+                      ))}
+                    </span>
+                    <span class="text-muted-dim font-mono text-[11px]">{book.rating.toFixed(1)}</span>
+                    <span class="text-muted-dim font-mono text-[11px]">·</span>
+                    <span class="text-muted-dim font-mono text-[11px]">
+                      {book.price > 0 ? `$${book.price.toFixed(2)}` : 'Free'}
+                    </span>
+                  </div>
+                  <p class="text-sm text-muted leading-relaxed">{book.punchline}</p>
+                  <div class="flex items-center gap-1 mt-3 text-xs font-label font-bold uppercase tracking-widest text-primary">
+                    <span class="book-card-expand-label">Read review</span>
+                    <span class="material-symbols-outlined text-sm transition-transform book-card-chevron" aria-hidden="true">expand_more</span>
+                  </div>
+                </div>
+              </button>
+              <div id={`expand-flat-${book.slug}`} class="book-card-panel hidden border-t border-white/5">
+                <div class="p-6 pt-5">
+                  <p class="text-sm text-muted leading-relaxed mb-5">{book.review}</p>
+                  <a
+                    href={book.link}
+                    target="_blank"
+                    rel="nofollow sponsored noopener"
+                    class="btn-primary no-underline inline-flex items-center gap-2 text-sm"
+                  >
+                    {book.price > 0 ? `Buy on Amazon · $${book.price.toFixed(2)}` : 'View free resource'}
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                  </a>
+                </div>
               </div>
-              <div class="flex-1 min-w-0">
-                <div class="flex items-start justify-between gap-2 mb-1">
-                  <h4 class="font-headline font-bold text-text text-sm leading-snug group-hover:text-primary transition-colors line-clamp-2">{book.title}</h4>
-                  {book.badge && (
-                    <span class="badge-editorial text-[10px] shrink-0">{book.badge}</span>
-                  )}
-                </div>
-                <p class="text-xs text-muted-dim mb-2">{book.author} · {book.year}</p>
-                <div class="flex items-center gap-3 mb-2 text-xs">
-                  <span class="flex items-center gap-0.5 text-primary" aria-label={`Rated ${book.rating} out of 5`}>
-                    {starIcons(book.rating).map((s) => (
-                      <span class="material-symbols-outlined" style={`font-size:14px;font-variation-settings:'FILL' ${s.fill};`} aria-hidden="true">{s.name}</span>
-                    ))}
-                  </span>
-                  <span class="text-muted-dim font-mono text-[11px]">{book.rating.toFixed(1)}</span>
-                  <span class="text-muted-dim font-mono text-[11px]">·</span>
-                  <span class="text-muted-dim font-mono text-[11px]">
-                    {book.price > 0 ? `$${book.price.toFixed(2)}` : 'Free'}
-                  </span>
-                </div>
-                <p class="text-sm text-muted leading-relaxed line-clamp-2">{book.description}</p>
-                <div class="flex items-center gap-1 mt-3 text-xs font-label font-bold uppercase tracking-widest text-primary opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
-                  View on Amazon
-                  <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                </div>
-              </div>
-            </a>
+            </article>
           ))}
         </div>
       </div>
@@ -309,7 +335,8 @@ function starIcons(rating: number): { name: string; fill: 0 | 1 }[] {
     </div>
   </section>
 
-  <!-- Client-side sort: reorders existing DOM nodes via appendChild (no innerHTML, no XSS surface) -->
+  <!-- Client-side sort + click-to-expand. Toggles classes and aria attributes only.
+       Sort reorders existing DOM nodes (no innerHTML, no XSS surface). -->
   <script is:inline>
     (function () {
       const sortButtons = document.querySelectorAll('.sort-btn');
@@ -318,7 +345,8 @@ function starIcons(rating: number): { name: string; fill: 0 | 1 }[] {
       const flatGrid = document.getElementById('books-flat-grid');
       if (!sortButtons.length || !categoryView || !flatView || !flatGrid) return;
 
-      const cards = Array.from(flatGrid.querySelectorAll('.book-card-flat'));
+      // ---------- Sort ----------
+      const flatCards = Array.from(flatGrid.querySelectorAll('.book-card-flat'));
 
       function applySort(sortKey, pushState) {
         sortButtons.forEach(function (btn) {
@@ -331,7 +359,7 @@ function starIcons(rating: number): { name: string; fill: 0 | 1 }[] {
           categoryView.classList.remove('hidden');
           flatView.classList.add('hidden');
         } else {
-          const sorted = cards.slice();
+          const sorted = flatCards.slice();
           if (sortKey === 'price-asc') {
             sorted.sort(function (a, b) {
               const ap = parseFloat(a.dataset.price) || 0;
@@ -351,7 +379,6 @@ function starIcons(rating: number): { name: string; fill: 0 | 1 }[] {
               return br - ar || (parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
             });
           }
-          // Re-append in sorted order — DOM moves nodes rather than duplicating them
           sorted.forEach(function (card) { flatGrid.appendChild(card); });
           categoryView.classList.add('hidden');
           flatView.classList.remove('hidden');
@@ -359,11 +386,8 @@ function starIcons(rating: number): { name: string; fill: 0 | 1 }[] {
 
         if (pushState) {
           const u = new URL(window.location.href);
-          if (sortKey === 'category') {
-            u.searchParams.delete('sort');
-          } else {
-            u.searchParams.set('sort', sortKey);
-          }
+          if (sortKey === 'category') u.searchParams.delete('sort');
+          else u.searchParams.set('sort', sortKey);
           history.replaceState(null, '', u.toString());
         }
       }
@@ -377,9 +401,25 @@ function starIcons(rating: number): { name: string; fill: 0 | 1 }[] {
 
       const initial = new URL(window.location.href).searchParams.get('sort');
       const valid = ['category', 'price-asc', 'price-desc', 'rating'];
-      if (initial && valid.indexOf(initial) >= 0) {
-        applySort(initial, false);
-      }
+      if (initial && valid.indexOf(initial) >= 0) applySort(initial, false);
+
+      // ---------- Click-to-expand ----------
+      const toggles = document.querySelectorAll('.book-card-toggle');
+      toggles.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          const panelId = btn.getAttribute('aria-controls');
+          const panel = panelId ? document.getElementById(panelId) : null;
+          if (!panel) return;
+          const isOpen = btn.getAttribute('aria-expanded') === 'true';
+          const next = !isOpen;
+          btn.setAttribute('aria-expanded', next ? 'true' : 'false');
+          panel.classList.toggle('hidden', !next);
+          const label = btn.querySelector('.book-card-expand-label');
+          if (label) label.textContent = next ? 'Hide review' : 'Read review';
+          const chev = btn.querySelector('.book-card-chevron');
+          if (chev) chev.style.transform = next ? 'rotate(180deg)' : '';
+        });
+      });
     })();
   </script>
 
@@ -397,6 +437,29 @@ function starIcons(rating: number): { name: string; fill: 0 | 1 }[] {
       color: var(--color-primary, #6366f1);
       background: rgba(99, 102, 241, 0.12);
       border-color: rgba(99, 102, 241, 0.4);
+    }
+    .book-card-toggle {
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+    }
+    .book-card-toggle:focus-visible {
+      outline: 2px solid rgba(99, 102, 241, 0.5);
+      outline-offset: -2px;
+    }
+    .book-card[data-slug]:has(.book-card-toggle[aria-expanded="true"]) {
+      border-color: rgba(99, 102, 241, 0.3);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(99, 102, 241, 0.05);
+    }
+    .book-card-chevron {
+      transition: transform 0.2s ease;
+    }
+    .book-card-panel {
+      animation: book-card-fade-in 0.2s ease;
+    }
+    @keyframes book-card-fade-in {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
   </style>
 </BaseLayout>

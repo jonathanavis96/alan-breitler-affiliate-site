@@ -1,9 +1,10 @@
 {
   "_comment": "AI Library — curated books and articles for academics. Affiliate links point to Amazon (books) or publisher/open-access (articles). Replace placeholder refs with real affiliate tags when accounts are set up.",
   "_schema_notes": {
-    "price": "Approximate Amazon list price in USD as of 2026-05-23. Books fluctuate — treat as a guide, not a guarantee. The actual price shown to a buyer is whatever Amazon displays when they click through.",
+    "price": "Latest Amazon price in USD. Refreshed weekly by scripts/refresh-book-prices.py via GitHub Actions.",
     "rating": "Our editorial rating out of 5, justified by the review body. Not aggregated from external sources.",
-    "review": "Honest editorial take in our voice (we / our). Each review names at least one real weakness or caveat — no pure marketing copy.",
+    "punchline": "One-sentence hook (~25 words) shown on the card. Sets up the review.",
+    "review": "Full editorial review (~100-120 words) shown inside the expanded panel. Each one names at least one real weakness — no pure marketing copy.",
     "priceCheckedAt": "Per-book ISO date of last automated Amazon price refresh. Run scripts/refresh-book-prices.py to update."
   },
   "books": [
@@ -19,7 +20,8 @@
       "badge": "Essential Read",
       "price": 17.97,
       "rating": 4.3,
-      "review": "Tegmark's strength is the range — he moves from near-term labour displacement to multi-millennium speculation about cosmic intelligence, and he does both with the patience of a working physicist rather than a futurist. The opening 'Prelude' scenario, where a superintelligent AI quietly takes over Wall Street, is one of the most memorable pieces of AI fiction in any non-fiction book. Where it falls short: parts of the back half drift into territory that's harder to falsify (consciousness, hedonium, cosmic endowment), and a reader looking for actionable insight about today's models will find the technical chapters thin compared to a textbook. Still, for the question 'where could this all be heading?', it's the best one-volume on-ramp we've found.",
+      "punchline": "A working physicist's tour from today's labour displacement to cosmic-scale intelligence. The best one-volume on-ramp to 'where is this going?'",
+      "review": "Tegmark's strength is the range — he moves from near-term labour displacement to multi-millennium speculation about cosmic intelligence, and he does both with the patience of a working physicist rather than a futurist. The opening 'Prelude' scenario, where a superintelligent AI quietly takes over Wall Street, is one of the most memorable pieces of AI fiction in any non-fiction book. Where it falls short: parts of the back half drift into territory that's harder to falsify, and a reader looking for actionable insight about today's models will find the technical chapters thin. Still, for the question 'where could this all be heading?', it's our pick for one-volume on-ramp.",
       "priceCheckedAt": "2026-05-23"
     },
     {
@@ -34,7 +36,8 @@
       "badge": "Textbook Standard",
       "price": 205.49,
       "rating": 4.7,
-      "review": "If a book can be called definitive, this is it. The 4th edition is the one used in pretty much every undergraduate AI course worth taking, and the coverage genuinely spans the field: classical search, probabilistic reasoning, machine learning, NLP, robotics, the lot. It's also a textbook in every uncomfortable sense — the price tag is steep, the writing is dense, and you'll bounce off chapters that aren't directly relevant to your work. We'd suggest borrowing it from a library before committing to the hardcover. But for self-taught practitioners who want to plug obvious gaps, no other single resource is as comprehensive.",
+      "punchline": "The standard undergraduate AI textbook. Steep price, dense pages, but no rival when you need rigorous foundations across the whole field.",
+      "review": "If a book can be called definitive, this is it. The 4th edition is the one used in pretty much every undergraduate AI course worth taking, and the coverage genuinely spans the field: classical search, probabilistic reasoning, machine learning, NLP, robotics, the lot. It's also a textbook in every uncomfortable sense — the price tag is steep, the writing is dense, and you'll bounce off chapters that aren't directly relevant to your work. We'd suggest borrowing it from a library before committing to the hardcover. But for self-taught practitioners who want to plug obvious gaps in their AI foundations, no other single resource is as comprehensive or as carefully edited as this one.",
       "priceCheckedAt": "2026-05-23"
     },
     {
@@ -49,7 +52,8 @@
       "badge": null,
       "price": 61.0,
       "rating": 4.2,
-      "review": "The Goodfellow-Bengio-Courville book remains the canonical academic reference for deep learning theory — the maths is rigorous and the structure is clean. Where it shows its age: 2016 is a decade ago in this field, so the chapters on architectures predate transformers, modern attention mechanisms, and most of what made the LLM era possible. Treat it as a foundations text, not a current-state-of-the-art map. Read alongside something newer (Chip Huyen's book or the d2l.ai online textbook) and you'll have most of what you need.",
+      "punchline": "The canonical deep-learning textbook from 2016. Rigorous and clean, but predates transformers — read it for foundations, pair with something newer.",
+      "review": "The Goodfellow-Bengio-Courville book remains the canonical academic reference for deep learning theory — the maths is rigorous, the notation is consistent, and the structure walks cleanly from linear algebra fundamentals through to deep architectures. Where it shows its age: 2016 is a decade ago in this field, so the architecture chapters predate transformers, modern attention mechanisms, and most of what made the LLM era possible. Treat it as a foundations text, not a current-state-of-the-art map. Read alongside something newer (Chip Huyen's book or the d2l.ai online textbook) and you'll have most of what a working ML engineer or graduate student actually needs from a primary reference shelf.",
       "priceCheckedAt": "2026-05-23"
     },
     {
@@ -64,7 +68,8 @@
       "badge": "Best for Beginners",
       "price": 47.93,
       "rating": 4.7,
-      "review": "Geron's book is the one we recommend most often to people who want to actually build something, not just understand the theory. Every chapter ends with working code you can run on your own laptop, and the progression — from scikit-learn fundamentals to Keras to production deployment — mirrors how a real ML project actually evolves. The catch: it's a Python-and-TensorFlow book in a world that's increasingly PyTorch, so transformer-era practitioners will find some examples feel slightly off the beaten path. Worth it anyway — the pedagogical clarity is hard to beat.",
+      "punchline": "The book we recommend most often to people who want to build, not just understand. Every chapter ends with working code you can run today.",
+      "review": "Geron's book is the one we recommend most often to people who want to actually build something, not just understand the theory. Every chapter ends with working code you can run on your own laptop, and the progression — from scikit-learn fundamentals to Keras to deployment — mirrors how a real ML project actually evolves from notebook to production. The catch: it's a Python-and-TensorFlow book in a world that's increasingly PyTorch, so transformer-era practitioners will find some examples feel slightly off the beaten path. Worth it anyway — the pedagogical clarity is hard to beat, and the underlying concepts translate cleanly to any framework you end up using.",
       "priceCheckedAt": "2026-05-23"
     },
     {
@@ -79,7 +84,8 @@
       "badge": null,
       "price": 20.0,
       "rating": 4.1,
-      "review": "Crawford forces you to look at the parts of AI the marketing decks skip: the cobalt mines in the DRC that power your GPU, the click-workers in Nairobi labelling violent content for $2 an hour, the energy bill of training a frontier model. The reporting is excellent and the geographical sweep — Atacama to Silicon Valley to Jakarta — is rare in this genre. Honest weakness: it's polemical, not balanced, and a reader expecting an even-handed cost-benefit analysis will find it one-sided. We think the corrective is worth the imbalance, but go in knowing what you're getting.",
+      "punchline": "An investigative tour of AI's hidden material costs — lithium mines, data labourers, energy. Polemical by design, but the reporting is excellent.",
+      "review": "Crawford forces you to look at the parts of AI the marketing decks skip: the cobalt mines in the DRC that power your GPU, the click-workers in Nairobi labelling violent content for $2 an hour, the energy bill of training a frontier model, and the global supply chain that makes any of it possible. The reporting is excellent and the geographical sweep — Atacama to Silicon Valley to Jakarta — is rare in this genre and adds real weight to the argument. Honest weakness: it's polemical, not balanced, and a reader expecting an even-handed cost-benefit analysis will find it one-sided. We think the corrective is worth the imbalance, but go in knowing what you're getting.",
       "priceCheckedAt": "2026-05-23"
     },
     {
@@ -94,7 +100,8 @@
       "badge": null,
       "price": 13.61,
       "rating": 4.4,
-      "review": "Russell is one of the few people writing about AI safety who has actually published the seminal textbook in the field (see entry above), so when he says the standard 'maximise a fixed objective' framing is broken, the argument lands with weight. His proposed alternative — assistance games, where the AI is uncertain about what humans want and learns by watching us — is genuinely original and the clearest articulation of the alignment problem we've read. Honest weakness: the middle chapters slow down with policy proposals that have aged less well than the technical sections. Skim those, read the rest carefully.",
+      "punchline": "The clearest case yet that the standard 'maximise an objective' framing of AI is broken — from the man who literally wrote the textbook.",
+      "review": "Russell is one of the few people writing about AI safety who has actually published the seminal textbook in the field, so when he says the standard 'maximise a fixed objective' framing is broken, the argument lands with weight. His proposed alternative — assistance games, where the AI is uncertain about what humans want and learns by watching us — is genuinely original and the clearest articulation of the alignment problem we've read in mainstream prose. Honest weakness: the middle chapters slow down with policy proposals that have aged less well than the technical sections, and a few specific recommendations feel out of step with how the field has actually evolved. Skim those, read the rest carefully.",
       "priceCheckedAt": "2026-05-23"
     },
     {
@@ -109,7 +116,8 @@
       "badge": "Free Resource",
       "price": 0,
       "rating": 4.5,
-      "review": "This is the free online reference we point people to when they want to learn prompting from first principles rather than from a Twitter thread. Coverage is wide — zero-shot, few-shot, chain-of-thought, ReAct, automatic prompt engineering, all of it with worked examples. Because it's a living document on a GitHub-backed site, it stays current in a way that printed prompt-engineering books simply can't. Honest weakness: depth is uneven across topics, and some sections read like notes-toward-a-chapter rather than finished prose. Free, well-maintained, and the price is right.",
+      "punchline": "The free online reference for prompting. Wide coverage, regularly updated, the price is right — perfect first stop before paying for a prompting book.",
+      "review": "This is the free online reference we point people to when they want to learn prompting from first principles rather than from a Twitter thread or a paid course. Coverage is wide — zero-shot, few-shot, chain-of-thought, ReAct, automatic prompt engineering, all of it with worked examples you can copy into ChatGPT or Claude and adapt to your own use case. Because it's a living document on a GitHub-backed site, it stays current in a way that printed prompt-engineering books simply can't. Honest weakness: depth is uneven across topics, and some sections read like notes-toward-a-chapter rather than finished prose. Free, well-maintained, and the price is right.",
       "priceCheckedAt": "2026-05-23"
     },
     {
@@ -124,7 +132,8 @@
       "badge": null,
       "price": 44.04,
       "rating": 4.3,
-      "review": "The 201 questions are genuinely the kind you'll be asked at FAANG-adjacent companies — Singh worked at Facebook, Huo at Hudson River Trading, and it shows in how the questions are framed. SQL and statistics sections are the strongest, and the product-sense case studies are good practice for a kind of interview that's hard to prep for elsewhere. Weakness: the ML chapters are noticeably thinner and slightly out of date compared to current expectations (very little on transformers or modern deep-learning interviewing). Pair it with Chip Huyen's Designing ML Systems book for the systems-design rounds and you're well-covered.",
+      "punchline": "201 real interview questions from FAANG-adjacent companies. Strong on SQL and stats, lighter on modern ML — pair with Chip Huyen for systems design.",
+      "review": "The 201 questions are genuinely the kind you'll be asked at FAANG-adjacent companies — Singh worked at Facebook, Huo at Hudson River Trading, and it shows in how the questions are framed and what edge-cases are tested. SQL and statistics sections are the strongest in the book, and the product-sense case studies are good practice for a kind of interview that's hard to prep for elsewhere. Weakness: the ML chapters are noticeably thinner and slightly out of date compared to current expectations, with very little on transformers or modern deep-learning interviewing. Pair it with Chip Huyen's Designing ML Systems book for the systems-design rounds and you're well-covered for the full interview loop.",
       "priceCheckedAt": "2026-05-23"
     },
     {
@@ -139,7 +148,8 @@
       "badge": "Most Current",
       "price": 20.07,
       "rating": 4.6,
-      "review": "Mollick is the rare academic who actually uses the tools he writes about, daily, and it shows on every page. His 'four rules' for working with AI — always invite AI to the table, be the human in the loop, treat it like a person but know what it is, assume this is the worst AI you'll ever use — have become genuinely useful heuristics in our own work. The book is short, current, and free of the breathless hype that bogs down most AI-and-work titles. Honest weakness: it's so tied to the 2024 state-of-the-art (GPT-4, early Claude 3) that some specific examples will date faster than the principles. The principles are durable; the screenshots aren't.",
+      "punchline": "Practical AI-at-work rules from a Wharton professor who actually uses the tools daily. Short, current, free of the breathless hype.",
+      "review": "Mollick is the rare academic who actually uses the tools he writes about, daily, and it shows on every page. His four rules for working with AI — always invite AI to the table, be the human in the loop, treat it like a person but know what it is, assume this is the worst AI you'll ever use — have become genuinely useful heuristics in our own work. The book is short, current, and free of the breathless hype that bogs down most AI-and-work titles in this genre. Honest weakness: it's so tied to the 2024 state-of-the-art that some specific examples will date faster than the principles. The principles are durable; the screenshots aren't.",
       "priceCheckedAt": "2026-05-23"
     },
     {
@@ -154,7 +164,8 @@
       "badge": null,
       "price": 13.49,
       "rating": 4.2,
-      "review": "Suleyman has the rare credential of having actually co-founded one of the labs (DeepMind) building the technology he's now warning about, so when he describes the 'pessimism aversion trap' — our collective unwillingness to confront how this story might end badly — it carries weight an outside critic couldn't muster. The framing of AI and synthetic biology as a paired wave is genuinely useful and not how most readers will already be thinking. Weakness: the proposed containment agenda in the back third reads more like a wish-list than a workable plan, and several proposals lean on international coordination that has no precedent at the speed required. Read it for the diagnosis, not the prescription.",
+      "punchline": "An insider warning about AI plus synthetic biology, written by a DeepMind co-founder. Strong diagnosis, weaker prescription — read for the framing.",
+      "review": "Suleyman has the rare credential of having actually co-founded one of the labs building the technology he's now warning about, so when he describes the 'pessimism aversion trap' — our collective unwillingness to confront how this story might end badly — it carries weight an outside critic couldn't muster. The framing of AI and synthetic biology as a paired wave is genuinely useful and not how most readers will already be thinking about either technology. Weakness: the proposed containment agenda in the back third reads more like a wish-list than a workable plan, and several proposals lean on international coordination that has no precedent at the speed required. Read it for the diagnosis, not the prescription.",
       "priceCheckedAt": "2026-05-23"
     },
     {
@@ -169,7 +180,8 @@
       "badge": "Critical Counterweight",
       "price": 13.57,
       "rating": 4.5,
-      "review": "If you read one critical-perspective book this year, make it this one. Narayanan and Kapoor distinguish carefully between predictive AI (which they argue is largely broken and oversold), generative AI (genuinely powerful but hyped beyond evidence), and content-moderation AI (a structurally hard problem dressed up as a tractable one) — and the analysis holds up technically in a way most critical books don't. Honest weakness: the tone occasionally tips from rigorous scepticism into rhetorical point-scoring, and a reader who's already convinced AI is overhyped will find no new arguments. But for someone trying to calibrate genuine excitement against marketing inflation, this is the sharpest scalpel we've found.",
+      "punchline": "The sharpest sceptic voice we've found. Cleanly separates what AI actually does from what marketing claims — start here for calibration.",
+      "review": "If you read one critical-perspective book this year, make it this one. Narayanan and Kapoor distinguish carefully between predictive AI (which they argue is largely broken and oversold), generative AI (genuinely powerful but hyped beyond evidence), and content-moderation AI (a structurally hard problem dressed up as a tractable one) — and the analysis holds up technically in a way most critical books don't. Honest weakness: the tone occasionally tips from rigorous scepticism into rhetorical point-scoring, and a reader who's already convinced AI is overhyped will find no new arguments in the back chapters. But for someone trying to calibrate genuine excitement against marketing inflation, this is the sharpest scalpel we've found.",
       "priceCheckedAt": "2026-05-23"
     },
     {
@@ -184,7 +196,8 @@
       "badge": null,
       "price": 18.64,
       "rating": 4.6,
-      "review": "Christian's previous book (Algorithms to Live By) showed he can make computer science legible to general readers; here he does the same for alignment, walking through the technical problems via long-form interviews with the researchers actively wrestling with them. The chapter on reward hacking — boat-race agents learning to spin in circles to maximise score — is the clearest layperson explanation of misalignment we've seen. Honest weakness: published in late 2020, so the alignment landscape it surveys is pre-RLHF, pre-Constitutional-AI, pre-most-of-what-changed-since-ChatGPT. Most foundations still apply; some specific case studies feel like archaeology. Best read alongside something more current.",
+      "punchline": "An interview-driven tour of the alignment problem in modern ML. Best layperson-friendly explanation of reward hacking we've read.",
+      "review": "Christian's previous book showed he can make computer science legible to general readers; here he does the same for alignment, walking through the technical problems via long-form interviews with the researchers actively wrestling with them. The chapter on reward hacking — boat-race agents learning to spin in circles to maximise score rather than finish the course — is the clearest layperson explanation of misalignment we've seen in print. Honest weakness: published in late 2020, so the alignment landscape it surveys is pre-RLHF, pre-Constitutional-AI, pre-most-of-what-changed-since-ChatGPT. Most foundations still apply; some specific case studies feel like archaeology now. Best read alongside something more current.",
       "priceCheckedAt": "2026-05-23"
     },
     {
@@ -199,7 +212,8 @@
       "badge": null,
       "price": 16.14,
       "rating": 4.0,
-      "review": "It's hard to overstate Bostrom's influence on the way the AI safety field thinks — instrumental convergence, the orthogonality thesis, the treacherous turn all enter the modern conversation through this 2014 book. As a historical artifact it's essential reading; without it, you can't fully understand why Russell, Christian, Suleyman, and the alignment community sound the way they do. Honest weakness: the prose is dense, the arguments occasionally run past the evidence, and a decade of empirical progress in actual frontier models has made some specific scenarios feel less urgent (and others more so) than Bostrom estimated. Read it slowly, and read it for the framework, not for current policy.",
+      "punchline": "The 2014 book that put AI existential risk on the modern agenda. Dense and dated in places, but essential historical reading.",
+      "review": "It's hard to overstate Bostrom's influence on the way the AI safety field thinks — instrumental convergence, the orthogonality thesis, and the treacherous turn all enter the modern conversation through this 2014 book. As a historical artefact it's essential reading; without it, you can't fully understand why Russell, Christian, Suleyman, and the broader alignment community sound the way they do today. Honest weakness: the prose is dense, the arguments occasionally run past the evidence, and a decade of empirical progress in actual frontier models has made some specific scenarios feel less urgent than Bostrom estimated, and others more so. Read it slowly, and read it for the framework, not for current policy.",
       "priceCheckedAt": "2026-05-23"
     },
     {
@@ -214,7 +228,8 @@
       "badge": "ML Engineer Essential",
       "price": 65.99,
       "rating": 4.7,
-      "review": "Almost every ML book is about training models; this one is about everything else — the data infrastructure, feature stores, training-serving skew, monitoring for distribution drift, the entire systems substrate that determines whether your model actually delivers value in production. Huyen spent years at Stanford, Snorkel, and Nvidia and writes with the lived experience of someone who has shipped models, not just published papers about them. Honest weakness: it predates the LLM-as-a-service era, so chapters on training infrastructure assume you're training your own models — which fewer teams now do. The systems-design fundamentals are durable regardless.",
+      "punchline": "Almost every ML book is about training models — this one is about everything else. The book working ML engineers wish they had earlier.",
+      "review": "Almost every ML book is about training models; this one is about everything else — the data infrastructure, feature stores, training-serving skew, monitoring for distribution drift, the entire systems substrate that determines whether your model actually delivers value in production. Huyen spent years at Stanford, Snorkel, and Nvidia and writes with the lived experience of someone who has shipped models, not just published papers about them. Honest weakness: it predates the LLM-as-a-service era, so chapters on training infrastructure assume you're training your own models — which fewer teams now do in 2026. The systems-design fundamentals are durable regardless, and the monitoring chapters are timeless.",
       "priceCheckedAt": "2026-05-23"
     },
     {
@@ -229,7 +244,8 @@
       "badge": "Best Compressed Intro",
       "price": 31.45,
       "rating": 4.4,
-      "review": "Burkov's promise of 100 pages is slightly cheated (it's closer to 160 with appendices) but the discipline of compression makes this the book we recommend most to working professionals who need to know enough ML to be dangerous, fast. Linear models, decision trees, kernels, deep networks, evaluation, hyperparameter tuning — all there, with the maths kept just heavy enough to be honest. Honest weakness: if you're new to ML, the density will be punishing; this book assumes you can follow a sigmoid derivative without hand-holding. If that's a fair assumption about you, it's the best speed-run in the genre.",
+      "punchline": "Ruthlessly compressed ML primer for working professionals. Enough maths to be honest, enough breadth to orient you — in roughly a long flight.",
+      "review": "Burkov's promise of 100 pages is slightly cheated (it's closer to 160 with appendices) but the discipline of compression makes this the book we recommend most to working professionals who need to know enough ML to be dangerous, fast. Linear models, decision trees, kernels, deep networks, evaluation, hyperparameter tuning — all there, with the maths kept just heavy enough to be honest. Honest weakness: if you're new to ML, the density will be punishing; this book assumes you can follow a sigmoid derivative without hand-holding and won't pause to explain backpropagation from scratch. If that's a fair assumption about you, it's the best speed-run in the genre we've seen.",
       "priceCheckedAt": "2026-05-23"
     },
     {
@@ -244,7 +260,8 @@
       "badge": null,
       "price": 22.58,
       "rating": 4.5,
-      "review": "Fei-Fei Li built ImageNet, the dataset that arguably unlocked the deep-learning revolution in computer vision, so her account of the field's formative years has insider value no other writer can match — the chapter on the 2012 AlexNet moment alone is worth the price of admission. The memoir thread (Chinese immigrant family, dry-cleaning shop in New Jersey, struggle to fund the early labs) is genuinely moving and adds dimension you don't get from purely technical AI books. Honest weakness: the structure flips between memoir and technical history in a way that occasionally loses momentum on both threads. Worth the unevenness for the insider perspective.",
+      "punchline": "Memoir from the ImageNet creator — insider history of the deep-learning revolution plus an immigrant scientist's origin story. Both threads land.",
+      "review": "Fei-Fei Li built ImageNet, the dataset that arguably unlocked the deep-learning revolution in computer vision, so her account of the field's formative years has insider value no other writer can match. The chapter on the 2012 AlexNet moment, when convolutional neural networks suddenly outperformed every classical method on the ImageNet benchmark, is alone worth the price of admission. The memoir thread — Chinese immigrant family, dry-cleaning shop in New Jersey, struggle to fund the early labs — is genuinely moving and adds dimension you don't get from purely technical AI books. Honest weakness: the structure flips between memoir and technical history in a way that occasionally loses momentum on both threads.",
       "priceCheckedAt": "2026-05-23"
     },
     {
@@ -259,7 +276,8 @@
       "badge": null,
       "price": 10.49,
       "rating": 4.3,
-      "review": "Published in 2016 but more relevant than ever, O'Neil — a former Wall Street quant who walked away — dissects the predictive models running so much of American life: who gets a loan, who gets parole, which teacher gets fired. Her three-criterion test for a 'weapon of math destruction' (opaque, scaling, damaging) is a genuinely useful framework you'll find yourself applying to systems she never analysed. Honest weakness: the case studies are almost entirely US-focused, and the technical depth is light by design — this is journalism, not a textbook. Read it for the framework and the case studies; supplement elsewhere for the maths.",
+      "punchline": "A mathematician's takedown of the predictive models running modern life. The three-criterion test for a 'WMD' has stayed useful since 2016.",
+      "review": "Published in 2016 but more relevant than ever, O'Neil — a former Wall Street quant who walked away from the industry — dissects the predictive models running so much of American life: who gets a loan, who gets parole, which teacher gets fired, which jobs an algorithm decides you can apply for. Her three-criterion test for a 'weapon of math destruction' (opaque, scaling, damaging) is a genuinely useful framework you'll find yourself applying to systems she never analysed. Honest weakness: the case studies are almost entirely US-focused, and the technical depth is light by design — this is journalism, not a textbook. Read it for the framework and the case studies.",
       "priceCheckedAt": "2026-05-23"
     },
     {
@@ -274,7 +292,8 @@
       "badge": null,
       "price": 21.98,
       "rating": 4.1,
-      "review": "Agrawal, Gans, and Goldfarb's first book (Prediction Machines) reframed AI as 'making prediction cheap' and that framing went a long way; this sequel extends the analysis to the system-level disruptions that follow once prediction is cheap everywhere — new business models, organisational redesigns, regulatory pressures. The 'between-points' versus 'system' distinction (incremental adoption vs structural redesign) is genuinely useful for thinking about which companies will and won't survive the transition. Honest weakness: as economists they sometimes overweight the rational-agent framing and underweight the political messiness of actual institutional change. Read with that grain of salt, and the strategic lens is worth it.",
+      "punchline": "The Toronto economists' system-level take on AI disruption. Useful 'between-points vs system' lens, but politically naive about institutional change.",
+      "review": "Agrawal, Gans, and Goldfarb's first book reframed AI as 'making prediction cheap' and that framing went a long way; this sequel extends the analysis to the system-level disruptions that follow once prediction is cheap everywhere — new business models, organisational redesigns, regulatory pressures. The 'between-points' versus 'system' distinction (incremental adoption versus structural redesign) is genuinely useful for thinking about which companies will and won't survive the transition to an AI-saturated economy. Honest weakness: as economists they sometimes overweight the rational-agent framing and underweight the political messiness of actual institutional change. Read with that grain of salt, and the strategic lens is worth it.",
       "priceCheckedAt": "2026-05-23"
     }
   ],
@@ -346,16 +365,6 @@
       "badge": "Must Read"
     }
   ],
-  "bookCategories": [
-    "Foundational AI",
-    "Machine Learning",
-    "AI Ethics",
-    "Practical Guides"
-  ],
-  "articleCategories": [
-    "Landmark Papers",
-    "Industry Research",
-    "AI Safety",
-    "AI Ethics"
-  ]
+  "bookCategories": ["Foundational AI", "Machine Learning", "AI Ethics", "Practical Guides"],
+  "articleCategories": ["Landmark Papers", "Industry Research", "AI Safety", "AI Ethics"]
 }
