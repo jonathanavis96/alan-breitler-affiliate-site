@@ -1,0 +1,88 @@
+# Weekly Amazon price refresh for the AI Library.
+#
+# Runs scripts/refresh-book-prices.py against data/library.json and commits
+# any changes back to main. The push triggers the normal deploy workflow, so
+# updated prices reach the live site within ~60s.
+#
+# Schedule: Sunday 03:00 UTC (off-peak globally). Manual run also available
+# via the Actions tab -> "Refresh book prices" -> "Run workflow".
+#
+# If Amazon blocks GitHub-runner IPs (the script reports "blocked (captcha)"
+# for more than half the books), this workflow exits 1 and we don't push
+# anything stale. In that case run the script locally and push manually.
+
+name: Refresh book prices
+
+on:
+  schedule:
+    # Sunday 03:00 UTC
+    - cron: "0 3 * * 0"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (log changes but don't commit)"
+        required: false
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    env:
+      # Pass workflow inputs through env to avoid direct ${{ }} interpolation
+      # inside shell scripts (mitigates script-injection class of issues even
+      # though the input is a restricted choice).
+      DRY_RUN: ${{ github.event.inputs.dry_run }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Refresh book prices
+        run: |
+          set -o pipefail
+          ARGS=""
+          if [ "${DRY_RUN}" = "true" ]; then
+            ARGS="--dry-run"
+          fi
+          python3 scripts/refresh-book-prices.py $ARGS 2>&1 | tee /tmp/refresh.log
+          tail -5 /tmp/refresh.log >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Detect changes
+        id: diff
+        if: env.DRY_RUN != 'true'
+        run: |
+          if git diff --quiet data/library.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No price changes - skipping commit."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Price changes detected:"
+            git diff --stat data/library.json
+          fi
+
+      - name: Commit and push
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/library.json
+          CHANGED_COUNT=$(grep -cE "^[↑↓]" /tmp/refresh.log || echo 0)
+          DIFF_SUMMARY=$(grep -E "^[↑↓]" /tmp/refresh.log | head -20)
+          git commit -m "Refresh book prices: ${CHANGED_COUNT} change(s)" \
+                     -m "Automated weekly refresh via scripts/refresh-book-prices.py" \
+                     -m "${DIFF_SUMMARY}"
+          git push origin HEAD:main
