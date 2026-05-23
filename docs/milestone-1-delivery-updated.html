@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Milestone 1 Delivery (Updated) — AIfocus</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: #2d3748;
+    font-size: 14px;
+    line-height: 1.7;
+    background: #fff;
+  }
+
+  /* Cover / Header */
+  .cover {
+    background: #1a2332;
+    color: #fff;
+    padding: 40px 60px 50px;
+    margin-bottom: 0;
+  }
+  .cover .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .cover .brand-icon {
+    width: 40px;
+    height: 40px;
+    background: #0AADCF;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 18px;
+    color: #fff;
+  }
+  .cover .brand-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+  .cover h1 {
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 6px;
+    letter-spacing: -0.5px;
+  }
+  .cover .subtitle {
+    font-size: 20px;
+    color: #8899aa;
+    font-weight: 400;
+    margin-bottom: 8px;
+  }
+  .cover .report-type {
+    color: #0AADCF;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .cover .meta {
+    font-size: 13px;
+    color: #667788;
+  }
+  .cover .meta span { margin-right: 8px; }
+  .cover .cyan-bar {
+    width: 48px;
+    height: 4px;
+    background: #0AADCF;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+
+  /* Content */
+  .content {
+    padding: 40px 60px;
+    max-width: 100%;
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a2332;
+    margin-top: 36px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid #0AADCF;
+  }
+  h2:first-child { margin-top: 0; }
+
+  h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #0AADCF;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-top: 24px;
+    margin-bottom: 10px;
+  }
+
+  p { margin-bottom: 12px; }
+
+  ul {
+    margin-bottom: 14px;
+    padding-left: 20px;
+  }
+  li {
+    margin-bottom: 5px;
+  }
+  li strong { color: #1a2332; }
+
+  a { color: #0AADCF; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Bullet overview */
+  .overview-box {
+    background: #f8fafc;
+    border-left: 4px solid #0AADCF;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    border-radius: 0 6px 6px 0;
+  }
+  .overview-box h2 {
+    border: none;
+    margin-top: 0;
+    padding-bottom: 4px;
+    font-size: 20px;
+  }
+  .overview-box ul { list-style: disc; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 13px;
+  }
+  thead th {
+    background: #1a2332;
+    color: #fff;
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #e8ecf0;
+    vertical-align: top;
+  }
+  tbody tr:nth-child(even) { background: #f8fafc; }
+  tbody td strong { color: #1a2332; }
+
+  /* Code blocks */
+  pre {
+    background: #f1f5f9;
+    border-radius: 6px;
+    padding: 16px 20px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    overflow-x: auto;
+    margin-bottom: 16px;
+    color: #475569;
+  }
+
+  /* Why it matters */
+  .why {
+    background: #f0f9ff;
+    border-left: 3px solid #0AADCF;
+    padding: 12px 16px;
+    margin: 16px 0 20px;
+    font-size: 13px;
+    color: #334155;
+    border-radius: 0 4px 4px 0;
+  }
+  .why strong { color: #0AADCF; }
+
+  /* Divider */
+  hr {
+    border: none;
+    height: 3px;
+    background: linear-gradient(90deg, #0AADCF 80px, #e8ecf0 80px);
+    margin: 32px 0;
+  }
+
+  /* Page break */
+  .page-break { page-break-before: always; }
+
+  /* Footer */
+  .footer {
+    font-size: 11px;
+    color: #94a3b8;
+    text-align: center;
+    padding: 20px 60px;
+    border-top: 1px solid #e8ecf0;
+    margin-top: 40px;
+  }
+
+  @media print {
+    body { font-size: 13px; }
+    .cover { padding: 30px 40px 40px; }
+    .content { padding: 30px 40px; }
+    .footer { position: fixed; bottom: 0; left: 0; right: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cover Header -->
+<div class="cover">
+  <div class="brand">
+    <div class="brand-icon">AD</div>
+    <div class="brand-name">All Done Sites</div>
+  </div>
+  <div class="cyan-bar"></div>
+  <h1>Milestone 1 Delivery</h1>
+  <div class="subtitle">— AIfocus</div>
+  <div class="report-type">Project Deliverable Report (Updated)</div>
+  <div class="meta">
+    <span>Prepared: April 2026</span> •
+    <span>Version: 2.0</span> •
+    <span>Status: Complete</span>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="content">
+
+  <div class="overview-box">
+    <h2>Overview</h2>
+    <p>Following your direction, the site has been fully rebranded to <strong>AIfocus</strong> — an AI-focused affiliate review site targeting academics. The niche, design, content, and architecture have all been updated to match your vision.</p>
+    <ul>
+      <li><strong>Brand:</strong> AIfocus</li>
+      <li><strong>Niche:</strong> AI publications, software, and applications</li>
+      <li><strong>Audience:</strong> Academics and researchers</li>
+      <li><strong>Pages delivered:</strong> 14</li>
+      <li><strong>Build status:</strong> Clean (zero errors)</li>
+      <li><strong>Live preview:</strong> <a href="https://jonathanavis96.github.io/alan-breitler-affiliate-site/">View the site</a></li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <div class="page-break"></div>
+  <h2>1. Strategy & Sitemap</h2>
+
+  <h3>Site Map</h3>
+  <pre>/                              Homepage
+├── /top-tools/                Top AI Tools (ranked product listing)
+├── /reviews/                  Reviews Index
+│   └── /reviews/[product]/       Individual AI tool reviews
+├── /resources/                Resources Index
+│   └── /resources/[topic]/       Educational guides & tutorials
+├── /about/                    About & Methodology
+├── /contact/                  Contact & Suggest a Tool
+├── /disclosure/               Affiliate Disclosure (FTC)
+├── /privacy/                  Privacy Policy
+├── /go/[product]/             Affiliate Link Redirects
+└── /404                       Error Page (AI-themed)</pre>
+
+  <h3>Content Strategy</h3>
+  <p>The site follows a <strong>hub & spoke model</strong> organised around four AI tool categories:</p>
+  <ul>
+    <li><strong>Writing Tools</strong> — AI assistants for drafting, editing, and academic prose</li>
+    <li><strong>Research Assistants</strong> — Tools for literature review, paper discovery, and evidence synthesis</li>
+    <li><strong>Image Generation</strong> — AI image generators for figures, diagrams, and presentation visuals</li>
+    <li><strong>Coding Assistants</strong> — AI coding tools for data analysis, scripting, and computational workflows</li>
+  </ul>
+
+  <h3>Navigation</h3>
+  <ul>
+    <li><strong>Primary nav (header):</strong> Home, Top Tools, Reviews, Resources, About, Contact</li>
+    <li><strong>Footer:</strong> Newsletter signup, nav links, legal pages (Disclosure, Privacy)</li>
+    <li><strong>Mobile:</strong> Bottom navigation bar with quick-access icons</li>
+  </ul>
+
+  <h3>Data Architecture</h3>
+  <p>All site content is driven by centralised data files:</p>
+  <ul>
+    <li><code>site.json</code> — Brand name, tagline, colour palette, navigation</li>
+    <li><code>products.json</code> — AI tool metadata, pricing, scores, categories</li>
+    <li><code>affiliates.json</code> — Affiliate link destinations and network info</li>
+    <li><code>categories.json</code> — The four tool categories with descriptions</li>
+  </ul>
+
+  <div class="why"><strong>Why it matters:</strong> Changing any product, link, or brand detail means updating one file — the change propagates across the entire site automatically.</div>
+
+  <hr>
+
+  <div class="page-break"></div>
+  <h2>2. Design System</h2>
+  <p>An ultra-modern dark theme designed for the AI/tech space.</p>
+
+  <h3>Typography</h3>
+  <table>
+    <thead><tr><th>Role</th><th>Font</th><th>Usage</th></tr></thead>
+    <tbody>
+      <tr><td>Headlines</td><td>Space Grotesk</td><td>Page titles, section headers — geometric, modern</td></tr>
+      <tr><td>Body text</td><td>IBM Plex Sans</td><td>Paragraphs, descriptions — technical, readable</td></tr>
+      <tr><td>Labels</td><td>IBM Plex Sans</td><td>Metadata, badges, navigation</td></tr>
+    </tbody>
+  </table>
+  <p>All fonts are self-hosted (no third-party requests) for performance and privacy.</p>
+
+  <h3>Colour Palette</h3>
+  <table>
+    <thead><tr><th>Colour</th><th>Hex</th><th>Usage</th></tr></thead>
+    <tbody>
+      <tr><td>Base</td><td><code>#0F1115</code></td><td>Page background — dark graphite</td></tr>
+      <tr><td>Surface</td><td><code>#171A21</code></td><td>Cards, elevated sections</td></tr>
+      <tr><td>Primary (Cyan)</td><td><code>#0AADCF</code></td><td>Links, buttons, interactive elements</td></tr>
+      <tr><td>Accent (Amber)</td><td><code>#FFB347</code></td><td>Highlights, badges, secondary accents</td></tr>
+      <tr><td>Text</td><td><code>#F3F4F6</code></td><td>Primary body text — soft off-white</td></tr>
+      <tr><td>Muted</td><td><code>#A7AFBF</code></td><td>Secondary text, descriptions</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Design Principles</h3>
+  <ul>
+    <li><strong>Dark theme</strong> throughout — premium, focused, distinctly modern</li>
+    <li><strong>Frosted glass panels</strong> — dark translucent overlays for cards and sections</li>
+    <li><strong>Grain texture</strong> — subtle noise overlay for tactile depth</li>
+    <li><strong>Hover glow effects</strong> — cyan and amber glows on interactive elements</li>
+    <li><strong>Animated score counters</strong> — scores animate into view on scroll</li>
+    <li><strong>Scroll-triggered reveals</strong> — content fades in as you scroll</li>
+  </ul>
+
+  <div class="why"><strong>Why it matters:</strong> Design is a trust signal. The ultra-modern dark theme positions AIfocus as a premium authority in the AI tools space — not another generic affiliate template.</div>
+
+  <hr>
+
+  <div class="page-break"></div>
+
+  <h2>3. Homepage</h2>
+
+  <h3>Sections Built</h3>
+  <table>
+    <thead><tr><th>#</th><th>Section</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>Hero</strong></td><td>Bold typographic-only hero. Animated typewriter cycles through "Research", "Writing", "Analysis", "Discovery"</td></tr>
+      <tr><td>2</td><td><strong>Value Grid</strong></td><td>Asymmetric bento layout — "50+ AI Tools Tested" hero tile, plus In-Depth Reviews, 4 Categories, and 3-D Scoring</td></tr>
+      <tr><td>3</td><td><strong>Category Browser</strong></td><td>Four-card grid: Writing Tools, Research Assistants, Image Generation, Coding Assistants</td></tr>
+      <tr><td>4</td><td><strong>Methodology</strong></td><td>Four numbered steps: Feature Analysis → Workflow Integration Testing → Academic Use Case Scoring → Value Assessment</td></tr>
+      <tr><td>5</td><td><strong>Split CTA</strong></td><td>Primary button to /top-tools/ plus secondary newsletter signup</td></tr>
+    </tbody>
+  </table>
+  <p>Fully responsive across mobile, tablet, and desktop.</p>
+
+  <hr>
+
+  <h2>4. Core Pages</h2>
+  <table>
+    <thead><tr><th>Page</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><strong>About</strong></td><td>Mission statement, AI evaluation methodology, academic positioning</td></tr>
+      <tr><td><strong>Contact</strong></td><td>"Suggest a Tool" form + direct email link</td></tr>
+      <tr><td><strong>Affiliate Disclosure</strong></td><td>FTC-compliant disclosure with SaaS-appropriate language</td></tr>
+      <tr><td><strong>Privacy Policy</strong></td><td>Standard privacy policy</td></tr>
+      <tr><td><strong>404 Error</strong></td><td>AI-themed personality ("This Page Hallucinated Itself Out of Existence")</td></tr>
+    </tbody>
+  </table>
+  <p>All pages written with the AIfocus brand voice — authoritative, direct, slightly informal.</p>
+
+  <hr>
+
+  <h2>5. Content Framework</h2>
+
+  <h3>Top Tools (/top-tools/)</h3>
+  <p>The primary conversion page. Displays all AI tools organised by category with product cards, multi-dimensional score bars, a master comparison table, and real company logos.</p>
+
+  <h3>Reviews (/reviews/)</h3>
+  <ul>
+    <li><strong>Index page</strong> — Grid layout showing all reviewed tools</li>
+    <li><strong>Individual reviews</strong> — 5-section template: TL;DR → Deep Dive → Pricing → Who It's For → Final Verdict</li>
+    <li><strong>Demo reviews:</strong> ChatGPT Plus, Claude Pro, Consensus AI</li>
+  </ul>
+
+  <h3>Resources (/resources/)</h3>
+  <ul>
+    <li><strong>Index page</strong> — List of educational guides</li>
+    <li><strong>Individual resources</strong> — Template: Introduction → Step-by-step → Tool Recommendations → Key Takeaways</li>
+    <li><strong>Demo resource:</strong> "Getting Started with AI for Research"</li>
+  </ul>
+
+  <h3>Content Collections (MDX)</h3>
+  <p>Reviews and resources use Astro Content Collections with structured schemas. Adding new content in Milestone 2 means creating a single <code>.mdx</code> file with frontmatter — no code changes needed.</p>
+
+  <div class="why"><strong>Why it matters:</strong> These templates define the content system. When real content is added in Milestone 2, it slots into these proven layouts. The demo pages demonstrate exactly how the final site will look and function.</div>
+
+  <hr>
+
+  <div class="page-break"></div>
+
+  <h2>6. Scoring System</h2>
+  <p>A transparent, multi-dimensional scoring system designed for academic decision-making.</p>
+
+  <table>
+    <thead><tr><th>Dimension</th><th>What It Measures</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Ease of Use</strong></td><td>Learning curve, UX quality, onboarding experience</td></tr>
+      <tr><td><strong>Academic Value</strong></td><td>Fit for scholarly research, writing, and workflows</td></tr>
+      <tr><td><strong>Price-to-Value</strong></td><td>Cost-effectiveness relative to alternatives</td></tr>
+      <tr><td><strong>Overall</strong></td><td>Simple average of the three dimensions (out of 10)</td></tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <h2>7. Placeholder Products</h2>
+  <p>Seven representative AI tools with real company logos, placeholder affiliate links, and sample scores:</p>
+
+  <table>
+    <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Overall</th></tr></thead>
+    <tbody>
+      <tr><td><strong>ChatGPT Plus</strong> (OpenAI)</td><td>Writing, Research</td><td>$20/mo</td><td>8.0</td></tr>
+      <tr><td><strong>Claude Pro</strong> (Anthropic)</td><td>Writing, Research, Coding</td><td>$20/mo</td><td>8.7</td></tr>
+      <tr><td><strong>Consensus</strong></td><td>Research</td><td>$9.99/mo</td><td>8.7</td></tr>
+      <tr><td><strong>Elicit</strong> (Ought)</td><td>Research, Writing</td><td>$10/mo</td><td>9.0</td></tr>
+      <tr><td><strong>Midjourney</strong></td><td>Image Generation</td><td>$10/mo</td><td>6.7</td></tr>
+      <tr><td><strong>GitHub Copilot</strong></td><td>Coding</td><td>$10/mo</td><td>8.7</td></tr>
+      <tr><td><strong>Grammarly AI</strong></td><td>Writing</td><td>$12/mo</td><td>8.0</td></tr>
+    </tbody>
+  </table>
+  <p>Affiliate links currently point to each product's official site. These will be updated with your real affiliate account links in Milestone 2.</p>
+
+  <hr>
+
+  <h2>8. SEO Foundation</h2>
+
+  <table>
+    <thead><tr><th>Feature</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Unique title & meta description per page</td><td>✅ Done</td></tr>
+      <tr><td>Open Graph tags (social sharing)</td><td>✅ Done</td></tr>
+      <tr><td>Twitter Card tags</td><td>✅ Done</td></tr>
+      <tr><td>Canonical URLs</td><td>✅ Done</td></tr>
+      <tr><td>JSON-LD schema markup</td><td>✅ Done</td></tr>
+      <tr><td>XML Sitemap (auto-generated)</td><td>✅ Done</td></tr>
+      <tr><td>Semantic HTML</td><td>✅ Done</td></tr>
+      <tr><td>Static site generation (pre-rendered)</td><td>✅ Done</td></tr>
+      <tr><td>Self-hosted fonts (no third-party CDN)</td><td>✅ Done</td></tr>
+      <tr><td>Branded favicon (AI lettermark)</td><td>✅ Done</td></tr>
+      <tr><td>OG sharing image</td><td>✅ Done</td></tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <div class="page-break"></div>
+  <h2>What's Next — Milestone 2</h2>
+  <table>
+    <thead><tr><th>Deliverable</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Content</strong></td><td>Full reviews, resources, and roundup content for all products</td></tr>
+      <tr><td><strong>On-page SEO</strong></td><td>Keyword research, title tag tuning, internal linking</td></tr>
+      <tr><td><strong>Performance</strong></td><td>Speed and mobile optimisation (Lighthouse 90+ target)</td></tr>
+      <tr><td><strong>Affiliate links</strong></td><td>Real affiliate link setup with your account credentials</td></tr>
+      <tr><td><strong>Newsletter</strong></td><td>Backend integration for email signup</td></tr>
+      <tr><td><strong>Testing</strong></td><td>Cross-browser and mobile device testing</td></tr>
+      <tr><td><strong>Revisions</strong></td><td>Client review and revisions (up to 2 rounds)</td></tr>
+      <tr><td><strong>Launch</strong></td><td>Production deployment and launch support</td></tr>
+    </tbody>
+  </table>
+
+</div>
+
+<div class="footer">
+  Confidential — Prepared by All Done Sites
+</div>
+
+</body>
+</html>

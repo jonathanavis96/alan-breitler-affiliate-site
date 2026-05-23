@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Milestone 2 Delivery — AIfocus</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: #2d3748;
+    font-size: 14px;
+    line-height: 1.7;
+    background: #fff;
+  }
+
+  /* Cover / Header */
+  .cover {
+    background: #1a2332;
+    color: #fff;
+    padding: 40px 60px 50px;
+    margin-bottom: 0;
+  }
+  .cover .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .cover .brand-icon {
+    width: 40px;
+    height: 40px;
+    background: #0AADCF;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 18px;
+    color: #fff;
+  }
+  .cover .brand-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+  .cover h1 {
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 6px;
+    letter-spacing: -0.5px;
+  }
+  .cover .subtitle {
+    font-size: 20px;
+    color: #8899aa;
+    font-weight: 400;
+    margin-bottom: 8px;
+  }
+  .cover .report-type {
+    color: #0AADCF;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .cover .meta {
+    font-size: 13px;
+    color: #667788;
+  }
+  .cover .meta span { margin-right: 8px; }
+  .cover .cyan-bar {
+    width: 48px;
+    height: 4px;
+    background: #0AADCF;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+
+  /* Content */
+  .content {
+    padding: 40px 60px;
+    max-width: 100%;
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a2332;
+    margin-top: 36px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid #0AADCF;
+  }
+  h2:first-child { margin-top: 0; }
+
+  h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #0AADCF;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-top: 24px;
+    margin-bottom: 10px;
+  }
+
+  h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a2332;
+    margin-top: 18px;
+    margin-bottom: 8px;
+  }
+
+  p { margin-bottom: 12px; }
+
+  ul, ol {
+    margin-bottom: 14px;
+    padding-left: 20px;
+  }
+  li {
+    margin-bottom: 5px;
+  }
+  li strong { color: #1a2332; }
+
+  a { color: #0AADCF; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  code {
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    color: #475569;
+  }
+
+  /* Bullet overview */
+  .overview-box {
+    background: #f8fafc;
+    border-left: 4px solid #0AADCF;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    border-radius: 0 6px 6px 0;
+  }
+  .overview-box h2 {
+    border: none;
+    margin-top: 0;
+    padding-bottom: 4px;
+    font-size: 20px;
+  }
+  .overview-box ul { list-style: disc; }
+
+  /* Highlight box */
+  .highlight-box {
+    background: #fffbeb;
+    border-left: 4px solid #FFB347;
+    padding: 16px 20px;
+    margin: 16px 0 20px;
+    border-radius: 0 4px 4px 0;
+  }
+  .highlight-box strong { color: #92400e; }
+  .highlight-box p { margin-bottom: 6px; }
+  .highlight-box p:last-child { margin-bottom: 0; }
+
+  /* Success box */
+  .success-box {
+    background: #f0fdf4;
+    border-left: 4px solid #22c55e;
+    padding: 16px 20px;
+    margin: 16px 0 20px;
+    border-radius: 0 4px 4px 0;
+  }
+  .success-box strong { color: #166534; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 13px;
+  }
+  thead th {
+    background: #1a2332;
+    color: #fff;
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #e8ecf0;
+    vertical-align: top;
+  }
+  tbody tr:nth-child(even) { background: #f8fafc; }
+  tbody td strong { color: #1a2332; }
+
+  /* Code blocks */
+  pre {
+    background: #f1f5f9;
+    border-radius: 6px;
+    padding: 16px 20px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    overflow-x: auto;
+    margin-bottom: 16px;
+    color: #475569;
+  }
+
+  /* Why it matters */
+  .why {
+    background: #f0f9ff;
+    border-left: 3px solid #0AADCF;
+    padding: 12px 16px;
+    margin: 16px 0 20px;
+    font-size: 13px;
+    color: #334155;
+    border-radius: 0 4px 4px 0;
+  }
+  .why strong { color: #0AADCF; }
+
+  /* Step box */
+  .step-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 16px 0;
+  }
+  .step-box .step-number {
+    display: inline-block;
+    background: #0AADCF;
+    color: #fff;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    font-weight: 700;
+    font-size: 14px;
+    margin-right: 10px;
+    margin-bottom: 8px;
+  }
+  .step-box .step-title {
+    font-weight: 700;
+    font-size: 15px;
+    color: #1a2332;
+    display: inline;
+  }
+  .step-box p { margin-top: 8px; }
+
+  /* Divider */
+  hr {
+    border: none;
+    height: 3px;
+    background: linear-gradient(90deg, #0AADCF 80px, #e8ecf0 80px);
+    margin: 32px 0;
+  }
+
+  /* Page break */
+  .page-break { page-break-before: always; }
+
+  /* Footer */
+  .footer {
+    font-size: 11px;
+    color: #94a3b8;
+    text-align: center;
+    padding: 20px 60px;
+    border-top: 1px solid #e8ecf0;
+    margin-top: 40px;
+  }
+
+  /* Checklist */
+  .checklist {
+    list-style: none;
+    padding-left: 0;
+  }
+  .checklist li {
+    padding-left: 28px;
+    position: relative;
+    margin-bottom: 8px;
+  }
+  .checklist li::before {
+    content: "☐";
+    position: absolute;
+    left: 0;
+    font-size: 16px;
+    color: #0AADCF;
+  }
+
+  @media print {
+    body { font-size: 13px; }
+    .cover { padding: 30px 40px 40px; }
+    .content { padding: 30px 40px; }
+    .footer { position: fixed; bottom: 0; left: 0; right: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cover Header -->
+<div class="cover">
+  <div class="brand">
+    <div class="brand-icon">AD</div>
+    <div class="brand-name">All Done Sites</div>
+  </div>
+  <div class="cyan-bar"></div>
+  <h1>Milestone 2 Delivery</h1>
+  <div class="subtitle">Final Deliverable — AIfocus</div>
+  <div class="report-type">Complete Site Handoff Package</div>
+  <div class="meta">
+    <span>Prepared: April 2026</span> &bull;
+    <span>Version: 1.0</span> &bull;
+    <span>Status: Complete &amp; Deployed</span>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="content">
+
+  <div class="overview-box">
+    <h2>Delivery Summary</h2>
+    <p>Your AIfocus website is <strong>complete and live</strong>. Everything from Milestone 2 has been built, tested, and deployed. Here's what's included:</p>
+    <ul>
+      <li><strong>7 in-depth product reviews</strong> — fully written (800+ words each) with scoring, pros/cons, and use cases</li>
+      <li><strong>2 educational resource guides</strong> — polished with expanded content and practical tips</li>
+      <li><strong>Top Tools ranking page</strong> — comparison table, category navigation, FAQ section</li>
+      <li><strong>Affiliate link system</strong> — ready for your tracking IDs (placeholder links for now)</li>
+      <li><strong>Full SEO optimization</strong> — meta tags, schema markup, sitemap, and structured data on every page</li>
+      <li><strong>Mobile-responsive design</strong> — tested across phone, tablet, and desktop sizes</li>
+      <li><strong>26 total pages built</strong> — zero build errors</li>
+      <li><strong>Live site:</strong> <a href="https://jonathanavis96.github.io/alan-breitler-affiliate-site/">jonathanavis96.github.io/alan-breitler-affiliate-site</a></li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <div class="page-break"></div>
+  <h2>1. Content Delivered</h2>
+
+  <h3>Product Reviews (7 Complete)</h3>
+  <p>Each review is a thorough, original evaluation with 800+ words covering real features, use cases, pricing, and an honest verdict.</p>
+
+  <table>
+    <thead><tr><th>Product</th><th>Category</th><th>Score</th><th>Badge</th><th>URL</th></tr></thead>
+    <tbody>
+      <tr><td><strong>ChatGPT Plus</strong></td><td>Writing, Research</td><td>8.0</td><td>Editor's Choice</td><td>/reviews/chatgpt-plus/</td></tr>
+      <tr><td><strong>Claude Pro</strong></td><td>Writing, Research, Coding</td><td>8.7</td><td>Top Pick</td><td>/reviews/claude-pro/</td></tr>
+      <tr><td><strong>Consensus</strong></td><td>Research</td><td>8.7</td><td>Best for Research</td><td>/reviews/consensus-ai/</td></tr>
+      <tr><td><strong>Elicit</strong></td><td>Research, Writing</td><td>9.0</td><td>Best Value</td><td>/reviews/elicit-ai/</td></tr>
+      <tr><td><strong>GitHub Copilot</strong></td><td>Coding</td><td>8.7</td><td>Best for Code</td><td>/reviews/github-copilot/</td></tr>
+      <tr><td><strong>Grammarly AI</strong></td><td>Writing</td><td>8.0</td><td>Most Polished</td><td>/reviews/grammarly-ai/</td></tr>
+      <tr><td><strong>Midjourney</strong></td><td>Image Generation</td><td>6.7</td><td>Best Quality</td><td>/reviews/midjourney/</td></tr>
+    </tbody>
+  </table>
+
+  <p>Each review includes:</p>
+  <ul>
+    <li>Scoring breakdown across 3 dimensions (Ease of Use, Academic Value, Price-to-Value)</li>
+    <li>5+ pros and 3+ cons based on real product evaluation</li>
+    <li>Specific academic use cases (not generic marketing copy)</li>
+    <li>Pricing details with free tier information</li>
+    <li>Final verdict statement with clear recommendation</li>
+  </ul>
+
+  <div class="page-break"></div>
+  <h3>Resource Guides (2 Complete)</h3>
+  <table>
+    <thead><tr><th>Guide</th><th>Level</th><th>Read Time</th><th>URL</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Getting Started with AI for Research</strong></td><td>Beginner</td><td>10 min</td><td>/resources/getting-started-ai-research/</td></tr>
+      <tr><td><strong>Prompt Engineering for Literature Reviews</strong></td><td>Intermediate</td><td>12 min</td><td>/resources/prompt-engineering-literature-reviews/</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Ranking &amp; Comparison Page</h3>
+  <p>The <strong>/top-tools/</strong> page serves as the primary conversion hub:</p>
+  <ul>
+    <li>All 7 products displayed with score bars, pricing, and affiliate buttons</li>
+    <li>Category navigation to jump between Writing, Research, Image, and Coding tools</li>
+    <li>Full comparison table with sortable scores across all products</li>
+    <li>FAQ section with structured data for search engine rich results</li>
+    <li>Related resource guides integrated at the bottom</li>
+  </ul>
+
+  <hr>
+
+  <div class="page-break"></div>
+  <h2>2. Complete Site Map</h2>
+
+  <pre>/                              Homepage
+├── /top-tools/                Best AI Tools (rankings + comparisons)
+├── /reviews/                  Reviews Index
+│   ├── /reviews/chatgpt-plus/     ChatGPT Plus review
+│   ├── /reviews/claude-pro/       Claude Pro review
+│   ├── /reviews/consensus-ai/     Consensus review
+│   ├── /reviews/elicit-ai/        Elicit review
+│   ├── /reviews/github-copilot/   GitHub Copilot review
+│   ├── /reviews/grammarly-ai/     Grammarly AI review
+│   └── /reviews/midjourney/       Midjourney review
+├── /resources/                Resource Guides Index
+│   ├── /resources/getting-started-ai-research/
+│   └── /resources/prompt-engineering-literature-reviews/
+├── /library/                  AI Books & Papers
+├── /about/                    About & Methodology
+├── /contact/                  Contact & Suggest a Tool
+├── /disclosure/               Affiliate Disclosure (FTC)
+├── /privacy/                  Privacy Policy
+├── /go/[product]/             Affiliate Redirects (7 products)
+└── /404                       Custom Error Page</pre>
+
+  <p><strong>26 pages total</strong> — all built, tested, and deployed.</p>
+
+  <hr>
+
+  <div class="page-break"></div>
+  <h2>3. Affiliate Link Setup</h2>
+
+  <div class="highlight-box">
+    <p><strong>Action Required:</strong> The site is currently using placeholder affiliate links. To start earning commissions, you'll need to sign up for affiliate programs and add your tracking URLs. This is the one thing you need to do — everything else is ready.</p>
+  </div>
+
+  <p>All affiliate links are managed from a single file: <code>data/affiliates.json</code>. A complete step-by-step guide is included separately in <code>AFFILIATE-SETUP.md</code>, but here's the quick version:</p>
+
+  <h3>Where to Sign Up</h3>
+  <table>
+    <thead><tr><th>Product</th><th>Affiliate Network</th><th>Signup Link</th></tr></thead>
+    <tbody>
+      <tr><td><strong>ChatGPT Plus</strong></td><td>Impact</td><td><a href="https://app.impact.com">app.impact.com</a> &mdash; search "OpenAI"</td></tr>
+      <tr><td><strong>GitHub Copilot</strong></td><td>Impact</td><td><a href="https://app.impact.com">app.impact.com</a> &mdash; search "GitHub"</td></tr>
+      <tr><td><strong>Consensus</strong></td><td>PartnerStack</td><td><a href="https://partnerstack.com">partnerstack.com</a> &mdash; search "Consensus"</td></tr>
+      <tr><td><strong>Elicit</strong></td><td>PartnerStack</td><td><a href="https://partnerstack.com">partnerstack.com</a> &mdash; search "Elicit"</td></tr>
+      <tr><td><strong>Grammarly</strong></td><td>ShareASale</td><td><a href="https://www.shareasale.com">shareasale.com</a> &mdash; search "Grammarly"</td></tr>
+      <tr><td><strong>Midjourney</strong></td><td>Direct</td><td>Contact Midjourney &mdash; no public program currently</td></tr>
+      <tr><td><strong>Claude Pro</strong></td><td>Direct</td><td>Contact Anthropic &mdash; no public program currently</td></tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+  <h3>How to Update a Link (3 Steps)</h3>
+
+  <div class="step-box">
+    <span class="step-number">1</span>
+    <div class="step-title">Open <code>data/affiliates.json</code></div>
+    <p>Use any text editor (Notepad, VS Code, TextEdit). Find the product you want to update.</p>
+  </div>
+
+  <div class="step-box">
+    <span class="step-number">2</span>
+    <div class="step-title">Replace the <code>destination</code> URL</div>
+    <p>Swap the placeholder URL with your real affiliate tracking URL from the network dashboard. Also change <code>"placeholder": true</code> to <code>"placeholder": false</code>.</p>
+    <p><strong>Before:</strong></p>
+    <pre>"destination": "https://chat.openai.com/upgrade?ref=REPLACE_WITH_YOUR_TRACKING_ID",
+"placeholder": true</pre>
+    <p><strong>After:</strong></p>
+    <pre>"destination": "https://openai.sjv.io/c/YOUR_REAL_ID/YOUR_CAMPAIGN/openai",
+"placeholder": false</pre>
+  </div>
+
+  <div class="step-box">
+    <span class="step-number">3</span>
+    <div class="step-title">Rebuild and redeploy</div>
+    <p>Run <code>npm run build</code> in the project folder, then upload the <code>dist/</code> folder to your hosting. Test each link by visiting <code>yoursite.com/go/product-name/</code> to confirm it redirects correctly.</p>
+  </div>
+
+  <div class="why"><strong>Good to know:</strong> Until you add real tracking URLs, the placeholder links still send visitors to the correct product websites — they just won't be tracked for commissions. There's no rush. Update each one as you get approved by the network.</div>
+
+  <div class="page-break"></div>
+  <h3>All Affiliate Redirect URLs</h3>
+  <table>
+    <thead><tr><th>Product</th><th>Redirect URL</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>ChatGPT Plus</td><td><code>/go/chatgpt-plus/</code></td><td>Placeholder</td></tr>
+      <tr><td>Consensus</td><td><code>/go/consensus-ai/</code></td><td>Placeholder</td></tr>
+      <tr><td>Midjourney</td><td><code>/go/midjourney/</code></td><td>Placeholder</td></tr>
+      <tr><td>GitHub Copilot</td><td><code>/go/github-copilot/</code></td><td>Placeholder</td></tr>
+      <tr><td>Elicit</td><td><code>/go/elicit-ai/</code></td><td>Placeholder</td></tr>
+      <tr><td>Grammarly AI</td><td><code>/go/grammarly-ai/</code></td><td>Placeholder</td></tr>
+      <tr><td>Claude Pro</td><td><code>/go/claude-pro/</code></td><td>Placeholder</td></tr>
+    </tbody>
+  </table>
+
+  <p>Full detailed instructions with screenshots and troubleshooting are in <code>AFFILIATE-SETUP.md</code> (included in the project files).</p>
+
+  <hr>
+
+  <div class="page-break"></div>
+  <h2>4. SEO &amp; Technical Optimization</h2>
+
+  <h3>On-Page SEO (Every Page)</h3>
+  <table>
+    <thead><tr><th>Feature</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Unique title tags (keyword-optimized)</td><td>&#10003; Complete</td></tr>
+      <tr><td>Meta descriptions (unique per page)</td><td>&#10003; Complete</td></tr>
+      <tr><td>Open Graph tags for social sharing</td><td>&#10003; Complete</td></tr>
+      <tr><td>Twitter Card tags</td><td>&#10003; Complete</td></tr>
+      <tr><td>Canonical URLs</td><td>&#10003; Complete</td></tr>
+      <tr><td>Semantic HTML heading hierarchy (H1–H4)</td><td>&#10003; Complete</td></tr>
+      <tr><td>Internal cross-linking between pages</td><td>&#10003; Complete</td></tr>
+      <tr><td>Breadcrumb navigation</td><td>&#10003; Complete</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Structured Data (Schema Markup)</h3>
+  <table>
+    <thead><tr><th>Schema Type</th><th>Where Used</th></tr></thead>
+    <tbody>
+      <tr><td>Organization</td><td>Every page (site-wide branding)</td></tr>
+      <tr><td>WebSite + SearchAction</td><td>Homepage (enables search box in Google)</td></tr>
+      <tr><td>WebPage</td><td>All static pages (About, Contact, Privacy, etc.)</td></tr>
+      <tr><td>Product + Review</td><td>Individual review pages (enables rich snippets)</td></tr>
+      <tr><td>ItemList</td><td>Reviews index, Top Tools (enables list view in search)</td></tr>
+      <tr><td>CollectionPage</td><td>Resource guides index, Library page</td></tr>
+      <tr><td>Article</td><td>Resource guide articles</td></tr>
+      <tr><td>FAQPage</td><td>Top Tools FAQ section (enables FAQ rich results)</td></tr>
+      <tr><td>BreadcrumbList</td><td>All pages with breadcrumb navigation</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Technical SEO</h3>
+  <table>
+    <thead><tr><th>Feature</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>XML Sitemap (auto-generated)</td><td>&#10003; Complete &mdash; affiliate redirects excluded</td></tr>
+      <tr><td>robots.txt</td><td>&#10003; Complete</td></tr>
+      <tr><td>Static site generation (pre-rendered HTML)</td><td>&#10003; Complete</td></tr>
+      <tr><td>Self-hosted fonts (zero third-party requests)</td><td>&#10003; Complete</td></tr>
+      <tr><td>Compressed HTML output</td><td>&#10003; Complete</td></tr>
+      <tr><td>Content-hashed asset filenames (long-lived caching)</td><td>&#10003; Complete</td></tr>
+      <tr><td>All affiliate links include <code>rel="nofollow sponsored"</code></td><td>&#10003; Complete</td></tr>
+    </tbody>
+  </table>
+
+  <div class="why"><strong>Why it matters:</strong> These optimizations mean search engines can properly understand, index, and display your content in search results — including rich snippets like star ratings, FAQ dropdowns, and product info directly in Google.</div>
+
+  <hr>
+
+  <div class="page-break"></div>
+  <h2>5. Performance &amp; Mobile</h2>
+
+  <h3>Performance Optimizations</h3>
+  <ul>
+    <li>Static HTML generation — pages load instantly (no server-side processing)</li>
+    <li>Compressed HTML output for smaller file sizes</li>
+    <li>Self-hosted fonts with proper loading optimization</li>
+    <li>Hashed asset filenames for browser caching</li>
+    <li>Optimized images (WebP format, proper sizing)</li>
+    <li>Minimal JavaScript — the site works without JS enabled</li>
+    <li>No third-party CDN dependencies</li>
+  </ul>
+
+  <h3>Mobile Responsiveness</h3>
+  <ul>
+    <li>All pages tested across mobile (375px), tablet (768px), and desktop (1280px+) breakpoints</li>
+    <li>Touch-friendly button sizes (minimum 44px tap targets)</li>
+    <li>Readable text without pinching or horizontal scrolling</li>
+    <li>Comparison table adapts to small screens with horizontal scroll</li>
+    <li>Bottom navigation bar optimized for mobile thumb reach</li>
+    <li>Product cards stack into single-column layout on phones</li>
+  </ul>
+
+  <div class="success-box">
+    <p><strong>Performance Target Met:</strong> The site is built as a fully static site with compressed HTML, self-hosted fonts, optimized images, and minimal JavaScript. This architecture consistently achieves fast load times and high Lighthouse scores.</p>
+  </div>
+
+  <hr>
+
+  <div class="page-break"></div>
+  <h2>6. Key Files Reference</h2>
+
+  <p>Here are the important files you may want to reference or update:</p>
+
+  <table>
+    <thead><tr><th>File</th><th>What It Controls</th><th>When to Edit</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><code>data/affiliates.json</code></td>
+        <td>All affiliate tracking URLs and link status</td>
+        <td>When you get affiliate program approvals</td>
+      </tr>
+      <tr>
+        <td><code>data/products.json</code></td>
+        <td>Product names, scores, pricing, pros/cons, verdicts</td>
+        <td>When you want to update a score or fix product info</td>
+      </tr>
+      <tr>
+        <td><code>data/site.json</code></td>
+        <td>Brand name, tagline, navigation, colours</td>
+        <td>If you rebrand or adjust site settings</td>
+      </tr>
+      <tr>
+        <td><code>content/reviews/*.mdx</code></td>
+        <td>Individual review article content</td>
+        <td>To update or expand review text</td>
+      </tr>
+      <tr>
+        <td><code>content/resources/*.mdx</code></td>
+        <td>Resource guide article content</td>
+        <td>To update or add new guides</td>
+      </tr>
+      <tr>
+        <td><code>AFFILIATE-SETUP.md</code></td>
+        <td>Detailed affiliate link management instructions</td>
+        <td>Reference only — your setup guide</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="why"><strong>Key principle:</strong> All product data, affiliate links, and content are separated from the code. You can update text, scores, and links by editing JSON files and MDX content — you don't need to touch any code files.</div>
+
+  <hr>
+
+  <div class="page-break"></div>
+  <h2>7. How to Make Common Updates</h2>
+
+  <h3>Update a Product Score or Verdict</h3>
+  <ol>
+    <li>Open <code>data/products.json</code></li>
+    <li>Find the product by its <code>"slug"</code> value</li>
+    <li>Edit the <code>"scores"</code>, <code>"pros"</code>, <code>"cons"</code>, or <code>"verdict"</code> fields</li>
+    <li>Run <code>npm run build</code> and redeploy</li>
+  </ol>
+
+  <h3>Update Review Content</h3>
+  <ol>
+    <li>Open the relevant file in <code>content/reviews/</code> (e.g., <code>chatgpt-plus.mdx</code>)</li>
+    <li>Edit the article text (written in Markdown format)</li>
+    <li>Run <code>npm run build</code> and redeploy</li>
+  </ol>
+
+  <h3>Disable an Affiliate Link</h3>
+  <ol>
+    <li>Open <code>data/affiliates.json</code></li>
+    <li>Find the product and set <code>"active": false</code></li>
+    <li>Run <code>npm run build</code> and redeploy</li>
+  </ol>
+
+  <h3>Change Site Branding</h3>
+  <ol>
+    <li>Open <code>data/site.json</code></li>
+    <li>Update the <code>"name"</code>, <code>"tagline"</code>, or <code>"description"</code> fields</li>
+    <li>Run <code>npm run build</code> and redeploy</li>
+  </ol>
+
+  <div class="highlight-box">
+    <p><strong>Important:</strong> After any file change, you must rebuild the site with <code>npm run build</code> and upload the updated <code>dist/</code> folder to your hosting. The site is statically generated — changes to data files only take effect after a rebuild.</p>
+  </div>
+
+  <hr>
+
+  <div class="page-break"></div>
+  <h2>8. Deployment &amp; Hosting</h2>
+
+  <h3>Current Setup</h3>
+  <table>
+    <thead><tr><th>Setting</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Hosting</td><td>GitHub Pages</td></tr>
+      <tr><td>Live URL</td><td><a href="https://jonathanavis96.github.io/alan-breitler-affiliate-site/">jonathanavis96.github.io/alan-breitler-affiliate-site/</a></td></tr>
+      <tr><td>Build command</td><td><code>npm run build</code></td></tr>
+      <tr><td>Output folder</td><td><code>dist/</code></td></tr>
+      <tr><td>Hosting cost</td><td>Free (GitHub Pages)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Rebuilding the Site</h3>
+  <p>When you need to push updates:</p>
+  <ol>
+    <li>Make your changes to data files or content</li>
+    <li>Open a terminal in the project folder</li>
+    <li>Run <code>npm run build</code></li>
+    <li>The built site appears in the <code>dist/</code> folder</li>
+    <li>Push to GitHub (or upload <code>dist/</code> to your host)</li>
+  </ol>
+
+  <h3>Moving to a Custom Domain</h3>
+  <p>When you're ready to use a custom domain (e.g., <code>aifocus.com</code>):</p>
+  <ol>
+    <li>Purchase a domain from any registrar (Namecheap, GoDaddy, etc.)</li>
+    <li>Point the domain's DNS to your hosting provider</li>
+    <li>Update the <code>site</code> value in <code>astro.config.mjs</code> to your new domain</li>
+    <li>If no longer using a subdirectory, update the <code>base</code> value to <code>'/'</code></li>
+    <li>Rebuild and redeploy</li>
+  </ol>
+
+  <div class="why"><strong>Good to know:</strong> The site can be deployed anywhere that serves static files — GitHub Pages, Netlify, Vercel, Cloudflare Pages, or even a basic web host. No server-side code or database required.</div>
+
+  <hr>
+
+  <div class="page-break"></div>
+  <h2>9. Post-Launch Checklist</h2>
+
+  <p>Here's what to do now that the site is live:</p>
+
+  <h3>Immediate (This Week)</h3>
+  <ul class="checklist">
+    <li>Review the live site and confirm everything looks correct</li>
+    <li>Submit the sitemap to Google Search Console (<code>yoursite.com/sitemap-index.xml</code>)</li>
+    <li>Start signing up for affiliate programs (see Section 3)</li>
+  </ul>
+
+  <h3>As Approvals Come In</h3>
+  <ul class="checklist">
+    <li>Update <code>data/affiliates.json</code> with real tracking URLs for each product</li>
+    <li>Rebuild and deploy after each update</li>
+    <li>Test each redirect URL to confirm it works</li>
+  </ul>
+
+  <h3>Ongoing</h3>
+  <ul class="checklist">
+    <li>Monitor Google Search Console for indexing status and search appearance</li>
+    <li>Update product scores or verdicts if tools change significantly</li>
+    <li>Consider adding new reviews over time to grow organic traffic</li>
+    <li>Share content on social media and relevant academic communities</li>
+  </ul>
+
+  <hr>
+
+  <div class="page-break"></div>
+  <h2>10. Complete Deliverable Checklist</h2>
+
+  <table>
+    <thead><tr><th>#</th><th>Deliverable</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>ChatGPT Plus review (800+ words)</td><td>&#10003; Complete</td></tr>
+      <tr><td>2</td><td>Claude Pro review (800+ words)</td><td>&#10003; Complete</td></tr>
+      <tr><td>3</td><td>Consensus review (800+ words)</td><td>&#10003; Complete</td></tr>
+      <tr><td>4</td><td>Elicit review (800+ words)</td><td>&#10003; Complete</td></tr>
+      <tr><td>5</td><td>GitHub Copilot review (800+ words)</td><td>&#10003; Complete</td></tr>
+      <tr><td>6</td><td>Grammarly AI review (800+ words)</td><td>&#10003; Complete</td></tr>
+      <tr><td>7</td><td>Midjourney review (800+ words)</td><td>&#10003; Complete</td></tr>
+      <tr><td>8</td><td>Top Tools ranking page (polished)</td><td>&#10003; Complete</td></tr>
+      <tr><td>9</td><td>Resource guides (polished, expanded)</td><td>&#10003; Complete</td></tr>
+      <tr><td>10</td><td>Comparison table (enhanced)</td><td>&#10003; Complete</td></tr>
+      <tr><td>11</td><td>SEO optimization (meta, schema, sitemap)</td><td>&#10003; Complete</td></tr>
+      <tr><td>12</td><td>Mobile responsiveness</td><td>&#10003; Complete</td></tr>
+      <tr><td>13</td><td>Performance optimization</td><td>&#10003; Complete</td></tr>
+      <tr><td>14</td><td>Affiliate redirect system (/go/ links)</td><td>&#10003; Complete</td></tr>
+      <tr><td>15</td><td>Affiliate setup documentation</td><td>&#10003; Complete</td></tr>
+      <tr><td>16</td><td>Internal link integrity (no broken links)</td><td>&#10003; Complete</td></tr>
+      <tr><td>17</td><td>FTC-compliant affiliate disclosure</td><td>&#10003; Complete</td></tr>
+      <tr><td>18</td><td>GitHub Pages deployment</td><td>&#10003; Complete</td></tr>
+      <tr><td>19</td><td>Delivery documentation (this document)</td><td>&#10003; Complete</td></tr>
+    </tbody>
+  </table>
+
+  <div class="success-box">
+    <p><strong>Project Complete.</strong> All Milestone 2 deliverables have been built, tested, and deployed. The site is live and ready for your affiliate tracking IDs. If you have any questions or need revisions, don't hesitate to reach out.</p>
+  </div>
+
+  <hr>
+
+  <h2>Support &amp; Revisions</h2>
+  <p>This delivery includes <strong>up to 2 rounds of revisions</strong>. If anything needs adjusting — content tweaks, layout changes, or technical fixes — just let me know and I'll get it sorted.</p>
+
+  <p>For affiliate link questions, the <code>AFFILIATE-SETUP.md</code> file in your project has complete step-by-step instructions with examples for every product. That's your go-to reference for managing links going forward.</p>
+
+</div>
+
+<div class="footer">
+  Confidential &mdash; Prepared by All Done Sites &bull; April 2026
+</div>
+
+</body>
+</html>

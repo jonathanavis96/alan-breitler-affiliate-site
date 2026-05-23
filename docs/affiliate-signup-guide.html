@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Affiliate Network Signup Guide — AIfocus</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: #2d3748;
+    font-size: 14px;
+    line-height: 1.7;
+    background: #fff;
+  }
+
+  /* Cover / Header */
+  .cover {
+    background: #1a2332;
+    color: #fff;
+    padding: 40px 60px 50px;
+    margin-bottom: 0;
+  }
+  .cover .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .cover .brand-logo {
+    width: 48px;
+    height: 48px;
+    display: block;
+  }
+  .cover .brand-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.5px;
+  }
+  .cover h1 {
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 6px;
+    letter-spacing: -0.5px;
+  }
+  .cover .subtitle {
+    font-size: 20px;
+    color: #8899aa;
+    font-weight: 400;
+    margin-bottom: 8px;
+  }
+  .cover .report-type {
+    color: #0AADCF;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .cover .meta {
+    font-size: 13px;
+    color: #667788;
+  }
+  .cover .meta span { margin-right: 8px; }
+  .cover .cyan-bar {
+    width: 48px;
+    height: 4px;
+    background: #0AADCF;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+
+  /* Content */
+  .content {
+    padding: 40px 60px;
+    max-width: 100%;
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a2332;
+    margin-top: 36px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid #0AADCF;
+  }
+  h2:first-child { margin-top: 0; }
+
+  h3 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #0AADCF;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-top: 24px;
+    margin-bottom: 10px;
+  }
+
+  h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a2332;
+    margin-top: 18px;
+    margin-bottom: 8px;
+  }
+
+  p { margin-bottom: 12px; }
+
+  ul, ol {
+    margin-bottom: 14px;
+    padding-left: 20px;
+  }
+  li {
+    margin-bottom: 5px;
+  }
+  li strong { color: #1a2332; }
+
+  a { color: #0AADCF; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  code {
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    color: #475569;
+  }
+
+  /* Overview box */
+  .overview-box {
+    background: #f8fafc;
+    border-left: 4px solid #0AADCF;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+    border-radius: 0 6px 6px 0;
+  }
+  .overview-box h2 {
+    border: none;
+    margin-top: 0;
+    padding-bottom: 4px;
+    font-size: 20px;
+  }
+  .overview-box ul { list-style: disc; }
+
+  /* Highlight box */
+  .highlight-box {
+    background: #fffbeb;
+    border-left: 4px solid #FFB347;
+    padding: 16px 20px;
+    margin: 16px 0 20px;
+    border-radius: 0 4px 4px 0;
+  }
+  .highlight-box strong { color: #92400e; }
+  .highlight-box p { margin-bottom: 6px; }
+  .highlight-box p:last-child { margin-bottom: 0; }
+
+  /* Success box */
+  .success-box {
+    background: #f0fdf4;
+    border-left: 4px solid #22c55e;
+    padding: 16px 20px;
+    margin: 16px 0 20px;
+    border-radius: 0 4px 4px 0;
+  }
+  .success-box strong { color: #166534; }
+  .success-box p { margin-bottom: 6px; }
+  .success-box p:last-child { margin-bottom: 0; }
+
+  /* Why-it-matters box */
+  .why {
+    background: #f0f9ff;
+    border-left: 3px solid #0AADCF;
+    padding: 12px 16px;
+    margin: 16px 0 20px;
+    font-size: 13px;
+    color: #334155;
+    border-radius: 0 4px 4px 0;
+  }
+  .why strong { color: #0AADCF; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 13px;
+  }
+  thead th {
+    background: #1a2332;
+    color: #fff;
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #e8ecf0;
+    vertical-align: top;
+  }
+  tbody tr:nth-child(even) { background: #f8fafc; }
+  tbody td strong { color: #1a2332; }
+
+  /* Network card */
+  .network {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin: 20px 0 28px;
+    background: #fff;
+    page-break-inside: avoid;
+  }
+  .network .network-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+  .network .network-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1a2332;
+    margin: 0;
+  }
+  .network .network-title .num {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    background: #0AADCF;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    font-size: 14px;
+    font-weight: 700;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+  .network .covers {
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .network .covers strong { color: #1a2332; }
+  .network .url-row {
+    background: #f1f5f9;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin: 14px 0;
+    font-size: 13px;
+    word-break: break-all;
+  }
+  .network .url-row .label {
+    font-weight: 600;
+    color: #475569;
+    margin-right: 8px;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.8px;
+  }
+  .network h4 {
+    margin-top: 18px;
+    margin-bottom: 8px;
+  }
+  .network ol {
+    padding-left: 20px;
+    margin-bottom: 14px;
+  }
+  .network ol li {
+    margin-bottom: 6px;
+  }
+  .network .commission {
+    background: #f8fafc;
+    border-left: 3px solid #0AADCF;
+    padding: 12px 16px;
+    margin-top: 14px;
+    font-size: 13px;
+    border-radius: 0 4px 4px 0;
+  }
+  .network .commission strong { color: #0AADCF; }
+
+  /* Approval pill */
+  .pill {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  .pill-easy { background: #d1fae5; color: #065f46; }
+  .pill-fast { background: #fef3c7; color: #92400e; }
+
+  /* Timeline */
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 14px 0 20px;
+  }
+  .timeline li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 16px;
+    background: #f8fafc;
+    border-left: 3px solid #0AADCF;
+    margin-bottom: 8px;
+    border-radius: 0 6px 6px 0;
+  }
+  .timeline li .day {
+    flex-shrink: 0;
+    display: inline-block;
+    /* min-width keeps every pill the same horizontal size — otherwise
+       "Day 1" and "Days 5-7" produce a ragged left edge for the text. */
+    min-width: 84px;
+    text-align: center;
+    background: #0AADCF;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  /* Code blocks */
+  pre {
+    background: #f1f5f9;
+    border-radius: 6px;
+    padding: 16px 20px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    overflow-x: auto;
+    margin-bottom: 16px;
+    color: #475569;
+  }
+
+  /* Divider */
+  hr {
+    border: none;
+    height: 3px;
+    background: linear-gradient(90deg, #0AADCF 80px, #e8ecf0 80px);
+    margin: 32px 0;
+  }
+
+  /* Page break */
+  .page-break { page-break-before: always; }
+
+  /* Footer */
+  .footer {
+    font-size: 11px;
+    color: #94a3b8;
+    text-align: center;
+    padding: 20px 60px;
+    border-top: 1px solid #e8ecf0;
+    margin-top: 40px;
+  }
+
+  /* Checklist */
+  .checklist {
+    list-style: none;
+    padding-left: 0;
+  }
+  .checklist li {
+    padding-left: 28px;
+    position: relative;
+    margin-bottom: 8px;
+  }
+  .checklist li::before {
+    content: "☐";
+    position: absolute;
+    left: 0;
+    font-size: 16px;
+    color: #0AADCF;
+  }
+
+  @media print {
+    body { font-size: 13px; }
+    .cover { padding: 30px 40px 40px; }
+    .content { padding: 30px 40px; }
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+    /* Reserve bottom page margin so the fixed footer never overlaps content. */
+    @page {
+      margin: 0 0 0.6in 0;
+    }
+    /* Each major section (h2) starts on its own page so the doc reads as
+       cleanly chunked content instead of a continuous wall of text.
+       The first H2 (inside .overview-box) is excluded — it has to sit
+       directly under the cover. */
+    h2 { page-break-before: always; break-before: page; }
+    .overview-box h2,
+    h2.no-break { page-break-before: auto; break-before: auto; }
+    /* Keep section title attached to the content that follows it. */
+    h2 { page-break-after: avoid; break-after: avoid; }
+    /* Keep network cards together — better than breaking mid-card. */
+    .network { page-break-inside: avoid; break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cover Header -->
+<div class="cover">
+  <div class="brand">
+    <img class="brand-logo" src="../scripts/assets/logo.svg" alt="All Done Sites">
+    <div class="brand-name">All Done Sites</div>
+  </div>
+  <div class="cyan-bar"></div>
+  <h1>Affiliate Network Signup Guide</h1>
+  <div class="subtitle">AIfocus &mdash; Action pack for client signup</div>
+  <div class="report-type">Step-by-step walkthrough for 4 networks</div>
+  <div class="meta">
+    <span>Prepared: May 2026</span> &bull;
+    <span>Version: 1.0</span> &bull;
+    <span>Live site: aifocus.work</span>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="content">
+
+  <div class="overview-box">
+    <h2>What this pack does</h2>
+    <p>This guide walks you through signing up for the <strong>four affiliate networks</strong> that cover the AI tools currently on AIfocus plus the four new tools launching with the next content drop.</p>
+    <p>You only need to sign up to the <strong>networks</strong>, not to each tool individually &mdash; once approved on a network, you apply to specific tool programs from inside its dashboard.</p>
+    <ul>
+      <li><strong>Total time:</strong> ~30 minutes to submit all four applications</li>
+      <li><strong>Approval:</strong> 1&ndash;7 days, depending on the network</li>
+      <li><strong>Your action items:</strong> create accounts, apply to tool programs, send the tracking URLs to me</li>
+    </ul>
+  </div>
+
+  <h2>Why these four networks</h2>
+  <p>The seven AI tools currently on the site, plus the four new tools launching with the next content update, all run their affiliate programmes through one of these four networks. Sign up to all four and you are covered for the full lineup.</p>
+
+  <table>
+    <thead><tr><th>Network</th><th>Tools it covers</th><th>Approval bar</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Impact</strong></td><td>Grammarly, Otter.ai</td><td><span class="pill pill-easy">Easy (1&ndash;5 days)</span></td></tr>
+      <tr><td><strong>PartnerStack</strong></td><td>Consensus, QuillBot</td><td><span class="pill pill-easy">Easy (~1 week)</span></td></tr>
+      <tr><td><strong>ShareASale</strong></td><td>Scite.ai</td><td><span class="pill pill-easy">Easy (1&ndash;3 days)</span></td></tr>
+      <tr><td><strong>Dub.co</strong></td><td>Perplexity Pro</td><td><span class="pill pill-fast">Near-instant</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="why">
+    <strong>Heads up:</strong> a handful of the AI tools featured on the site (ChatGPT, Claude, Midjourney, GitHub Copilot, Elicit) <em>do not</em> currently offer a public affiliate programme. They are kept on the site for SEO and discovery, but they are not part of the revenue plan. See the table at the end of this guide so you don't waste time hunting for them.
+  </div>
+
+  <h2>Before you start</h2>
+  <p>Gather these once and they will speed every signup up:</p>
+  <ul class="checklist">
+    <li>A bank account or PayPal account &mdash; most networks pay by ACH or bank transfer; some support PayPal</li>
+    <li>A US tax form &mdash; <strong>W-9</strong> if US resident, <strong>W-8BEN</strong> if not. Networks will prompt you to upload it during signup.</li>
+    <li>The site URL: <a href="https://aifocus.work">https://aifocus.work</a></li>
+    <li>A short site description, e.g. <em>"AIfocus is an independent review site for AI tools used in academic research, writing, and analysis. We score tools across ease of use, academic value, and price-to-value to help researchers, students, and educators pick the right tools."</em></li>
+    <li>Approximate monthly traffic &mdash; even "new site, ramping up" is fine</li>
+  </ul>
+
+  <div class="highlight-box">
+    <p><strong>When asked for the promotional method,</strong> pick <strong>"content site"</strong> or <strong>"review site"</strong>. Some forms ask <em>website</em> vs <em>social</em> &mdash; pick website / content.</p>
+  </div>
+
+
+  <h2>1. Impact &mdash; Grammarly + Otter.ai</h2>
+  <div class="network">
+    <div class="network-head">
+      <h3 class="network-title"><span class="num">1</span>Impact</h3>
+      <div class="covers">Covers: <strong>Grammarly</strong> &middot; <strong>Otter.ai</strong></div>
+    </div>
+    <div class="url-row">
+      <span class="label">Signup URL</span>
+      <a href="https://app.impact.com/secure/sign-up">https://app.impact.com/secure/sign-up</a>
+    </div>
+
+    <h4>Steps</h4>
+    <ol>
+      <li>Open the signup URL above and click <strong>"Sign up as a publisher"</strong>.</li>
+      <li>Fill in your basic account details (name, email, password).</li>
+      <li>On the company-details screen, enter your name or business name, the website <code>https://aifocus.work</code>, and your country.</li>
+      <li>Verify your email via the link Impact sends.</li>
+      <li>Once inside the dashboard, go to <strong>Brands &rarr; Find brands</strong> in the left sidebar and search for <strong>"Grammarly"</strong>. Click <em>Apply</em>.</li>
+      <li>Search for <strong>"Otter.ai"</strong> and click <em>Apply</em>.</li>
+    </ol>
+
+    <h4>After approval</h4>
+    <p>For each tool, Impact will issue a unique tracking link. Send those to me &mdash; I will plug them into the site's affiliate registry within minutes.</p>
+
+    <div class="commission">
+      <strong>Commission</strong> &nbsp;|&nbsp;
+      <strong>Grammarly:</strong> $20 per premium signup, $0.20 per free signup, 90-day cookie, $50 minimum payout. Volume bonuses up to $800/mo.
+      <br><strong>Otter.ai:</strong> ~20&ndash;25% per sale, 30-day cookie, $10 minimum payout, NET30 (paid 30 days after month-end).
+    </div>
+  </div>
+
+  <h2>2. PartnerStack &mdash; Consensus + QuillBot</h2>
+  <div class="network">
+    <div class="network-head">
+      <h3 class="network-title"><span class="num">2</span>PartnerStack</h3>
+      <div class="covers">Covers: <strong>Consensus</strong> &middot; <strong>QuillBot</strong></div>
+    </div>
+    <div class="url-row">
+      <span class="label">Signup URL</span>
+      <a href="https://market.partnerstack.com/">https://market.partnerstack.com/</a>
+    </div>
+
+    <h4>Steps</h4>
+    <ol>
+      <li>Open the signup URL and click <strong>"Become a partner"</strong> or <strong>"Sign up"</strong>, whichever is visible.</li>
+      <li>Choose <strong>"Marketing partner"</strong> or <strong>"Affiliate"</strong> when prompted.</li>
+      <li>Fill in your partner profile: name / company name, website (<code>https://aifocus.work</code>), short audience description for academic readers, and tick <em>website</em> / <em>content</em> as promotional methods.</li>
+      <li>Verify your email.</li>
+      <li>From the PartnerStack dashboard, click <strong>Marketplace</strong> in the left sidebar. Search for and apply to <strong>Consensus</strong> (sometimes filed under "Consensus NLP") and <strong>QuillBot</strong>.</li>
+    </ol>
+
+    <div class="commission">
+      <strong>Commission</strong> &nbsp;|&nbsp;
+      <strong>Consensus:</strong> 30% recurring commission for 12 months. Roughly $36 per paying signup at current pricing.
+      <br><strong>QuillBot:</strong> 10&ndash;20% recurring (up to ~$20 per subscriber), 30-day cookie. Tier scales with subscriber plan.
+    </div>
+  </div>
+
+
+  <h2>3. ShareASale &mdash; Scite.ai</h2>
+  <div class="network">
+    <div class="network-head">
+      <h3 class="network-title"><span class="num">3</span>ShareASale</h3>
+      <div class="covers">Covers: <strong>Scite.ai</strong></div>
+    </div>
+    <div class="url-row">
+      <span class="label">Signup URL</span>
+      <a href="https://www.shareasale.com/info/affiliates/">https://www.shareasale.com/info/affiliates/</a>
+    </div>
+
+    <h4>Steps</h4>
+    <ol>
+      <li>Click <strong>"Start"</strong> or <strong>"Affiliate sign up"</strong>.</li>
+      <li>Choose a unique username &mdash; this becomes part of your tracking links, so pick something professional (e.g. <code>aifocus-alan</code>).</li>
+      <li>Fill in personal / business details and verify your email.</li>
+      <li>ShareASale will ask for your website plus a tax form (W-9 or W-8BEN). Upload both.</li>
+      <li>Once your account is approved (email confirmation), log in and search the merchant list for <strong>"scite"</strong>. Click <em>Join programme</em>.</li>
+    </ol>
+
+    <div class="commission">
+      <strong>Commission</strong> &nbsp;|&nbsp;
+      <strong>Scite.ai:</strong> 20% per sale, 30-day cookie (default).
+    </div>
+  </div>
+
+  <h2>4. Dub.co &mdash; Perplexity Pro</h2>
+  <div class="network">
+    <div class="network-head">
+      <h3 class="network-title"><span class="num">4</span>Dub.co</h3>
+      <div class="covers">Covers: <strong>Perplexity Pro</strong></div>
+    </div>
+    <div class="url-row">
+      <span class="label">Signup URL</span>
+      <a href="https://partners.dub.co/perplexity/register">https://partners.dub.co/perplexity/register</a>
+    </div>
+
+    <div class="highlight-box">
+      <p><strong>Note:</strong> use the link above. It's the Perplexity-specific Dub.co referral programme &mdash; not the generic Dub.co signup, which is for something different.</p>
+    </div>
+
+    <h4>Steps</h4>
+    <ol>
+      <li>Open the signup URL above.</li>
+      <li>Enter your email and create a password.</li>
+      <li>Fill in basic profile info: name, website (<code>https://aifocus.work</code>), country, audience description.</li>
+      <li>You will get an immediate tracking link or a short approval review &mdash; usually approved within minutes.</li>
+    </ol>
+
+    <div class="commission">
+      <strong>Commission</strong> &nbsp;|&nbsp;
+      <strong>Perplexity Pro:</strong> $10 flat per Pro signup + 10% recurring; $2 bonus per Comet trial. Link-attributed (no traditional cookie &mdash; Dub.co tracks by short-link click).
+    </div>
+  </div>
+
+
+  <h2>After all approvals &mdash; sending tracking URLs to me</h2>
+  <p>For each approved program you will receive a unique tracking URL that looks something like this:</p>
+
+  <pre>Impact         &rarr;  https://imp.i123456.net/abc123XYZ
+PartnerStack   &rarr;  https://partnerstack.consensus.app/?ps_partner_key=...
+ShareASale     &rarr;  https://www.shareasale.com/r.cfm?b=12345&amp;u=abc&amp;m=...
+Dub.co         &rarr;  https://refer.perplexity.ai/abc123</pre>
+
+  <div class="success-box">
+    <p><strong>Send all six URLs in a single message</strong> with the tool each belongs to (Grammarly, Otter.ai, Consensus, QuillBot, Scite.ai, Perplexity Pro). I will plug them into the site's affiliate registry, commit, and within ~2 minutes the live site at <strong>aifocus.work</strong> will redirect through your new tracking links.</p>
+    <p>The in-content "go to tool" buttons all use the <code>/go/&lt;slug&gt;/</code> redirect URL pattern (e.g. <code>/go/grammarly-ai/</code>), so the content side never needs updating &mdash; just the redirect destinations.</p>
+  </div>
+
+  <h2>Tools without affiliate programmes</h2>
+  <p>Five tools on the site don't currently have a public affiliate programme. They are kept on the site for SEO and brand-recognition value &mdash; readers search for these tools by name, land on AIfocus, and then convert on the <em>other</em> tools that do have programmes. Don't waste time hunting for links to these:</p>
+
+  <table>
+    <thead><tr><th>Tool</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td><strong>ChatGPT / OpenAI</strong></td><td>No public programme. Enterprise partner intake only.</td></tr>
+      <tr><td><strong>Claude / Anthropic</strong></td><td>No public programme. Mar 2026 launched an enterprise consulting partner network, not affiliate.</td></tr>
+      <tr><td><strong>Midjourney</strong></td><td>No cash programme. Referral system pays existing Pro users in GPU hours, not commission.</td></tr>
+      <tr><td><strong>GitHub Copilot</strong></td><td>No affiliate. Their Partner Programme is for tech extensions, not commissions.</td></tr>
+      <tr><td><strong>Elicit</strong></td><td>Programme closed 12 May 2025. Not accepting new affiliates.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Timeline expectation</h2>
+  <p>If you start all four signups today:</p>
+
+  <ul class="timeline">
+    <li><span class="day">Day 1</span>Dub.co (Perplexity) link is live within an hour</li>
+    <li><span class="day">Days 1&ndash;3</span>ShareASale approval (Scite.ai)</li>
+    <li><span class="day">Days 1&ndash;5</span>Impact approval (Grammarly + Otter.ai)</li>
+    <li><span class="day">Days 5&ndash;7</span>PartnerStack approval (Consensus + QuillBot)</li>
+  </ul>
+
+  <p>Worst-case, you will have all six tracking URLs in hand within a week. The site is ready to plug them in the moment they arrive.</p>
+
+  <h2>If a network rejects you</h2>
+  <p>Rare on these four &mdash; they're all fairly easy approval bars for a content site. If it does happen:</p>
+  <ul>
+    <li>Most rejections cite "insufficient traffic" or "site not ready". Reply to the rejection email with a screenshot of the live site, emphasise it is a new but professionally produced review site, and ask for reconsideration. Approval after appeal is common.</li>
+    <li>If it is a hard "no", let me know and we will look at alternative networks (e.g. CJ Affiliate or Awin sometimes carry overlapping brands).</li>
+  </ul>
+
+  <div class="success-box">
+    <p><strong>That's it.</strong> Once you have the tracking URLs in hand, send them across in one go. The site has everything else ready and the moment they go in, every "go to tool" button on aifocus.work starts earning revenue.</p>
+  </div>
+
+</div>
+
+<div class="footer">
+  All Done Sites &bull; AIfocus Affiliate Network Signup Guide &bull; v1.0 &bull; May 2026
+</div>
+
+</body>
+</html>
