@@ -45,4 +45,3 @@ See you on Thursday.
 Alan Breitler
 Founder, AIfocus
 https://aifocus.work
-https://aifocus.work

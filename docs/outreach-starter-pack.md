@@ -20,10 +20,10 @@ Outreach is most efficient when you focus on a small number of audience types wh
 
 Highest return per pitch. These are people who actively need content to fill a weekly slot.
 
-- **The Sentinel** (academic AI newsletter, ~12K subscribers)
+- **One Useful Thing** (Ethan Mollick, Wharton) — the most widely-read practical-AI Substack, with a large faculty and graduate readership
+- **AI, academia, and the Future** (Bryan Alexander) — higher-ed futurist Substack focused squarely on AI in universities (aiandacademia.substack.com)
 - **Inside Higher Ed's Daily News** — feature submissions accepted
 - **Times Higher Education's Hub** — opinion piece submissions
-- **AI in Academia** Substack — guest essay submissions
 - **The Scholarly Kitchen** — guest post submissions on AI/scholarly publishing intersection
 - **Discipline-specific AI newsletters** — search "[your field] AI newsletter Substack" and start a list
 
@@ -56,9 +56,9 @@ Lower per-contact value, but cumulative reach is significant if you do it withou
 
 Long lead time but high payoff. A single mention in a Chronicle of Higher Education or Inside Higher Ed article can drive significant referral traffic.
 
-- Beth McMurtrie (Chronicle, covers AI in academia extensively)
-- John Warner (Inside Higher Ed columnist on writing/teaching)
-- Pat Walters / discipline-specific science journalists who cover research tools
+- Beth McMurtrie (Chronicle senior writer covering AI in teaching; writes the weekly Teaching newsletter)
+- John Warner (writes on AI, writing and teaching; Inside Higher Ed columnist and Substack author)
+- Richard Van Noorden (Nature features editor; covers AI tools in scientific research)
 
 ---
 

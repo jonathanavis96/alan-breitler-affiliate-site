@@ -21,7 +21,7 @@ Use it for: working through a difficult section of a draft, summarising a long d
 → https://aifocus.work/reviews/claude-pro/
 
 **Grammarly — running in the background**
-Replaced: nothing. It is genuinely the only tool I have ever installed and forgotten about while still using daily.
+Replaced: nothing. It is genuinely the only tool we have ever installed and forgotten about while still using daily.
 
 Grammarly Premium catches the basic errors and the tone-register mismatches that even careful writers introduce in long drafts. The inline integration in Google Docs and Word means there is no workflow to learn — the tool just exists in the background and surfaces corrections as you write. For academics who write English as a second language, the Fluency suggestions in particular are excellent.
 
@@ -41,7 +41,7 @@ Free tier is enough for occasional use. The annual Premium plan at $9.95/month e
 → https://aifocus.work/reviews/quillbot/
 
 **Perplexity Pro — the new search habit**
-Replaced: half of my Google Scholar usage.
+Replaced: half of our Google Scholar usage.
 
 For the early phase of any new research question — when you do not yet know what specific question to ask — Perplexity has become our default. Every answer includes inline citations to the actual sources, so you can verify what the tool is telling you. Pro plan lets you switch between GPT-4, Claude, Sonar, and Gemini per question, which is the underrated feature that justifies the upgrade.
 
@@ -61,7 +61,6 @@ Next email (Day 14): what's coming next on AIfocus, plus a small ask.
 
 Alan Breitler
 Founder, AIfocus
-https://aifocus.work
 https://aifocus.work
 
 —

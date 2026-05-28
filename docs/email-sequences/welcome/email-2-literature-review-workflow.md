@@ -41,7 +41,6 @@ If you have questions about adapting this workflow to your specific field, reply
 Alan Breitler
 Founder, AIfocus
 https://aifocus.work
-https://aifocus.work
 
 —
 This email contains affiliate links. We may earn a small commission if you sign up through these links, at no extra cost to you. We only recommend tools we genuinely use. Full disclosure: https://aifocus.work/disclosure/

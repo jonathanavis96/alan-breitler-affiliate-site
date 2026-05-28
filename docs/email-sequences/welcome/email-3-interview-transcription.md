@@ -51,7 +51,6 @@ Next email (next Tuesday): the tools we actually reach for every day, and what e
 Alan Breitler
 Founder, AIfocus
 https://aifocus.work
-https://aifocus.work
 
 —
 This email contains affiliate links. We may earn a small commission if you sign up through these links, at no extra cost to you. We only recommend tools we genuinely use. Full disclosure: https://aifocus.work/disclosure/

@@ -36,8 +36,8 @@ Capture screenshots / numbers for:
 
 ### 2. Google Analytics 4 — who is actually visiting?
 
-Once Alan has shared GA4 admin access (currently blocked — see milestone
-notes), log in and capture:
+Log in to GA4 (admin access confirmed for jonathanavis96@gmail.com) and
+capture:
 
 - **Reports → Engagement → Pages and screens** — top 10 pages by views over
   the last 28 days. The expectation is the homepage dominates, with the
@@ -70,10 +70,10 @@ account → aifocus.work).
   the rule is still Active and has fired a healthy number of times (>500 in
   30 days is normal for a public domain).
 
-### 4. Newsletter (if live by day 30)
+### 4. Newsletter
 
-If Alan has signed up for Buttondown and the form has been live for any
-meaningful time:
+The Buttondown signup form went live on 2026-05-28, so by day 30 it will
+have been collecting for several weeks:
 
 - **Total subscribers** — Buttondown dashboard.
 - **Subscriber sources** — Buttondown captures the `source` parameter we
