@@ -13,30 +13,32 @@
       "slug": "URL identifier — must match the affiliateSlug in products.json (do not change)",
       "name": "Product display name — for your reference only (does not appear on site)",
       "destination": "The URL visitors are redirected to — REPLACE with your real affiliate tracking URL",
-      "network": "Which affiliate network or program manages this link (for your reference)",
-      "placeholder": "true = this link still uses a placeholder URL and needs your real tracking link",
+      "network": "Which affiliate network or program manages this link (for your reference). 'none' means the tool has no public affiliate program, so the link stays as a standard referral link.",
+      "placeholder": "true = this link still uses a placeholder URL and needs your real tracking link. false = final URL (either a real tracking URL, or a standard link for a tool with no program)",
       "active": "true = link is live on the site, false = link is disabled (button still shows but goes nowhere)"
     },
     "signup_urls": {
-      "impact": "https://app.impact.com — ChatGPT Plus and GitHub Copilot affiliate programs",
-      "partnerstack": "https://partnerstack.com — Consensus and Elicit affiliate programs",
-      "shareasale": "https://www.shareasale.com — Grammarly affiliate program",
-      "direct": "Contact the company directly — Midjourney and Claude/Anthropic"
+      "impact": "https://app.impact.com — Grammarly and Otter.ai affiliate programs",
+      "partnerstack": "https://market.partnerstack.com — Consensus and QuillBot affiliate programs",
+      "shareasale": "https://www.shareasale.com — Scite.ai affiliate program",
+      "dub.co": "https://partners.dub.co/perplexity/register — Perplexity Pro affiliate program",
+      "none": "No public affiliate program — ChatGPT/OpenAI, Claude/Anthropic, Midjourney, GitHub Copilot and Elicit do not offer one (Elicit's closed in 2025). These links stay as standard referral links and earn nothing; that is expected, not a setup gap."
     },
     "important_notes": [
       "All affiliate links on the site automatically include rel='nofollow sponsored' for compliance",
       "The /go/ redirect pages are excluded from search engines via robots.txt and noindex tags",
       "You can disable any product's affiliate link by setting 'active' to false",
-      "After updating, always test each link to confirm it redirects correctly"
+      "After updating, always test each link to confirm it redirects correctly",
+      "Six tools earn commission once their tracking URLs are added (network: impact, partnerstack, shareasale, dub.co). The five with network 'none' have no program and remain standard links."
     ]
   },
   "links": [
     {
       "slug": "chatgpt-plus",
       "name": "ChatGPT Plus (OpenAI)",
-      "destination": "https://chat.openai.com/upgrade?ref=REPLACE_WITH_YOUR_TRACKING_ID",
-      "network": "impact",
-      "placeholder": true,
+      "destination": "https://chat.openai.com/upgrade",
+      "network": "none",
+      "placeholder": false,
       "active": true
     },
     {
@@ -50,48 +52,48 @@
     {
       "slug": "midjourney",
       "name": "Midjourney",
-      "destination": "https://www.midjourney.com/account/?ref=REPLACE_WITH_YOUR_TRACKING_ID",
-      "network": "direct",
-      "placeholder": true,
+      "destination": "https://www.midjourney.com/",
+      "network": "none",
+      "placeholder": false,
       "active": true
     },
     {
       "slug": "github-copilot",
       "name": "GitHub Copilot",
-      "destination": "https://github.com/features/copilot?ref=REPLACE_WITH_YOUR_TRACKING_ID",
-      "network": "impact",
-      "placeholder": true,
+      "destination": "https://github.com/features/copilot",
+      "network": "none",
+      "placeholder": false,
       "active": true
     },
     {
       "slug": "elicit-ai",
       "name": "Elicit",
-      "destination": "https://elicit.com/?ref=REPLACE_WITH_YOUR_TRACKING_ID",
-      "network": "partnerstack",
-      "placeholder": true,
+      "destination": "https://elicit.com/",
+      "network": "none",
+      "placeholder": false,
       "active": true
     },
     {
       "slug": "grammarly-ai",
       "name": "Grammarly with AI",
       "destination": "https://www.grammarly.com/plans?ref=REPLACE_WITH_YOUR_TRACKING_ID",
-      "network": "shareasale",
+      "network": "impact",
       "placeholder": true,
       "active": true
     },
     {
       "slug": "claude-pro",
       "name": "Claude Pro (Anthropic)",
-      "destination": "https://claude.ai/upgrade?ref=REPLACE_WITH_YOUR_TRACKING_ID",
-      "network": "direct",
-      "placeholder": true,
+      "destination": "https://claude.ai/upgrade",
+      "network": "none",
+      "placeholder": false,
       "active": true
     },
     {
       "slug": "quillbot",
       "name": "QuillBot (Chegg)",
       "destination": "https://quillbot.com/?ref=REPLACE_WITH_YOUR_TRACKING_ID",
-      "network": "impact",
+      "network": "partnerstack",
       "placeholder": true,
       "active": true
     },
@@ -99,7 +101,7 @@
       "slug": "otter-ai",
       "name": "Otter.ai",
       "destination": "https://otter.ai/?ref=REPLACE_WITH_YOUR_TRACKING_ID",
-      "network": "partnerstack",
+      "network": "impact",
       "placeholder": true,
       "active": true
     },
@@ -107,7 +109,7 @@
       "slug": "scite-ai",
       "name": "Scite.ai",
       "destination": "https://scite.ai/?ref=REPLACE_WITH_YOUR_TRACKING_ID",
-      "network": "direct",
+      "network": "shareasale",
       "placeholder": true,
       "active": true
     },
@@ -115,7 +117,7 @@
       "slug": "perplexity-pro",
       "name": "Perplexity Pro",
       "destination": "https://www.perplexity.ai/pro?ref=REPLACE_WITH_YOUR_TRACKING_ID",
-      "network": "direct",
+      "network": "dub.co",
       "placeholder": true,
       "active": true
     }
