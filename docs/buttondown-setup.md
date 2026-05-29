@@ -22,8 +22,12 @@ things: sign up, then paste your username into one config file.
 3. Pick a username. **Make a note of this — you'll need it in Step 3.**
    - Recommended: use `aifocus` if available, otherwise `aifocus-work` or `alanbreitler`.
    - The username appears in the embed URL — keep it short and on-brand.
-4. Pick the Free plan to start (100 subscribers, fully functional). You can
-   upgrade to Standard ($9/mo) when you cross 100 subscribers.
+4. Pick the Free plan to start (100 subscribers, no card required). One thing
+   to know up front: the Free plan covers the signup form and one-off
+   newsletters, but it does **not** include automations — so the automated
+   5-email welcome sequence in Step 6 needs Buttondown's **Basic plan
+   ($9/month)**. You can stay on Free until you're ready to switch the
+   sequence on.
 5. Confirm your email when the verification email arrives.
 
 That's the whole signup. No need to design a form, customise a template, or set
@@ -117,6 +121,12 @@ trailing slash, no spaces).
 
 ## Step 6 — Set up the welcome sequence
 
+**Plan requirement:** automations — and therefore this welcome sequence — are
+part of Buttondown's **Basic plan ($9/month)**, not the Free plan. The signup
+form and regular newsletters work on Free; only the automated drip needs the
+upgrade. (On Free, the one email Buttondown still sends automatically is the
+opt-in confirmation, and you can customise its wording into a short welcome.)
+
 You have 5 pre-written welcome emails in `docs/email-sequences/welcome/` ready
 to load into Buttondown. To set them up:
 
@@ -151,15 +161,16 @@ immediately, email 2 in two days, and so on.
 
 ## Cost summary
 
-| Tier | Subscribers | Price/month |
-|---|---|---|
-| Free | 0–100 | $0 |
-| Standard | 101–1,000 | $9 |
-| Plus | 1,001–10,000 | $29 |
-| Pro | 10,001+ | $79 |
+| Plan | Includes automations? |
+|---|---|
+| Free (up to 100 subscribers) | No |
+| Basic ($9/month) | Yes |
 
-The Free tier is enough to validate everything works and to start collecting
-your first hundred subscribers. Upgrade when you cross 100.
+The Free tier runs the signup form and one-off newsletters at no cost.
+**Basic ($9/month)** is the first tier that includes **automations**, which the
+5-email welcome sequence in Step 6 needs. Buttondown has higher tiers for
+larger lists; names, prices, and limits change over time, so check
+buttondown.com/pricing for current details before upgrading.
 
 ---
 
