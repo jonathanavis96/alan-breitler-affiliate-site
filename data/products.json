@@ -337,6 +337,37 @@
         "Citation quality varies; always verify before quoting in published work"
       ],
       "verdict": "The best AI answer engine for researchers. Combines live web search with structured citations and is the fastest tool for the early exploratory phase of any research question."
+    },
+    {
+      "slug": "submagic",
+      "name": "Submagic",
+      "brand": "Submagic",
+      "categories": ["video-media"],
+      "image": "/images/products/submagic.webp",
+      "affiliateSlug": "submagic",
+      "pricing": "$19/mo",
+      "freeTier": true,
+      "freeTierNote": "Free plan covers 3 videos a month (with a watermark); paid plans from $12/mo billed yearly remove it and add length",
+      "badge": "Best for Short-Form Video",
+      "scores": {
+        "ease_of_use": 9,
+        "academic_value": 7,
+        "price_to_value": 8
+      },
+      "overallScore": 8.0,
+      "useCase": "Captioned clips, lecture and talk highlights, science communication",
+      "pros": [
+        "Auto-generates accurate, styled captions in seconds — strong for accessibility and silent-scroll social feeds",
+        "Magic Clips pulls the best short segments out of a long lecture or talk automatically",
+        "B-roll, auto-zoom, and translation make a recorded talk look produced without an editor",
+        "Genuinely fast learning curve — usable on day one with no video-editing background"
+      ],
+      "cons": [
+        "Built for creators and marketers, not academics — the academic use case is real but secondary",
+        "Free plan is limited to 3 short, watermarked videos a month",
+        "Caption accuracy still needs a proofread for technical terms, names, and equations"
+      ],
+      "verdict": "The fastest way to turn a lecture, talk, or research explainer into a captioned clip people will actually watch. A creator tool at heart, but a genuinely useful one for academics doing science communication."
     }
   ]
 }

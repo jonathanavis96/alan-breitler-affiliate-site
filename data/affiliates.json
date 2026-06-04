@@ -22,6 +22,7 @@
       "partnerstack": "https://market.partnerstack.com — Consensus and QuillBot affiliate programs",
       "shareasale": "https://www.shareasale.com — Scite.ai affiliate program",
       "dub.co": "https://partners.dub.co/perplexity/register — Perplexity Pro affiliate program",
+      "submagic": "https://www.submagic.co/affiliate — Submagic in-house affiliate program (already live with your tracking link)",
       "none": "No public affiliate program — ChatGPT/OpenAI, Claude/Anthropic, Midjourney, GitHub Copilot and Elicit do not offer one (Elicit's closed in 2025). These links stay as standard referral links and earn nothing; that is expected, not a setup gap."
     },
     "important_notes": [
@@ -29,7 +30,8 @@
       "The /go/ redirect pages are excluded from search engines via robots.txt and noindex tags",
       "You can disable any product's affiliate link by setting 'active' to false",
       "After updating, always test each link to confirm it redirects correctly",
-      "Six tools earn commission once their tracking URLs are added (network: impact, partnerstack, shareasale, dub.co). The five with network 'none' have no program and remain standard links."
+      "Submagic is already earning — its link uses your live tracking URL (via=alan83), so commissions start as soon as visitors click through and subscribe.",
+      "Six more tools earn commission once their tracking URLs are added (network: impact, partnerstack, shareasale, dub.co). The five with network 'none' have no program and remain standard links."
     ]
   },
   "links": [
@@ -119,6 +121,14 @@
       "destination": "https://www.perplexity.ai/pro?ref=REPLACE_WITH_YOUR_TRACKING_ID",
       "network": "dub.co",
       "placeholder": true,
+      "active": true
+    },
+    {
+      "slug": "submagic",
+      "name": "Submagic",
+      "destination": "https://submagic.co/?via=alan83",
+      "network": "submagic",
+      "placeholder": false,
       "active": true
     }
   ]

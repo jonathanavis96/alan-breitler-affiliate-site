@@ -23,6 +23,12 @@
       "slug": "coding-assistants",
       "description": "Write analysis scripts in half the time. Get inline suggestions for Python, R, and MATLAB — plus instant explanations for legacy code you inherited from a former lab member.",
       "icon": "terminal"
+    },
+    {
+      "name": "Video & Media",
+      "slug": "video-media",
+      "description": "Turn lectures, conference talks, and research explainers into captioned, shareable clips. These tools handle subtitles, accessibility captions, and short-form edits — so your work reaches an audience beyond the journal.",
+      "icon": "movie"
     }
   ]
 }

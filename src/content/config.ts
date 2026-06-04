@@ -29,6 +29,7 @@ const reviews = defineCollection({
       'research-assistants',
       'image-generation',
       'coding-assistants',
+      'video-media',
     ])).min(1),
 
     /** Hero/thumbnail image path relative to public/ */
