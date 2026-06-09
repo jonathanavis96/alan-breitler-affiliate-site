@@ -23,6 +23,7 @@
       "shareasale": "https://www.shareasale.com — Scite.ai affiliate program",
       "dub.co": "https://partners.dub.co/perplexity/register — Perplexity Pro affiliate program",
       "submagic": "https://www.submagic.co/affiliate — Submagic in-house affiliate program (already live with your tracking link)",
+      "everneed": "https://www.everneedai.com/page/affiliate — Everneed AI in-house affiliate program via iDevAffiliate (already live with your tracking link)",
       "none": "No public affiliate program — ChatGPT/OpenAI, Claude/Anthropic, Midjourney, GitHub Copilot and Elicit do not offer one (Elicit's closed in 2025). These links stay as standard referral links and earn nothing; that is expected, not a setup gap."
     },
     "important_notes": [
@@ -30,7 +31,7 @@
       "The /go/ redirect pages are excluded from search engines via robots.txt and noindex tags",
       "You can disable any product's affiliate link by setting 'active' to false",
       "After updating, always test each link to confirm it redirects correctly",
-      "Submagic is already earning — its link uses your live tracking URL (via=alan83), so commissions start as soon as visitors click through and subscribe.",
+      "Submagic and Everneed AI are already earning — their links use your live tracking URLs, so commissions start as soon as visitors click through and subscribe. Everneed AI pays 50% recurring commission.",
       "Six more tools earn commission once their tracking URLs are added (network: impact, partnerstack, shareasale, dub.co). The five with network 'none' have no program and remain standard links."
     ]
   },
@@ -128,6 +129,14 @@
       "name": "Submagic",
       "destination": "https://submagic.co/?via=alan83",
       "network": "submagic",
+      "placeholder": false,
+      "active": true
+    },
+    {
+      "slug": "everneed-ai",
+      "name": "Everneed AI",
+      "destination": "https://everneedai.idevaffiliate.com/751.html",
+      "network": "everneed",
       "placeholder": false,
       "active": true
     }

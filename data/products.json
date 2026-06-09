@@ -368,6 +368,37 @@
         "Caption accuracy still needs a proofread for technical terms, names, and equations"
       ],
       "verdict": "The fastest way to turn a lecture, talk, or research explainer into a captioned clip people will actually watch. A creator tool at heart, but a genuinely useful one for academics doing science communication."
+    },
+    {
+      "slug": "everneed-ai",
+      "name": "Everneed AI",
+      "brand": "Everneed AI",
+      "categories": ["writing-tools"],
+      "image": "/images/products/everneed.webp",
+      "affiliateSlug": "everneed-ai",
+      "pricing": "$9.99/mo",
+      "freeTier": true,
+      "freeTierNote": "Free account with limited one-time credits to trial the platform — not an ongoing free tier",
+      "badge": "Best for Bulk Content",
+      "scores": {
+        "ease_of_use": 8,
+        "academic_value": 6,
+        "price_to_value": 7
+      },
+      "overallScore": 7.0,
+      "useCase": "Bulk content drafting, social copy, marketing assets",
+      "pros": [
+        "All-in-one: article writing, social copy, digital art, code help, and speech-to-text under one login and one bill",
+        "32 templates cover common content jobs (blog posts, ad copy, product descriptions, video scripts) so you start from a prompt, not a blank page",
+        "Low entry price — $9.99/mo or a one-time credit pack — undercuts buying separate writing, image, and transcription subscriptions",
+        "Genuinely fast for high-volume, repeatable content where speed matters more than nuance"
+      ],
+      "cons": [
+        "Built for marketers and entrepreneurs, not researchers — no citation handling, source grounding, or academic tone control",
+        "A wrapper over general models, so output still needs fact-checking and editing; originality and depth are the weak points",
+        "Strict no-refund policy on subscriptions and credit packs — trial the free credits before committing"
+      ],
+      "verdict": "A cheap, all-in-one content suite that earns its place for high-volume marketing copy — but it is a generalist built for creators and marketers, not a research tool. For academic writing a focused, citation-aware tool will serve you better; for fast first drafts of non-scholarly content, it is a reasonable budget pick."
     }
   ]
 }
