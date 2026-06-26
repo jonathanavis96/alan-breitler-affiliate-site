@@ -350,6 +350,16 @@ h2 + table {
 h2 ~ h3 {
     page-break-before: auto;
 }
+
+/* Each top-level section (## heading) starts on its own page,
+   except the first one, which stays on the cover page */
+h2 {
+    page-break-before: always;
+}
+
+h2:first-of-type {
+    page-break-before: avoid;
+}
 """
 
 

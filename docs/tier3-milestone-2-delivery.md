@@ -2,6 +2,8 @@
 
 ## Delivery Summary
 
+It has been a genuine pleasure working with you on AIfocus. I have really enjoyed building it out with you, and I would love to keep working together on future projects. Thank you for the opportunity.
+
 Tier 3 Milestone 2 is **complete and live on aifocus.work**. This milestone added the content and revenue layer on top of the launched site: four new in-depth reviews, a working newsletter with a five-email welcome sequence, an outreach starter pack for building visibility, and a 30-day post-launch review plan. Quick top-line:
 
 - **4 new in-depth reviews** — QuillBot, Otter.ai, Scite.ai, and Perplexity Pro, each fully scored and integrated into the rankings
