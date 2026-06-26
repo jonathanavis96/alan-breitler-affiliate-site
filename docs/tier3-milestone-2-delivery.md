@@ -19,6 +19,17 @@ The site now stands at 39 pages, 13 reviewed tools, 13 affiliate redirects, and 
 
 ---
 
+## What I Need From You
+
+Two small items remain on your side. Neither blocks this milestone, and I'm happy to handle both for you as they come through:
+
+1. **Affiliate tracking IDs** — the in-scope tools (Consensus, Grammarly, QuillBot, Otter.ai, Scite.ai, and Perplexity) are already built and live, sitting on placeholder redirects and waiting only on your network approvals. As Impact, PartnerStack, and ShareASale approve you, forward each ID and I'll wire it straight into the live redirect at no charge. (Dub.co, which covers Perplexity, declined for now; the reapply window opens at the end of June.)
+2. **Buttondown welcome series** — the signup form is already live and collecting subscribers. When you're ready, load the five welcome emails into a Buttondown automation (guide in `docs/buttondown-setup.md`), and set the newsletter name to "AIfocus" and the From name to "Alan" under Settings → Newsletter.
+
+The Amazon Associates tag and the `@aifocus.work` email destination you sent earlier are both already wired in and live.
+
+---
+
 ## 1. Four New In-Depth Reviews
 
 Four new tools have been researched, written up, and fully integrated — each with a product card, ranking placement, `/go/` affiliate redirect, and schema.org markup for rich results. The reviews match the existing editorial style: a clear score across ease of use, academic value, and price-to-value, an honest account of where each tool falls short, and free-tier guidance for budget-conscious academics.
@@ -113,17 +124,6 @@ Beyond the contracted milestone work, two live affiliate tools you sourced were 
 | Everneed AI | https://aifocus.work/reviews/everneed-ai/ | Best for Bulk Content | Live affiliate link, 50% recurring |
 
 Each received the same full treatment as every other tool: an honest, scored review page, a product card in the rankings, a `/go/` affiliate redirect carrying your live tracking link, a logo, and `rel="nofollow sponsored"` on the outbound link. Submagic also introduced a new "Video & Media" category to house it. These two are the first genuinely earning affiliate links on the site, ahead of the network approvals still in progress below.
-
----
-
-## 8. Outstanding — Items From Your Side
-
-None of these block the milestone. Each one simply unlocks a bit more value as it comes through, and I'm happy to handle them for you after the milestone closes:
-
-- **Affiliate tracking IDs** — the in-scope tools (Consensus, Grammarly, QuillBot, Otter.ai, Scite.ai, and Perplexity) are already built and live, sitting on placeholder redirects and waiting only on your network approvals. As Impact, PartnerStack, and ShareASale approve you, forward each ID and I'll wire it straight into the live redirect at no charge. (Dub.co, which covers Perplexity, declined for now; the reapply window opens at the end of June.)
-- **Buttondown welcome series** — the signup form is already live and collecting subscribers. When you're ready, load the five welcome emails into a Buttondown automation (guide in `docs/buttondown-setup.md`), and set the newsletter name to "AIfocus" and the From name to "Alan" under Settings → Newsletter.
-
-The Amazon Associates tag and the `@aifocus.work` email destination you sent earlier are both already wired in and live.
 
 ---
 

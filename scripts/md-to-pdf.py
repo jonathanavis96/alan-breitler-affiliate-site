@@ -351,14 +351,11 @@ h2 ~ h3 {
     page-break-before: auto;
 }
 
-/* Each top-level section (## heading) starts on its own page,
-   except the first one, which stays on the cover page */
-h2 {
-    page-break-before: always;
-}
-
-h2:first-of-type {
-    page-break-before: avoid;
+/* Keep each ## section whole — it moves to the next page rather than
+   being cut off, so short sections pack together and long ones break
+   cleanly only when they genuinely exceed a page */
+.section {
+    page-break-inside: avoid;
 }
 """
 
@@ -375,6 +372,15 @@ def build_html(md_content: str) -> str:
     cover_title = h1_match.group(1) if h1_match else "Project Deliverable"
     if h1_match:
         html_body = html_body.replace(h1_match.group(0), "", 1)
+
+    # Wrap each h2-led section in a .section div so it stays whole across
+    # page breaks (short sections share a page; a section never gets cut off)
+    parts = re.split(r"(?=<h2)", html_body)
+    html_body = "".join(
+        f'<div class="section">{p}</div>' if p.lstrip().startswith("<h2") else p
+        for p in parts
+        if p.strip()
+    )
 
     # Split on em-dash for two-line title
     cover_title_lines = cover_title.split("—")
