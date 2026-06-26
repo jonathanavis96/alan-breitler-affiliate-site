@@ -24,7 +24,7 @@ The site now stands at 39 pages, 13 reviewed tools, 13 affiliate redirects, and 
 Two small items remain on your side. Neither blocks this milestone, and I'm happy to handle both for you as they come through:
 
 1. **Affiliate tracking IDs** — the in-scope tools (Consensus, Grammarly, QuillBot, Otter.ai, Scite.ai, and Perplexity) are already built and live, sitting on placeholder redirects and waiting only on your network approvals. As Impact, PartnerStack, and ShareASale approve you, forward each ID and I'll wire it straight into the live redirect at no charge. (Dub.co, which covers Perplexity, declined for now; the reapply window opens at the end of June.)
-2. **Buttondown welcome series** — the signup form is already live and collecting subscribers. When you're ready, load the five welcome emails into a Buttondown automation (guide in `docs/buttondown-setup.md`), and set the newsletter name to "AIfocus" and the From name to "Alan" under Settings → Newsletter.
+2. **Buttondown welcome series** — the signup form is already live and collecting subscribers. When you're ready, load the five welcome emails into a Buttondown automation (see the attached **Newsletter Guide** and **Welcome Email Sequence**), and set the newsletter name to "AIfocus" and the From name to "Alan" under Settings → Newsletter.
 
 The Amazon Associates tag and the `@aifocus.work` email destination you sent earlier are both already wired in and live.
 
@@ -65,13 +65,13 @@ A five-email welcome sequence is written and ready to load into Buttondown's aut
 | 4 | Tools we use every day (and what they replaced) | 9 | Claude Pro, Grammarly, QuillBot, Perplexity |
 | 5 | What's coming next + a small ask | 14 | Relationship + feedback (no affiliate push) |
 
-The drafts are plain-text, paste-ready, and written in the site's editorial voice. Each carries a single affiliate link maximum and a one-line affiliate disclosure. The full set lives in `docs/email-sequences/welcome/`, and `docs/buttondown-setup.md` is a 10-minute guide to loading them into Buttondown's automation.
+The drafts are plain-text, paste-ready, and written in the site's editorial voice. Each carries a single affiliate link maximum and a one-line affiliate disclosure. The full set is included as the attached **Welcome Email Sequence**, and the attached **Newsletter Guide** walks through loading them into Buttondown's automation.
 
 ---
 
 ## 3. Outreach Starter Pack
 
-`docs/outreach-starter-pack.md` is a practical playbook for getting AIfocus in front of academic audiences over its first few months. It contains:
+The attached **Outreach Starter Pack** is a practical playbook for getting AIfocus in front of academic audiences over its first few months. It contains:
 
 - **An audience map** — five tiers of contacts (AI-for-academics newsletters, university library blogs, faculty development centres, academic forums, and journalists), ranked by likelihood of linking, with named real-world starting points in each tier
 - **Four pitch templates** — cold newsletter pitch, library/CTL pitch, reciprocal-resource pitch, and guest-post offer
@@ -86,7 +86,7 @@ The tone throughout is matched to the academic audience: evidence-based, no hype
 
 ## 4. 30-Day Post-Launch Check-In
 
-`docs/30-day-check-in.md` is a structured review to run around one month after launch. It sets out exactly what data to gather from Search Console, Analytics, Cloudflare, the newsletter, and the affiliate redirects; the questions that data should answer; and a single decision to make at the end — whether the next month should focus on indexing/traffic, conversion, or content depth. It also lists what *not* to do at the 30-day mark, to avoid over-reacting to early noise.
+The attached **30-Day Check-In** plan is a structured review to run around one month after launch. It sets out exactly what data to gather from Search Console, Analytics, Cloudflare, the newsletter, and the affiliate redirects; the questions that data should answer; and a single decision to make at the end — whether the next month should focus on indexing/traffic, conversion, or content depth. It also lists what *not* to do at the 30-day mark, to avoid over-reacting to early noise.
 
 ---
 
@@ -131,4 +131,4 @@ Each received the same full treatment as every other tool: an honest, scored rev
 
 This milestone includes **up to 2 rounds of revisions**. If anything needs adjusting, just let me know and I'll get it sorted.
 
-For day-to-day reference, the repo includes `docs/deployment.md` (deploy and hosting), `docs/buttondown-setup.md` (newsletter activation), and `docs/30-day-check-in.md` (the post-launch review plan).
+For day-to-day reference, this delivery includes four attachments alongside this document: the **Newsletter Guide**, the **Welcome Email Sequence**, the **Outreach Starter Pack**, and the **30-Day Check-In** plan.
