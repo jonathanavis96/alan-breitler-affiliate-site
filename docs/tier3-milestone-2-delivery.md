@@ -10,9 +10,10 @@ Tier 3 Milestone 2 is **complete and live on aifocus.work**. This milestone adde
 - **Outreach starter pack** — audience map, pitch templates, guest-post angles, and a 90-day plan
 - **30-day check-in plan** — a structured review of what to measure and decide around the one-month mark
 - **On-page polish** — internal cross-linking, an SEO meta audit, newsletter conversion tracking in GA4, and a new workflow resource article
+- **Additional scope delivered** — two live affiliate tools you sourced (Submagic and Everneed AI) were fully reviewed and built in at no extra charge (detailed in section 7)
 - **Bonus additions** — a few extras added during the build because they complemented the work (detailed in section 6)
 
-The site now stands at 35 pages, 11 reviewed tools, 11 affiliate redirects, and 3 resource articles.
+The site now stands at 39 pages, 13 reviewed tools, 13 affiliate redirects, and 3 resource articles.
 
 ---
 
@@ -72,7 +73,7 @@ The tone throughout is matched to the academic audience: evidence-based, no hype
 
 ## 4. 30-Day Post-Launch Check-In
 
-`docs/30-day-check-in.md` is a structured review to run around one month after launch (targeted for the week of 22 June). It sets out exactly what data to gather from Search Console, Analytics, Cloudflare, the newsletter, and the affiliate redirects; the questions that data should answer; and a single decision to make at the end — whether the next month should focus on indexing/traffic, conversion, or content depth. It also lists what *not* to do at the 30-day mark, to avoid over-reacting to early noise.
+`docs/30-day-check-in.md` is a structured review to run around one month after launch. It sets out exactly what data to gather from Search Console, Analytics, Cloudflare, the newsletter, and the affiliate redirects; the questions that data should answer; and a single decision to make at the end — whether the next month should focus on indexing/traffic, conversion, or content depth. It also lists what *not* to do at the 30-day mark, to avoid over-reacting to early noise.
 
 ---
 
@@ -100,14 +101,27 @@ These are yours to keep at no extra cost. They are noted as extras simply so the
 
 ---
 
-## 7. Outstanding — Items From Your Side
+## 7. Additional Scope Delivered — Affiliate Tools Added at No Charge
 
-None of these block the milestone, but each one unlocks a bit more value as it comes through:
+Beyond the contracted milestone work, two live affiliate tools you sourced were fully reviewed and built into the site at no extra charge. Both sit a little outside the site's original focus (AI tools for academic research and writing), but since each carries a live affiliate link earning you commission, they were added in full so the revenue starts flowing right away:
 
-- **Affiliate tracking IDs** — as Impact, PartnerStack, and ShareASale approve you, forward the IDs and I'll wire each one into the live redirects. (Dub.co, which covers Perplexity, declined for now; we can reapply when the 30-day window opens.)
-- **Amazon Associates Tag** — once you're approved at amazon.com/associates, send your Associate Tag and I'll activate the 18 library book links so they earn commission.
-- **Buttondown** — load the five welcome emails into a Buttondown automation (guide in `docs/buttondown-setup.md`), and set the newsletter name to "AIfocus" and the From name to "Alan" under Settings → Newsletter.
-- **Email destination** — Cloudflare has emailed a verification link to your address so `@aifocus.work` mail can land in your inbox. Clicking it lets me complete the switch from the placeholder.
+| Tool | Review | Positioned as | Earning |
+|------|--------|---------------|---------|
+| Submagic | https://aifocus.work/reviews/submagic/ | Best for Short-Form Video | Live affiliate link, per click / sign-up |
+| Everneed AI | https://aifocus.work/reviews/everneed-ai/ | Best for Bulk Content | Live affiliate link, 50% recurring |
+
+Each received the same full treatment as every other tool: an honest, scored review page, a product card in the rankings, a `/go/` affiliate redirect carrying your live tracking link, a logo, and `rel="nofollow sponsored"` on the outbound link. Submagic also introduced a new "Video & Media" category to house it. These two are the first genuinely earning affiliate links on the site, ahead of the network approvals still in progress below.
+
+---
+
+## 8. Outstanding — Items From Your Side
+
+None of these block the milestone. Each one simply unlocks a bit more value as it comes through, and I'm happy to handle them for you after the milestone closes:
+
+- **Affiliate tracking IDs** — the in-scope tools (Consensus, Grammarly, QuillBot, Otter.ai, Scite.ai, and Perplexity) are already built and live, sitting on placeholder redirects and waiting only on your network approvals. As Impact, PartnerStack, and ShareASale approve you, forward each ID and I'll wire it straight into the live redirect at no charge. (Dub.co, which covers Perplexity, declined for now; the reapply window opens at the end of June.)
+- **Buttondown welcome series** — the signup form is already live and collecting subscribers. When you're ready, load the five welcome emails into a Buttondown automation (guide in `docs/buttondown-setup.md`), and set the newsletter name to "AIfocus" and the From name to "Alan" under Settings → Newsletter.
+
+The Amazon Associates tag and the `@aifocus.work` email destination you sent earlier are both already wired in and live.
 
 ---
 
